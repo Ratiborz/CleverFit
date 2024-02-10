@@ -1,6 +1,7 @@
 .sider {
     padding-top: 47px;
     height: 100vh;
+    z-index: 10;
 }
 
 .wrapper {
@@ -13,6 +14,11 @@
 .logo {
     padding-left: 29px;
     margin-bottom: 67px;
+}
+
+.logo_mini {
+    margin-left: 25px;
+    margin-bottom: 68px;
 }
 
 .button {
@@ -30,17 +36,25 @@
     width: 20px;
     height: 66px;
     padding-left: 3px;
-    font-size: 18px;
-    line-height: 64px;
     cursor: pointer;
     transition: color 0.3s;
     margin: auto 0;
-    background-image: url(/public/block-trigger.svg);
+    background-image: url(/block-trigger.svg);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-}
-
-.trigger:hover {
-    color: #1890ff;
+    position: absolute;
+    right: -20px; /* отступ справа, чтобы триггер был прижат к правому краю canea */
+    top: 50%; /* располагаем триггер по вертикали по центру */
+    transform: translateY(-50%); /* корректируем положение по вертикали */
+    &:hover {
+        svg {
+            fill: #1890ff;
+            transition: 0.3s;
+        }
+    }
+    svg {
+        fill: #8c8c8c;
+        transition: 0.3s;
+    }
 }

@@ -1,7 +1,7 @@
 import {
     CalendarTwoTone,
     HeartFilled,
-    IdcardTwoTone,
+    IdcardOutlined,
     MenuFoldOutlined,
     MenuUnfoldOutlined,
     TrophyFilled,
@@ -30,13 +30,13 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-    getItem('Календарь', '1', <CalendarTwoTone />),
-    getItem('Тренировки', '2', <HeartFilled />),
-    getItem('Достижения', '3', <TrophyFilled />),
-    getItem('Профиль', '4', <IdcardTwoTone />),
+    getItem('Календарь', '1', <CalendarTwoTone twoToneColor='#10239E' />),
+    getItem('Тренировки', '2', <HeartFilled style={{ color: '#10239E' }} />),
+    getItem('Достижения', '3', <TrophyFilled style={{ color: '#10239E' }} />),
+    getItem('Профиль', '4', <IdcardOutlined style={{ color: '#10239E' }} />),
 ];
 
-const Aside: React.FC = () => {
+export const Aside: React.FC = () => {
     const [collapsed, setCollapsed] = useState(false);
     return (
         <Layout>
@@ -51,13 +51,23 @@ const Aside: React.FC = () => {
             >
                 <div className={s.wrapper}>
                     <div>
-                        <Image
-                            className={s.logo}
-                            preview={false}
-                            width={133}
-                            src='/public/Logo.svg'
-                            alt='logo'
-                        />
+                        {collapsed ? (
+                            <Image
+                                className={s.logo_mini}
+                                preview={false}
+                                width={29}
+                                src='/fit.svg'
+                                alt='logo'
+                            />
+                        ) : (
+                            <Image
+                                className={s.logo}
+                                preview={false}
+                                width={133}
+                                src='/Logo.svg'
+                                alt='logo'
+                            />
+                        )}
 
                         <Menu
                             theme='light'
@@ -69,21 +79,16 @@ const Aside: React.FC = () => {
 
                     <Button
                         className={s.button}
-                        icon={
-                            <Image src='/public/Exit.svg' width={16} preview={false} alt='exit' />
-                        }
+                        icon={<Image src='/Exit.svg' width={16} preview={false} alt='exit' />}
                     >
                         {!collapsed && <span className={s.button_text}>Выход</span>}
                     </Button>
                 </div>
+                {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+                    className: `${s.trigger} `,
+                    onClick: () => setCollapsed(!collapsed),
+                })}
             </Sider>
-
-            {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-                className: `${s.trigger} `,
-                onClick: () => setCollapsed(!collapsed),
-            })}
         </Layout>
     );
 };
-
-export default Aside;

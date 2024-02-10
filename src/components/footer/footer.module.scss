@@ -1,0 +1,36 @@
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.feedback_btn {
+    margin-left: 26px;
+    margin-bottom: 40px;
+}
+
+.dowloand_btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 12px 24px;
+}
+
+.dowloand {
+    width: 158px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 130%;
+}
+
+.dowloand_btn__descrip {
+    color: rgb(140, 140, 140);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 130%;
+}
+
+.card {
+    margin-right: 24px;
+    margin-bottom: 42px;
+}

@@ -1,12 +1,13 @@
 .header {
     padding: 16px 24px;
+    width: 100%;
     background-color: #f0f5ff;
 }
 
 .settings {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     max-width: 129px;
     width: 100%;
     font-size: 14px;
@@ -26,6 +27,7 @@
     font-weight: 700;
     line-height: 130%;
     max-width: 900px;
+    width: 100%;
     margin: 0;
 }
 
@@ -33,5 +35,19 @@
     font-size: 14px;
     font-weight: 400;
     line-height: 130%;
-    letter-spacing: 0%;
+}
+
+@media (max-width: 834px) {
+    .setting_icon {
+        display: none;
+    }
+    .title {
+        font-size: 24px;
+        font-weight: 500;
+        line-height: 130%;
+        max-width: 473px;
+    }
+    .title_settings {
+        justify-content: flex-start;
+    }
 }

@@ -11,7 +11,9 @@ export const Header = () => {
                     мечты!
                 </h1>
                 <div className={s.settings}>
-                    <SettingOutlined />
+                    <span className={s.setting_icon}>
+                        <SettingOutlined />
+                    </span>
                     <p>Настройки</p>
                 </div>
             </div>

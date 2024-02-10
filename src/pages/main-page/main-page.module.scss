@@ -1,4 +1,9 @@
+.general_wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
 .main_container {
-    max-width: 1232px;
     width: 100%;
+    background: none;
 }

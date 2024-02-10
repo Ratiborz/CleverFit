@@ -1,8 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
 #root {
-    display: flex;
-    flex-direction: row-reverse;
     max-width: 1440px;
     width: 100%;
     margin: 0 auto;
