@@ -6,4 +6,8 @@
 .main_container {
     width: 100%;
     background: none;
+    overflow: hidden;
+}
+
+@media (max-width: 834px) {
 }

@@ -38,57 +38,68 @@ const items: MenuItem[] = [
 
 export const Aside: React.FC = () => {
     const [collapsed, setCollapsed] = useState(false);
+    const [modileWidth, setMobileWidth] = useState(false);
+
     return (
-        <Layout>
-            <Sider
-                className={s.sider}
-                trigger={null}
-                width={208}
-                theme='light'
-                collapsible
-                collapsed={collapsed}
-                onCollapse={(value) => setCollapsed(value)}
-            >
-                <div className={s.wrapper}>
-                    <div>
-                        {collapsed ? (
-                            <Image
-                                className={s.logo_mini}
-                                preview={false}
-                                width={29}
-                                src='/fit.svg'
-                                alt='logo'
-                            />
-                        ) : (
-                            <Image
-                                className={s.logo}
-                                preview={false}
-                                width={133}
-                                src='/Logo.svg'
-                                alt='logo'
-                            />
-                        )}
-
-                        <Menu
-                            theme='light'
-                            defaultSelectedKeys={['1']}
-                            mode='inline'
-                            items={items}
+        <Sider
+            breakpoint='xs'
+            onBreakpoint={(broken) => {
+                if (broken) {
+                    setMobileWidth(true);
+                } else {
+                    setMobileWidth(false); // Сбросить mobileWidth в false при отсутствии брейкпоинта
+                }
+            }}
+            collapsedWidth={modileWidth ? 0 : 60}
+            className={s.sider}
+            data-test-id='sider-switch'
+            trigger={null}
+            width={modileWidth ? 106 : 208}
+            theme='light'
+            collapsible
+            collapsed={collapsed}
+            onCollapse={(value) => setCollapsed(value)}
+        >
+            <div className={s.wrapper}>
+                <div>
+                    {collapsed ? (
+                        <Image
+                            className={s.logo_mini}
+                            preview={false}
+                            width={29}
+                            src='/fit.svg'
+                            alt='logo'
                         />
-                    </div>
+                    ) : (
+                        <Image
+                            className={s.logo}
+                            preview={false}
+                            width={133}
+                            src='/Logo.svg'
+                            alt='logo'
+                        />
+                    )}
 
-                    <Button
-                        className={s.button}
-                        icon={<Image src='/Exit.svg' width={16} preview={false} alt='exit' />}
-                    >
-                        {!collapsed && <span className={s.button_text}>Выход</span>}
-                    </Button>
+                    <Menu theme='light' defaultSelectedKeys={['1']} mode='inline' items={items} />
                 </div>
-                {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-                    className: `${s.trigger} `,
-                    onClick: () => setCollapsed(!collapsed),
-                })}
-            </Sider>
-        </Layout>
+
+                <Button
+                    className={s.button}
+                    icon={
+                        modileWidth ? (
+                            ''
+                        ) : (
+                            <Image src='/Exit.svg' width={16} preview={false} alt='exit' />
+                        )
+                    }
+                >
+                    {!collapsed && <span className={s.button_text}>Выход</span>}
+                </Button>
+            </div>
+            {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+                className: `${s.trigger} `,
+                onClick: () => setCollapsed(!collapsed),
+            })}
+        </Sider>
     );
 };

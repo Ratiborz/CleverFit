@@ -41,13 +41,27 @@
     .setting_icon {
         display: none;
     }
+
     .title {
         font-size: 24px;
         font-weight: 500;
-        line-height: 130%;
-        max-width: 473px;
+        max-width: 617px;
+        letter-spacing: 0px;
     }
+
     .title_settings {
-        justify-content: flex-start;
+        justify-content: space-between;
+        margin-top: 15px;
+    }
+
+    .settings {
+        padding: 0;
+        max-width: 75px;
+    }
+}
+
+@media (max-width: 360px) {
+    .title {
+        font-size: 20px;
     }
 }

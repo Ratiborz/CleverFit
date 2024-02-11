@@ -1,14 +1,11 @@
 .wrapper {
     margin-top: 24px;
     margin-left: 24px;
-    height: 100%;
-    width: 100%;
     background: none;
 }
 
 .card {
     max-width: 752px;
-    width: 100%;
     margin-bottom: 24px;
 }
 
@@ -22,7 +19,6 @@
     font-size: 16px;
     font-weight: 400;
     line-height: 130%;
-    letter-spacing: 0%;
     text-align: left;
 }
 
@@ -32,10 +28,20 @@
     font-weight: 500;
 }
 
-.card_training__p {
+.wrapper__card_mini {
     display: flex;
-    justify-content: center;
-    padding: 12px 0 12px;
+    align-items: center;
+    gap: 16px;
+    max-width: 752px;
+}
+
+.card_mini {
+    max-width: 240px;
+    width: 100%;
+}
+
+.card_training__p {
+    padding: 12px 24px;
     font-size: 16px;
     font-weight: 400;
     line-height: 130%;
@@ -47,11 +53,22 @@
     align-items: center;
     justify-content: center;
     color: rgb(47, 84, 235);
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 130%;
     margin: 0 auto;
-    width: 100%;
     height: 56px;
-    padding: 12px 24px;
+}
+
+@media (max-width: 834px) {
+    .card {
+        max-width: 722px;
+        margin-right: 24px;
+    }
+
+    .wrapper__card_mini {
+        max-width: 722px;
+        margin-right: 24px;
+    }
+
+    .card_mini {
+        max-width: 230px;
+    }
 }

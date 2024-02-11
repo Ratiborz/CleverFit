@@ -1,7 +1,7 @@
 import { CalendarTwoTone, HeartFilled, IdcardOutlined } from '@ant-design/icons';
 import s from './main.module.scss';
 
-import { Button, Card, Divider, Layout, Space } from 'antd';
+import { Button, Card, Divider, Layout } from 'antd';
 
 export const Main = () => {
     return (
@@ -17,15 +17,15 @@ export const Main = () => {
                 </p>
             </Card>
 
-            <Card className={`${s.card} ${s.card_margin}`} bodyStyle={{ width: 752 }}>
+            <Card className={`${s.card} ${s.card_margin}`}>
                 <p className={s.card__descrip}>
                     CleverFit — это не просто приложение, а твой личный помощник в мире фитнеса. Не
                     откладывай на завтра — начни тренироваться уже сегодня!
                 </p>
             </Card>
 
-            <Space size={16}>
-                <Card bodyStyle={{ padding: 0, width: 238 }}>
+            <div className={s.wrapper__card_mini}>
+                <Card bodyStyle={{ padding: 0 }} className={s.card_mini}>
                     <p className={s.card_training__p}>Расписать тренировки</p>
                     <Divider style={{ margin: 0 }} />
                     <Button className={s.card_training__btn} type='link' icon={<HeartFilled />}>
@@ -33,7 +33,7 @@ export const Main = () => {
                     </Button>
                 </Card>
 
-                <Card bodyStyle={{ padding: 0, width: 238 }}>
+                <Card bodyStyle={{ padding: 0 }} className={s.card_mini}>
                     <p className={s.card_training__p}>Назначить календарь</p>
                     <Divider style={{ margin: 0 }} />
                     <Button
@@ -45,14 +45,14 @@ export const Main = () => {
                     </Button>
                 </Card>
 
-                <Card bodyStyle={{ padding: 0, width: 238 }}>
+                <Card bodyStyle={{ padding: 0 }} className={s.card_mini}>
                     <p className={s.card_training__p}>Заполнить профиль</p>
                     <Divider style={{ margin: 0 }} />
                     <Button className={s.card_training__btn} type='link' icon={<IdcardOutlined />}>
                         Профиль
                     </Button>
                 </Card>
-            </Space>
+            </div>
         </Layout>
     );
 };
