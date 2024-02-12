@@ -4,16 +4,23 @@
     background-color: #f0f5ff;
 }
 
-.settings {
+.title_settings :global .ant-btn {
     display: flex;
+}
+
+.settings_btn {
     justify-content: space-between;
     align-items: center;
-    max-width: 129px;
+    max-width: 130px;
     width: 100%;
+    padding: 7px 15px;
+}
+
+.button_text {
+    color: black;
     font-size: 14px;
     font-weight: 400;
     line-height: 130%;
-    padding: 7px 15px;
 }
 
 .title_settings {
@@ -38,10 +45,6 @@
 }
 
 @media (max-width: 834px) {
-    .setting_icon {
-        display: none;
-    }
-
     .title {
         font-size: 24px;
         font-weight: 500;
@@ -54,14 +57,40 @@
         margin-top: 15px;
     }
 
-    .settings {
-        padding: 0;
-        max-width: 75px;
+    .settings_btn :global .anticon.anticon-setting {
+        display: none;
     }
 }
 
 @media (max-width: 360px) {
     .title {
         font-size: 20px;
+    }
+
+    .title_settings {
+        position: relative;
+    }
+
+    .settings_btn {
+        position: absolute;
+        top: -12px;
+        width: auto;
+    }
+
+    .settings_btn :global p {
+        display: none;
+    }
+
+    .title_settings {
+        margin-top: 24px;
+    }
+
+    .settings_btn :global .anticon.anticon-setting {
+        display: block;
+        color: #262626;
+        border: 1px solid #d9d9d9;
+        border-radius: 50%;
+        padding: 9px;
+        background-color: #ffffff;
     }
 }

@@ -29,32 +29,32 @@ function getItem(
     } as MenuItem;
 }
 
-const items: MenuItem[] = [
-    getItem('Календарь', '1', <CalendarTwoTone twoToneColor='#10239E' />),
-    getItem('Тренировки', '2', <HeartFilled style={{ color: '#10239E' }} />),
-    getItem('Достижения', '3', <TrophyFilled style={{ color: '#10239E' }} />),
-    getItem('Профиль', '4', <IdcardOutlined style={{ color: '#10239E' }} />),
-];
-
 export const Aside: React.FC = () => {
     const [collapsed, setCollapsed] = useState(false);
-    const [modileWidth, setMobileWidth] = useState(false);
+    const [mobileWidth, setMobileWidth] = useState(false);
+
+    const items: MenuItem[] = [
+        getItem('Календарь',  '1',  mobileWidth ? '' : <CalendarTwoTone twoToneColor='#10239E' />),
+        getItem('Тренировки', '2',  mobileWidth ? '' : <HeartFilled style={{ color: '#10239E' }} />),
+        getItem('Достижения', '3',  mobileWidth ? '' : <TrophyFilled style={{ color: '#10239E' }} />,),
+        getItem('Профиль',    '4',  mobileWidth ? '' : <IdcardOutlined style={{ color: '#10239E' }} />),
+    ];
 
     return (
         <Sider
             breakpoint='xs'
-            onBreakpoint={(broken) => {
+            onBreakpoint={(broken: boolean) => {
                 if (broken) {
                     setMobileWidth(true);
                 } else {
-                    setMobileWidth(false); // Сбросить mobileWidth в false при отсутствии брейкпоинта
+                    setMobileWidth(false);
                 }
             }}
-            collapsedWidth={modileWidth ? 0 : 60}
+            collapsedWidth={mobileWidth ? 1 : 60}
             className={s.sider}
-            data-test-id='sider-switch'
+            data-test-id={mobileWidth ? 'sider-switch-mobile' : 'sider-switch'}
             trigger={null}
-            width={modileWidth ? 106 : 208}
+            width={mobileWidth ? 106 : 208}
             theme='light'
             collapsible
             collapsed={collapsed}
@@ -66,7 +66,7 @@ export const Aside: React.FC = () => {
                         <Image
                             className={s.logo_mini}
                             preview={false}
-                            width={29}
+                            width={mobileWidth ? 0 : 29}
                             src='/fit.svg'
                             alt='logo'
                         />
@@ -74,19 +74,26 @@ export const Aside: React.FC = () => {
                         <Image
                             className={s.logo}
                             preview={false}
-                            width={133}
+                            width={mobileWidth ? 72 : 133}
                             src='/Logo.svg'
                             alt='logo'
                         />
                     )}
 
-                    <Menu theme='light' defaultSelectedKeys={['1']} mode='inline' items={items} />
+                    <Menu
+                        className={s.menu}
+                        style={{ overflow: 'hidden' }}
+                        theme='light'
+                        defaultSelectedKeys={['1']}
+                        mode='inline'
+                        items={items}
+                    />
                 </div>
 
                 <Button
                     className={s.button}
                     icon={
-                        modileWidth ? (
+                        mobileWidth ? (
                             ''
                         ) : (
                             <Image src='/Exit.svg' width={16} preview={false} alt='exit' />

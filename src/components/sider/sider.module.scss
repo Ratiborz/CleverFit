@@ -44,9 +44,9 @@
     background-position: center;
     background-repeat: no-repeat;
     position: absolute;
-    right: -20px; /* отступ справа, чтобы триггер был прижат к правому краю canea */
-    top: 50%; /* располагаем триггер по вертикали по центру */
-    transform: translateY(-50%); /* корректируем положение по вертикали */
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
     &:hover {
         svg {
             fill: #1890ff;
@@ -56,5 +56,35 @@
     svg {
         fill: #8c8c8c;
         transition: 0.3s;
+    }
+}
+
+@media (max-width: 360px) {
+    .sider {
+        position: absolute;
+    }
+
+    .menu {
+        :global li.ant-menu-item.ant-menu-item-only-child {
+            padding: 0 8px !important;
+            overflow: hidden;
+        }
+    }
+
+    .menu :global .ant-layout-sider-children {
+    }
+
+    .logo {
+        padding-left: 17px;
+        margin-bottom: 31px;
+    }
+
+    .trigger {
+        background-image: url(/mobile-trigger.svg);
+        top: 48px;
+        right: -32px;
+        padding-left: 8px;
+        width: 32px;
+        height: 48px;
     }
 }

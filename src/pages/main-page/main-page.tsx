@@ -16,7 +16,7 @@ export const MainPage: React.FC = () => {
             className={s.general_wrapper}
             style={{
                 backgroundImage: `url(${backgroundImage})`,
-                backgroundSize: '1440px 1024px',
+                backgroundSize: 'cover',
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition: 'top',
             }}
