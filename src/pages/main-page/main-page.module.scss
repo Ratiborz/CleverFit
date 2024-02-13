@@ -1,0 +1,11 @@
+.general_wrapper {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+}
+
+.main_container {
+    width: 100%;
+    background: none;
+    overflow: hidden;
+}

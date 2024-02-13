@@ -1,0 +1,96 @@
+.header {
+    padding: 16px 24px;
+    width: 100%;
+    background-color: #f0f5ff;
+}
+
+.title_settings :global .ant-btn {
+    display: flex;
+}
+
+.settings_btn {
+    justify-content: space-between;
+    align-items: center;
+    max-width: 130px;
+    width: 100%;
+    padding: 7px 15px;
+}
+
+.button_text {
+    color: black;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 130%;
+}
+
+.title_settings {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.title {
+    font-size: 38px;
+    font-weight: 700;
+    line-height: 130%;
+    max-width: 900px;
+    width: 100%;
+    margin: 0;
+}
+
+.general {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 130%;
+}
+
+@media (max-width: 834px) {
+    .title {
+        font-size: 24px;
+        font-weight: 500;
+        max-width: 617px;
+        letter-spacing: 0px;
+    }
+
+    .title_settings {
+        justify-content: space-between;
+        margin-top: 15px;
+    }
+
+    .settings_btn :global .anticon.anticon-setting {
+        display: none;
+    }
+}
+
+@media (max-width: 360px) {
+    .title {
+        font-size: 20px;
+    }
+
+    .title_settings {
+        position: relative;
+    }
+
+    .settings_btn {
+        position: absolute;
+        top: -12px;
+        width: auto;
+    }
+
+    .settings_btn :global p {
+        display: none;
+    }
+
+    .title_settings {
+        margin-top: 24px;
+    }
+
+    .settings_btn :global .anticon.anticon-setting {
+        display: block;
+        color: #262626;
+        border: 1px solid #d9d9d9;
+        border-radius: 50%;
+        padding: 9px;
+        background-color: #ffffff;
+    }
+}

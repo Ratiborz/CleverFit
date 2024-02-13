@@ -1,0 +1,87 @@
+.sider {
+    padding-top: 47px;
+    height: 100vh;
+    z-index: 10;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.logo {
+    padding-left: 29px;
+    margin-bottom: 67px;
+}
+
+.logo_mini {
+    margin-left: 18px;
+    margin-bottom: 68px;
+}
+
+.button {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    gap: 25px;
+    width: 100%;
+    padding: 7px 0 7px 22px;
+    border: none;
+    border-top: 1px solid #d9d9d9;
+}
+
+.trigger {
+    width: 20px;
+    height: 66px;
+    padding-left: 3px;
+    cursor: pointer;
+    transition: color 0.3s;
+    margin: auto 0;
+    background-image: url(/block-trigger.svg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    &:hover {
+        svg {
+            fill: #1890ff;
+            transition: 0.3s;
+        }
+    }
+    svg {
+        fill: #8c8c8c;
+        transition: 0.3s;
+    }
+}
+
+@media (max-width: 360px) {
+    .sider {
+        position: absolute;
+    }
+
+    .menu {
+        :global li.ant-menu-item.ant-menu-item-only-child {
+            padding: 0 8px !important;
+            overflow: hidden;
+        }
+    }
+
+    .logo {
+        padding-left: 17px;
+        margin-bottom: 31px;
+    }
+
+    .trigger {
+        background-image: url(/mobile-trigger.svg);
+        top: 48px;
+        right: -32px;
+        padding-left: 8px;
+        width: 32px;
+        height: 48px;
+    }
+}
