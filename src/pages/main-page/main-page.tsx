@@ -1,9 +1,9 @@
-import { Header } from '@components/header/header';
-import { Aside } from '@components/sider/sider';
+import { Header } from '@components/main-page/header/header';
+import { Aside } from '@components/main-page/sider/sider';
 import React from 'react';
 
-import { Footer } from '@components/footer/footer';
-import { Main } from '@components/main/main';
+import { Footer } from '@components/main-page/footer/footer';
+import { Main } from '@components/main-page/main/main';
 import { Layout } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import s from './main-page.module.scss';
