@@ -31,7 +31,13 @@ export const Registration: React.FC = () => {
             .then(() => {
                 history.push('/result/success');
             })
-            .catch()
+            .catch((error) => {
+                if (error.response && error.response.status === 409) {
+                    history.push('/result/error-user-exist');
+                } else {
+                    history.push('/result/error');
+                }
+            })
             .finally(() => setLoading(false));
         console.log(values);
     };
