@@ -1,19 +1,18 @@
 import { GooglePlusOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Typography } from 'antd';
+import { Button, Checkbox, Form, Input } from 'antd';
 import { useEffect, useState } from 'react';
-import s from './registration.module.scss';
+import s from './auth.module.scss';
 
-export const Registration: React.FC = () => {
+export const Auth = () => {
     const [isInvalidEmail, setIsInvalidEmail] = useState(false);
     const [isInvalidPassword, setIsInvalidPassword] = useState(true);
-    const [isInvalidConfirm, setIsInvalidConfirm] = useState(false);
 
     const [isFormValid, setIsFormValid] = useState(false);
 
     useEffect(() => {
-        const isValid = isInvalidEmail && isInvalidPassword && isInvalidConfirm;
+        const isValid = isInvalidEmail && isInvalidPassword;
         setIsFormValid(isValid);
-    }, [isInvalidEmail, isInvalidPassword, isInvalidConfirm]);
+    }, [isInvalidEmail, isInvalidPassword]);
 
     return (
         <>
@@ -55,7 +54,6 @@ export const Registration: React.FC = () => {
 
             <Form.Item className={s.password_item}>
                 <Form.Item
-                    style={{ marginBottom: 0 }}
                     name='password'
                     hasFeedback
                     rules={[
@@ -78,49 +76,23 @@ export const Registration: React.FC = () => {
                 >
                     <Input.Password placeholder='Пароль' className={s.password_input} />
                 </Form.Item>
-                <Typography
-                    className={s.password_requirements}
-                    style={{ color: isInvalidPassword ? '#8C8C8C' : 'red' }}
-                >
-                    Пароль не менее 8 символов, с заглавной буквой и цифрой
-                </Typography>
             </Form.Item>
 
-            <Form.Item
-                className={s.confirm_item}
-                name='confirm'
-                dependencies={['password']}
-                hasFeedback
-                rules={[
-                    {
-                        required: true,
-                        message: '',
-                    },
-                    ({ getFieldValue }) => ({
-                        validator(_, value) {
-                            if (!value || getFieldValue('password') === value) {
-                                setIsInvalidConfirm(true);
-                                return Promise.resolve();
-                            }
-                            setIsInvalidConfirm(false);
-                            return Promise.reject(new Error('Пароли не совпадают'));
-                        },
-                    }),
-                ]}
-            >
-                <Input.Password placeholder='Повторите пароль' className={s.confirm_input} />
-            </Form.Item>
-            <Button
-                className={s.sign_in__btn}
-                type='primary'
-                htmlType='submit'
-                disabled={!isFormValid}
-            >
-                Войти
-            </Button>
-            <Button className={s.google__btn} icon={<GooglePlusOutlined />}>
-                Регистрация через Google
-            </Button>
+            <div className={s.support_btn}>
+                <Checkbox className={s.checkbox}>Запомнить меня</Checkbox>
+                <Button type='link' className={s.password__recover} style={{ padding: 0 }}>
+                    Забыли пароль?
+                </Button>
+            </div>
+
+            <div className={s.size__wrapper}>
+                <Button className={s.sign_in__btn} type='primary' htmlType='submit'>
+                    Войти
+                </Button>
+                <Button className={s.google__btn} icon={<GooglePlusOutlined />}>
+                    Войти через Google
+                </Button>
+            </div>
         </>
     );
 };

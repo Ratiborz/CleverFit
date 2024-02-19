@@ -1,4 +1,7 @@
 .container__errors {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-image: url(/Enter_page_light.png);
     background-size: cover;
     background-repeat: no-repeat;

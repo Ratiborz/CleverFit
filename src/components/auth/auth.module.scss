@@ -1,5 +1,6 @@
 .email_item {
     margin-bottom: 32px;
+    width: 368px;
 }
 
 .email_placeholder {
@@ -28,35 +29,60 @@
     padding-left: 81px;
 }
 
+.email_item :global .ant-input-affix-wrapper {
+    padding-left: 81px;
+}
+
 .password_item {
-    margin-bottom: 28px;
+    margin-bottom: 55px;
+    width: 368px;
 }
 
 .password_input {
     height: 40px;
     width: 368px;
-    margin-bottom: 2px;
 }
 
-.password_requirements {
-    font-size: 12px;
-    font-weight: 400;
+.support_btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    max-width: 368px;
+    width: 100%;
+}
+
+.checkbox {
+    font-size: 14px;
     line-height: 130%;
-    color: #8c8c8c;
 }
 
-.confirm_item {
-    margin-bottom: 62px;
+.password__recover {
+    font-size: 16px;
+    line-height: 130%;
+    padding: 0;
 }
 
-.confirm_input {
-    height: 40px;
-    width: 368px;
+.password__recover :global span {
+    font-size: 16px;
+}
+
+.size__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.size__wrapper {
+    :global(.ant-btn) {
+        font-size: 16px;
+        height: 40px;
+    }
 }
 
 .sign_in__btn {
     width: 368px;
-    height: 40px;
+    height: 40px !important;
     padding: 7px 15px 7px 15px;
     box-sizing: border-box;
     border: 1px solid rgb(47, 84, 235);

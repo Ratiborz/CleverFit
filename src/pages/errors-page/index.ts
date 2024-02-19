@@ -1,1 +1,1 @@
-export { Errors } from './errors.tsx';
+export { ErrorsPage } from './errors.tsx';

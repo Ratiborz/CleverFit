@@ -1,8 +1,8 @@
 import { Button, Card, Image, Typography } from 'antd';
 import { NavLink } from 'react-router-dom';
-import s from './error.module.scss';
+import s from './error-user-exist.module.scss';
 
-export const Error = () => {
+export const ErrorUserExist = () => {
     return (
         <Card
             className={s.card}
@@ -20,10 +20,10 @@ export const Error = () => {
             />
             <h3 className={s.card__h3}>Данные не сохранились</h3>
             <Typography className={s.card__descrip}>
-                Что-то пошло не так и ваша регистрация не завершилась. Попробуйте ещё раз.
+                Такой e-mail уже записан в системе. Попробуйте зарегистрироваться по другому e-mail.
             </Typography>
             <Button className={s.card__btn}>
-                <NavLink to={'/auth/registration'}>Повторить</NavLink>
+                <NavLink to={'/auth/registration'}>Назад к регистрации</NavLink>
             </Button>
         </Card>
     );

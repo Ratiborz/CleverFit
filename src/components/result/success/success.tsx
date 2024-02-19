@@ -1,8 +1,8 @@
 import { Button, Card, Image, Typography } from 'antd';
 import { NavLink } from 'react-router-dom';
-import s from './error.module.scss';
+import s from './success.module.scss';
 
-export const Error = () => {
+export const Success = () => {
     return (
         <Card
             className={s.card}
@@ -13,17 +13,17 @@ export const Error = () => {
             }}
         >
             <Image
-                src='/result/cancel-cross.svg'
+                src='/result/Suggested-Icon.svg'
                 className={s.card__img}
                 alt='not-valid'
                 preview={false}
             />
-            <h3 className={s.card__h3}>Данные не сохранились</h3>
+            <h3 className={s.card__h3}>Регистрация успешна</h3>
             <Typography className={s.card__descrip}>
-                Что-то пошло не так и ваша регистрация не завершилась. Попробуйте ещё раз.
+                Регистрация прошла успешно. Зайдите в приложение, используя свои e-mail и пароль.
             </Typography>
             <Button className={s.card__btn}>
-                <NavLink to={'/auth/registration'}>Повторить</NavLink>
+                <NavLink to={'/auth'}>Войти</NavLink>
             </Button>
         </Card>
     );

@@ -1,4 +1,7 @@
 .container__registration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-image: url(/Enter_page_light.png);
     background-size: cover;
     background-repeat: no-repeat;
@@ -16,4 +19,37 @@
     z-index: 0;
     backdrop-filter: blur(4px);
     background-color: rgba(121, 156, 213, 0.5);
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 539px;
+    width: 100%;
+    background-color: #fff;
+    padding: 64px 32px;
+    z-index: 1;
+}
+
+.form__logo {
+    margin-bottom: 48px;
+}
+
+.choice_buttons {
+    display: flex;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.auth_btn,
+.registration_btn {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid rgb(240, 240, 240);
+    width: 184px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 130%;
 }
