@@ -1,18 +1,38 @@
 import { GooglePlusOutlined } from '@ant-design/icons';
+import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
+import { history } from '@redux/configure-store';
+import { actions } from '@redux/reducers/registration.slice';
+import { isUserAuthenticated } from '@utils/storage';
 import { Button, Checkbox, Form, Input } from 'antd';
+import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import s from './auth.module.scss';
 
 export const Auth = () => {
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const [isInvalidEmail, setIsInvalidEmail] = useState(false);
     const [isInvalidPassword, setIsInvalidPassword] = useState(true);
 
     const [isFormValid, setIsFormValid] = useState(false);
 
+    console.log(history.location);
+    useEffect(() => {
+        if (isUserAuthenticated()) {
+            navigate('/main');
+        }
+    }, []);
+
     useEffect(() => {
         const isValid = isInvalidEmail && isInvalidPassword;
         setIsFormValid(isValid);
     }, [isInvalidEmail, isInvalidPassword]);
+
+    const onChange = (e: CheckboxChangeEvent) => {
+        const state = e.target.checked;
+        dispatch(actions.setRemember(state));
+    };
 
     return (
         <>
@@ -79,7 +99,9 @@ export const Auth = () => {
             </Form.Item>
 
             <div className={s.support_btn}>
-                <Checkbox className={s.checkbox}>Запомнить меня</Checkbox>
+                <Checkbox onChange={onChange} className={s.checkbox}>
+                    Запомнить меня
+                </Checkbox>
                 <Button type='link' className={s.password__recover} style={{ padding: 0 }}>
                     Забыли пароль?
                 </Button>

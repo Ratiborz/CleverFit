@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { createBrowserHistory } from 'history';
 import { createReduxHistoryContext } from 'redux-first-history';
-import { reducer as registrationReducer } from './registration/registration.slice';
+import { reducer as registrationReducer } from './reducers/registration.slice';
 
 const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({
     history: createBrowserHistory(),

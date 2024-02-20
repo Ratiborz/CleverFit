@@ -4,13 +4,20 @@ import React from 'react';
 
 import { Footer } from '@components/main-page/footer/footer';
 import { Main } from '@components/main-page/main/main';
+import { isUserAuthenticated } from '@utils/storage';
 import { Layout } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
+import { Navigate } from 'react-router-dom';
 import s from './main-page.module.scss';
 
 const backgroundImage = '/Main_page_light.png';
 
 export const MainPage: React.FC = () => {
+    if (!isUserAuthenticated()) {
+        console.log(isUserAuthenticated());
+        return <Navigate to='/auth' />;
+    }
+
     return (
         <Layout
             className={s.general_wrapper}

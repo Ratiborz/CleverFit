@@ -1,8 +1,10 @@
 import { Loader } from '@components/loader/loader';
+import { useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { storageToken } from '@utils/storage';
 import { Button, Form, Image, Layout } from 'antd';
 import { useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { registrationRequest } from '../../API/registration-request';
+import { authLogin, registrationRequest } from '../../API/registration-request';
 import s from './registration-page.module.scss';
 
 export interface Values {
@@ -13,23 +15,44 @@ export interface Values {
 
 export const RegistrationPage: React.FC = () => {
     const navigate = useNavigate();
+    const rememberMe = useAppSelector((state) => state.registration.rememberMe);
     const [loading, setLoading] = useState(false);
 
     const onFinish = (values: Values) => {
-        setLoading(true);
-        registrationRequest(values)
-            .then(() => {
-                navigate('/result/success');
-            })
-            .catch((error) => {
-                if (error.response && error.response.status === 409) {
-                    navigate('/result/error-user-exist');
-                } else {
-                    navigate('/result/error');
-                }
-            })
-            .finally(() => setLoading(false));
-        console.log(values);
+        const numberOfValues = Object.keys(values).length;
+
+        if (numberOfValues === 3) {
+            setLoading(true);
+            registrationRequest(values)
+                .then(() => {
+                    navigate('/result/success');
+                })
+                .catch((error) => {
+                    if (error.response && error.response.status === 409) {
+                        navigate('/result/error-user-exist');
+                    } else {
+                        navigate('/result/error');
+                    }
+                })
+                .finally(() => setLoading(false));
+            console.log(values);
+        } else {
+            setLoading(true);
+            authLogin(values)
+                .then((response) => {
+                    console.log(response);
+                    storageToken.setItem('isAuthenticated', 'true');
+                    navigate('/main');
+                    if (rememberMe) {
+                        storageToken.setItem('accessToken', response.data.accessToken);
+                        storageToken.setItem('isAuthenticated', 'true');
+                    }
+                })
+                .catch(() => {
+                    navigate('/result/error-login');
+                })
+                .finally(() => setLoading(false));
+        }
     };
 
     return (
