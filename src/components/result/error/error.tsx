@@ -22,7 +22,7 @@ export const Error = () => {
             <Typography className={s.card__descrip}>
                 Что-то пошло не так и ваша регистрация не завершилась. Попробуйте ещё раз.
             </Typography>
-            <Button className={s.card__btn}>
+            <Button className={s.card__btn} data-test-id='registration-retry-button'>
                 <NavLink to={'/auth/registration'}>Повторить</NavLink>
             </Button>
         </Card>

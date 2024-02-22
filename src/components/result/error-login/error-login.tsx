@@ -22,7 +22,7 @@ export const ErrorLogin = () => {
             <Typography className={s.card__descrip}>
                 Что-то пошло не так. Попробуйте еще раз
             </Typography>
-            <Button className={s.card__btn}>
+            <Button className={s.card__btn} data-test-id='login-retry-button'>
                 <NavLink to={'/auth'}>Повторить</NavLink>
             </Button>
         </Card>

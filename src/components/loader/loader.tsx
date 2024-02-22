@@ -6,7 +6,7 @@ export const Loader = () => {
     return (
         <div className={s.backdrop}>
             <div className={s.loader}>
-                <Lottie animationData={animationData} loop={true} />
+                <Lottie animationData={animationData} loop={true} data-test-id='loader' />
             </div>
         </div>
     );

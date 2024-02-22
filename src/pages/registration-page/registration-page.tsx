@@ -1,5 +1,6 @@
 import { Loader } from '@components/loader/loader';
 import { useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { history } from '@redux/configure-store';
 import { storageToken } from '@utils/storage';
 import { Button, Form, Image, Layout } from 'antd';
 import { useState } from 'react';
@@ -11,6 +12,7 @@ export interface Values {
     email: string;
     password: string;
     confirm: string;
+    code: string;
 }
 
 export const RegistrationPage: React.FC = () => {
@@ -25,13 +27,13 @@ export const RegistrationPage: React.FC = () => {
             setLoading(true);
             registrationRequest(values)
                 .then(() => {
-                    navigate('/result/success');
+                    history.push('/result/success', { fromRequest: true });
                 })
                 .catch((error) => {
                     if (error.response && error.response.status === 409) {
-                        navigate('/result/error-user-exist');
+                        history.push('/result/error-user-exist', { fromRequest: true });
                     } else {
-                        navigate('/result/error');
+                        history.push('/result/error', { fromRequest: true });
                     }
                 })
                 .finally(() => setLoading(false));
@@ -42,18 +44,29 @@ export const RegistrationPage: React.FC = () => {
                 .then((response) => {
                     console.log(response);
                     storageToken.setItem('isAuthenticated', 'true');
-                    navigate('/main');
+                    history.push('/main');
                     if (rememberMe) {
                         storageToken.setItem('accessToken', response.data.accessToken);
                         storageToken.setItem('isAuthenticated', 'true');
                     }
                 })
                 .catch(() => {
-                    navigate('/result/error-login');
+                    history.push('/result/error-login', { fromRequest: true });
                 })
                 .finally(() => setLoading(false));
         }
     };
+
+    const isConfirmEmailPath = location.pathname.includes('/confirm-email');
+
+    if (isConfirmEmailPath) {
+        return (
+            <Layout className={s.container__registration}>
+                {loading && <Loader />}
+                <Outlet />
+            </Layout>
+        );
+    }
 
     return (
         <Layout className={s.container__registration}>

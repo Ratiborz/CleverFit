@@ -22,7 +22,7 @@ export const Success = () => {
             <Typography className={s.card__descrip}>
                 Регистрация прошла успешно. Зайдите в приложение, используя свои e-mail и пароль.
             </Typography>
-            <Button className={s.card__btn}>
+            <Button className={s.card__btn} data-test-id='registration-enter-button'>
                 <NavLink to={'/auth'}>Войти</NavLink>
             </Button>
         </Card>
