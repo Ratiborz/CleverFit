@@ -10,18 +10,18 @@ import s from './confirm-email.module.scss';
 export const ConfirmEmail = () => {
     const [loading, setLoading] = useState(false);
     const [isValidConfirm, setIsValidConfirm] = useState(true);
+    const [codeValue, setCodeValue] = useState();
     const emailValue = useAppSelector((state) => state.registration.email);
 
     const confirmCode = (code: string) => {
         setLoading(true);
         confirmEmail(emailValue, code)
             .then((response) => {
-                console.log(response);
-                console.log(emailValue, code);
                 history.push('/auth/change-password', { forgotPass: true });
             })
             .catch((error) => {
                 setIsValidConfirm(false);
+                setCodeValue('');
             })
             .finally(() => setLoading(false));
     };
@@ -61,8 +61,9 @@ export const ConfirmEmail = () => {
                         autoFocus={false}
                         placeholder={''}
                         validChars={'0-9'}
+                        value={codeValue}
                         onComplete={(code) => confirmCode(code)}
-                        data-test-id='verification-input'
+                        inputProps={{ 'data-test-id': 'verification-input' }}
                         classNames={{
                             container: s.container,
                             character: s.character,

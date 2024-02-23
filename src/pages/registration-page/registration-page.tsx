@@ -1,9 +1,10 @@
 import { Loader } from '@components/loader/loader';
-import { useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { history } from '@redux/configure-store';
+import { actions } from '@redux/reducers/repeatRequests.slice';
 import { storageToken } from '@utils/storage';
 import { Button, Form, Image, Layout } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { authLogin, registrationRequest } from '../../API/registration-request';
 import s from './registration-page.module.scss';
@@ -16,9 +17,29 @@ export interface Values {
 }
 
 export const RegistrationPage: React.FC = () => {
+    const dispatch = useAppDispatch();
+    const repeatRequestData = useAppSelector((state) => state.repeatRequests);
     const navigate = useNavigate();
     const rememberMe = useAppSelector((state) => state.registration.rememberMe);
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        if (repeatRequestData.email && repeatRequestData.password) {
+            setLoading(true);
+            registrationRequest(repeatRequestData)
+                .then(() => {
+                    history.push('/result/success', { fromRequest: true });
+                })
+                .catch((error) => {
+                    if (error.response && error.response.status === 409) {
+                        history.push('/result/error-user-exist', { fromRequest: true });
+                    } else {
+                        history.push('/result/error', { fromRequest: true });
+                    }
+                })
+                .finally(() => setLoading(false));
+        }
+    }, [repeatRequestData]);
 
     const onFinish = (values: Values) => {
         const numberOfValues = Object.keys(values).length;
@@ -33,16 +54,15 @@ export const RegistrationPage: React.FC = () => {
                     if (error.response && error.response.status === 409) {
                         history.push('/result/error-user-exist', { fromRequest: true });
                     } else {
+                        dispatch(actions.setDataRequest(values));
                         history.push('/result/error', { fromRequest: true });
                     }
                 })
                 .finally(() => setLoading(false));
-            console.log(values);
         } else {
             setLoading(true);
             authLogin(values)
                 .then((response) => {
-                    console.log(response);
                     storageToken.setItem('isAuthenticated', 'true');
                     history.push('/main');
                     if (rememberMe) {
@@ -56,17 +76,6 @@ export const RegistrationPage: React.FC = () => {
                 .finally(() => setLoading(false));
         }
     };
-
-    const isConfirmEmailPath = location.pathname.includes('/confirm-email');
-
-    if (isConfirmEmailPath) {
-        return (
-            <Layout className={s.container__registration}>
-                {loading && <Loader />}
-                <Outlet />
-            </Layout>
-        );
-    }
 
     return (
         <Layout className={s.container__registration}>

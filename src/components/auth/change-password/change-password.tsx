@@ -1,26 +1,47 @@
 import { Loader } from '@components/loader/loader';
+import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { history } from '@redux/configure-store';
+import { actions } from '@redux/reducers/repeatRequests.slice';
 import { Button, Form, Input, Typography } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { changePassword } from '../../../API/registration-request';
 import { confirmPassword } from '../../../types/value-request';
 import s from './change-password.module.scss';
 
 export const ChangePassword = () => {
+    const dispatch = useAppDispatch();
+    const newDataPass = useAppSelector((state) => state.repeatRequests);
     const [isInvalidPassword, setIsInvalidPassword] = useState(true);
     const [isInvalidConfirm, setIsInvalidConfirm] = useState(false);
     const [loading, setLoading] = useState(false);
 
+    useEffect(() => {
+        const values = {
+            password: newDataPass.newPassword,
+            confirm: newDataPass.newPasswordConfirm,
+        };
+
+        if (newDataPass.newPassword && newDataPass.newPasswordConfirm) {
+            setLoading(true);
+            changePassword(values)
+                .then(() => {
+                    history.push('/result/success-change-password', { fromRequest: true });
+                })
+                .catch(() => {
+                    history.push('/result/error-change-password', { fromRequest: true });
+                })
+                .finally(() => setLoading(false));
+        }
+    }, []);
+
     const onFinish = (values: confirmPassword) => {
         setLoading(true);
-        console.log(values);
         changePassword(values)
-            .then((response) => {
-                console.log(response);
+            .then(() => {
                 history.push('/result/success-change-password', { fromRequest: true });
             })
-            .catch((error) => {
-                console.log(error.response);
+            .catch(() => {
+                dispatch(actions.setNewPassword(values));
                 history.push('/result/error-change-password', { fromRequest: true });
             })
             .finally(() => setLoading(false));

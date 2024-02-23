@@ -3,6 +3,7 @@ import { Loader } from '@components/loader/loader';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { history } from '@redux/configure-store';
 import { actions } from '@redux/reducers/registration.slice';
+import { actions as repeatRequestsActions } from '@redux/reducers/repeatRequests.slice';
 import { isUserAuthenticated } from '@utils/storage';
 import { Button, Checkbox, Form, Input } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
@@ -12,10 +13,11 @@ import s from './auth.module.scss';
 
 export const Auth = () => {
     const dispatch = useAppDispatch();
+    const emaildata = useAppSelector((state) => state.repeatRequests.emailCheck);
     const emailValue = useAppSelector((state) => state.registration.email);
-    const [isInvalidEmail, setIsInvalidEmail] = useState(true);
-    const [isInvalidPassword, setIsInvalidPassword] = useState(true);
     const [loading, setLoading] = useState(false);
+    const [validEmail, setValidEmail] = useState(false);
+    const [isInvalidEmail, setIsInvalidEmail] = useState(false);
 
     useEffect(() => {
         if (isUserAuthenticated()) {
@@ -23,25 +25,50 @@ export const Auth = () => {
         }
     }, []);
 
+    useEffect(() => {
+        if (emaildata) {
+            setLoading(true);
+            checkEmail(emaildata)
+                .then(() => {
+                    history.push('/auth/confirm-email', { forgotPass: true });
+                })
+                .catch((error) => {
+                    if (
+                        error.response.data.message === 'Email не найден' &&
+                        error.response.status === 404
+                    ) {
+                        history.push('/result/error-check-email-no-exist', { fromRequest: true });
+                    } else {
+                        history.push('/result/error-check-email', { fromRequest: true });
+                    }
+                })
+                .finally(() => setLoading(false));
+        }
+    }, []);
+
     const forgotPassword = () => {
-        setLoading(true);
-        checkEmail(emailValue)
-            .then((response) => {
-                console.log(response);
-                history.push('/auth/confirm-email', { forgotPass: true });
-            })
-            .catch((error) => {
-                console.log(error.response);
-                if (
-                    error.response.data.message === 'Email не найден' &&
-                    error.response.status === 404
-                ) {
-                    history.push('/result/error-check-email-no-exist', { fromRequest: true });
-                } else {
-                    history.push('/result/error-check-email', { fromRequest: true });
-                }
-            })
-            .finally(() => setLoading(false));
+        console.log(isInvalidEmail);
+        if (validEmail) {
+            setLoading(true);
+            checkEmail(emailValue)
+                .then(() => {
+                    history.push('/auth/confirm-email', { forgotPass: true });
+                })
+                .catch((error) => {
+                    if (
+                        error.response.data.message === 'Email не найден' &&
+                        error.response.status === 404
+                    ) {
+                        history.push('/result/error-check-email-no-exist', { fromRequest: true });
+                    } else {
+                        dispatch(repeatRequestsActions.setDataRequest(emailValue));
+                        history.push('/result/error-check-email', { fromRequest: true });
+                    }
+                })
+                .finally(() => setLoading(false));
+        } else {
+            setIsInvalidEmail(true);
+        }
     };
 
     const onChange = (e: CheckboxChangeEvent) => {
@@ -66,11 +93,15 @@ export const Auth = () => {
                                     /^(?=.{1,64}@)(?=.{1,255}$)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
                                 if (emailRegex.test(value)) {
-                                    setIsInvalidEmail(true);
+                                    setIsInvalidEmail(false);
+                                    setValidEmail(true);
+                                    console.log(isInvalidEmail);
                                     dispatch(actions.setEmail(value));
                                     return Promise.resolve();
                                 } else {
-                                    setIsInvalidEmail(false);
+                                    setIsInvalidEmail(true);
+                                    setValidEmail(false);
+                                    console.log(isInvalidEmail);
                                     return Promise.reject();
                                 }
                             },
@@ -97,10 +128,8 @@ export const Auth = () => {
                         () => ({
                             validator(_, value) {
                                 if (value?.length >= 8 && /[A-Z]/.test(value) && /\d/.test(value)) {
-                                    setIsInvalidPassword(true);
                                     return Promise.resolve();
                                 }
-                                setIsInvalidPassword(false);
                                 return Promise.reject();
                             },
                         }),
@@ -127,7 +156,7 @@ export const Auth = () => {
                     type='link'
                     data-test-id='login-forgot-button'
                     className={s.password__recover}
-                    disabled={isInvalidEmail ? false : true}
+                    disabled={isInvalidEmail}
                     onClick={() => forgotPassword()}
                     style={{ padding: 0 }}
                 >

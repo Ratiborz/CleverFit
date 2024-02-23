@@ -3,7 +3,12 @@ import { AxiosResponse } from 'axios';
 import { confirmPassword } from '../types/value-request';
 import { http, httpClient } from './axios-config';
 
-export const registrationRequest = async (values: Values): Promise<AxiosResponse> => {
+interface RegistrValue {
+    email: string;
+    password: string;
+}
+
+export const registrationRequest = async (values: RegistrValue): Promise<AxiosResponse> => {
     return httpClient.post('/auth/registration', {
         email: values.email,
         password: values.password,
