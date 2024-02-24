@@ -13,7 +13,6 @@ import s from './auth.module.scss';
 
 export const Auth = () => {
     const dispatch = useAppDispatch();
-    const emaildata = useAppSelector((state) => state.repeatRequests.emailCheck);
     const emailValue = useAppSelector((state) => state.registration.email);
     const [loading, setLoading] = useState(false);
     const [validEmail, setValidEmail] = useState(false);
@@ -25,33 +24,12 @@ export const Auth = () => {
         }
     }, []);
 
-    useEffect(() => {
-        if (emaildata) {
-            setLoading(true);
-            checkEmail(emaildata)
-                .then(() => {
-                    history.push('/auth/confirm-email', { forgotPass: true });
-                })
-                .catch((error) => {
-                    if (
-                        error.response.data.message === 'Email не найден' &&
-                        error.response.status === 404
-                    ) {
-                        history.push('/result/error-check-email-no-exist', { fromRequest: true });
-                    } else {
-                        history.push('/result/error-check-email', { fromRequest: true });
-                    }
-                })
-                .finally(() => setLoading(false));
-        }
-    }, []);
-
     const forgotPassword = () => {
-        console.log(isInvalidEmail);
         if (validEmail) {
             setLoading(true);
             checkEmail(emailValue)
                 .then(() => {
+                    dispatch(actions.setLoading(true));
                     history.push('/auth/confirm-email', { forgotPass: true });
                 })
                 .catch((error) => {
@@ -65,7 +43,10 @@ export const Auth = () => {
                         history.push('/result/error-check-email', { fromRequest: true });
                     }
                 })
-                .finally(() => setLoading(false));
+                .finally(() => {
+                    setLoading(false);
+                    dispatch(actions.setLoading(false));
+                });
         } else {
             setIsInvalidEmail(true);
         }

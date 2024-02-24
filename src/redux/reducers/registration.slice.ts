@@ -3,11 +3,13 @@ import { createSlice } from '@reduxjs/toolkit';
 interface requestState {
     rememberMe: boolean;
     email: string;
+    loading: boolean;
 }
 
 const initialState: requestState = {
     rememberMe: false,
     email: '',
+    loading: false,
 };
 
 export const registrationSlice = createSlice({
@@ -20,6 +22,9 @@ export const registrationSlice = createSlice({
         },
         setEmail: (state, action) => {
             state.email = action.payload;
+        },
+        setLoading: (state, action) => {
+            state.loading = action.payload;
         },
     },
 });

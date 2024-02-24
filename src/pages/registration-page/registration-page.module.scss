@@ -37,19 +37,27 @@
 }
 
 .choice_buttons {
-    display: flex;
-    align-items: center;
-    margin-bottom: 32px;
+    margin-bottom: 8px;
+    max-width: 368px;
+    width: 100%;
 }
 
-.auth_btn,
-.registration_btn {
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-bottom: 1px solid rgb(240, 240, 240);
-    width: 184px;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 130%;
+.tabs {
+    width: 100%;
+
+    :global {
+        .ant-tabs-nav {
+            .ant-tabs-nav-wrap {
+                .ant-tabs-nav-list {
+                    width: 100%;
+                    .ant-tabs-tab {
+                        width: 50%;
+                        justify-content: center;
+                        margin: 0;
+                        padding: 12px 0;
+                    }
+                }
+            }
+        }
+    }
 }

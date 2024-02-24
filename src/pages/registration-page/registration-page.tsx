@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { history } from '@redux/configure-store';
 import { actions } from '@redux/reducers/repeatRequests.slice';
 import { storageToken } from '@utils/storage';
-import { Button, Form, Image, Layout } from 'antd';
+import { Form, Image, Layout, Tabs } from 'antd';
 import { useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { authLogin, registrationRequest } from '../../API/registration-request';
@@ -17,9 +17,9 @@ export interface Values {
 }
 
 export const RegistrationPage: React.FC = () => {
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const repeatRequestData = useAppSelector((state) => state.repeatRequests);
-    const navigate = useNavigate();
     const rememberMe = useAppSelector((state) => state.registration.rememberMe);
     const [loading, setLoading] = useState(false);
 
@@ -77,6 +77,10 @@ export const RegistrationPage: React.FC = () => {
         }
     };
 
+    const onChange = (key: string) => {
+        // console.log(key);
+    };
+
     return (
         <Layout className={s.container__registration}>
             {loading && <Loader />}
@@ -98,12 +102,36 @@ export const RegistrationPage: React.FC = () => {
                 />
 
                 <div className={s.choice_buttons}>
-                    <Button className={s.auth_btn} onClick={() => navigate('/auth')}>
+                    <Tabs
+                        defaultActiveKey='1'
+                        centered
+                        size='large'
+                        onChange={onChange}
+                        className={s.tabs}
+                        onTabClick={(key) => {
+                            console.log(key);
+                            if (key === '1') {
+                                navigate('/auth');
+                            }
+                            navigate('registration');
+                        }}
+                        items={[
+                            {
+                                label: `Вход`,
+                                key: '1',
+                            },
+                            {
+                                label: `Регистрация`,
+                                key: '2',
+                            },
+                        ]}
+                    />
+                    {/* <Button className={s.auth_btn} onClick={() => navigate('/auth')}>
                         Вход
                     </Button>
                     <Button className={s.registration_btn} onClick={() => navigate('registration')}>
                         Регистрация
-                    </Button>
+                    </Button> */}
                 </div>
 
                 <Outlet />
