@@ -52,3 +52,21 @@
 .containerInactive .character {
     border-color: red;
 }
+
+@media (max-width: 360px) {
+    .card__confirm_email {
+        max-width: 328px;
+    }
+    .card__confirm_email :global .ant-card-body {
+        padding: 32px 16px;
+    }
+
+    .card__support_descr {
+        text-align: center;
+        max-width: 255px;
+    }
+
+    .container {
+        margin-bottom: 6px;
+    }
+}

@@ -5,8 +5,8 @@ import { actions } from '@redux/reducers/repeatRequests.slice';
 import { storageToken } from '@utils/storage';
 import { Form, Image, Layout, Tabs } from 'antd';
 import { useEffect, useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
-import { authLogin, registrationRequest } from '../../API/registration-request';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { authLogin, registrationRequest } from '../../api/requests';
 import s from './registration-page.module.scss';
 
 export interface Values {
@@ -17,11 +17,14 @@ export interface Values {
 }
 
 export const RegistrationPage: React.FC = () => {
+    const location = useLocation();
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const repeatRequestData = useAppSelector((state) => state.repeatRequests);
     const rememberMe = useAppSelector((state) => state.registration.rememberMe);
     const [loading, setLoading] = useState(false);
+
+    const activeTabKey = location.pathname === '/auth' ? '1' : '2';
 
     useEffect(() => {
         if (repeatRequestData.email && repeatRequestData.password) {
@@ -77,10 +80,6 @@ export const RegistrationPage: React.FC = () => {
         }
     };
 
-    const onChange = (key: string) => {
-        // console.log(key);
-    };
-
     return (
         <Layout className={s.container__registration}>
             {loading && <Loader />}
@@ -93,27 +92,17 @@ export const RegistrationPage: React.FC = () => {
                 }}
                 scrollToFirstError
             >
-                <Image
-                    src='/logo_auth.svg'
-                    className={s.form__logo}
-                    alt='logo'
-                    width={309}
-                    preview={false}
-                />
+                <Image src='/logo_auth.svg' className={s.form__logo} alt='logo' preview={false} />
 
                 <div className={s.choice_buttons}>
                     <Tabs
-                        defaultActiveKey='1'
+                        defaultActiveKey={activeTabKey}
                         centered
-                        size='large'
-                        onChange={onChange}
                         className={s.tabs}
                         onTabClick={(key) => {
-                            console.log(key);
-                            if (key === '1') {
-                                navigate('/auth');
-                            }
-                            navigate('registration');
+                            if (key === '1') navigate('/auth');
+
+                            if (key === '2') navigate('registration');
                         }}
                         items={[
                             {
@@ -126,12 +115,6 @@ export const RegistrationPage: React.FC = () => {
                             },
                         ]}
                     />
-                    {/* <Button className={s.auth_btn} onClick={() => navigate('/auth')}>
-                        Вход
-                    </Button>
-                    <Button className={s.registration_btn} onClick={() => navigate('registration')}>
-                        Регистрация
-                    </Button> */}
                 </div>
 
                 <Outlet />

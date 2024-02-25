@@ -4,7 +4,7 @@ import { history } from '@redux/configure-store';
 import { Button, Card, Image, Typography } from 'antd';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { checkEmail } from '../../../API/registration-request';
+import { checkEmail } from '../../../api/requests';
 import s from './error-check-email.module.scss';
 
 export const ErrorCheckEmail = () => {

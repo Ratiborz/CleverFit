@@ -8,7 +8,7 @@ import { isUserAuthenticated } from '@utils/storage';
 import { Button, Checkbox, Form, Input } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { useEffect, useState } from 'react';
-import { checkEmail } from '../../../API/registration-request';
+import { checkEmail } from '../../../api/requests';
 import s from './auth.module.scss';
 
 export const Auth = () => {

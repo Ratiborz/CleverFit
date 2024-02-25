@@ -4,7 +4,7 @@ import { history } from '@redux/configure-store';
 import { Card, Image, Typography } from 'antd';
 import { useState } from 'react';
 import VerificationInput from 'react-verification-input';
-import { confirmEmail } from '../../../API/registration-request';
+import { confirmEmail } from '../../../api/requests';
 import s from './confirm-email.module.scss';
 
 export const ConfirmEmail = () => {
@@ -76,7 +76,9 @@ export const ConfirmEmail = () => {
                         }}
                     />
                 </div>
-                <Typography>Не пришло письмо? Проверьте папку Спам.</Typography>
+                <Typography className={s.card__support_descr}>
+                    Не пришло письмо? Проверьте папку Спам.
+                </Typography>
             </Card>
         </>
     );

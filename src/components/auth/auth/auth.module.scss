@@ -25,7 +25,6 @@
 
 .email_input {
     height: 40px;
-    width: 368px;
     padding-left: 81px;
 }
 
@@ -35,12 +34,12 @@
 
 .password_item {
     margin-bottom: 55px;
-    width: 368px;
+    max-width: 368px;
+    width: 100%;
 }
 
 .password_input {
     height: 40px;
-    width: 368px;
 }
 
 .support_btn {
@@ -107,4 +106,29 @@
     font-size: 16px;
     font-weight: 400;
     line-height: 130%;
+}
+
+@media (max-width: 360px) {
+    .email_item {
+        max-width: 296px;
+    }
+
+    .password_item {
+        max-width: 296px;
+    }
+
+    .sign_in__btn,
+    .google__btn {
+        max-width: 296px;
+    }
+
+    .size__wrapper {
+        :global(.ant-btn) {
+            font-size: 14px;
+        }
+    }
+
+    .password__recover :global span {
+        font-size: 14px;
+    }
 }

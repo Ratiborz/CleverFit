@@ -4,7 +4,7 @@ import { history } from '@redux/configure-store';
 import { actions } from '@redux/reducers/repeatRequests.slice';
 import { Button, Form, Input, Typography } from 'antd';
 import { useEffect, useState } from 'react';
-import { changePassword } from '../../../API/registration-request';
+import { changePassword } from '../../../api/requests';
 import { confirmPassword } from '../../../types/value-request';
 import s from './change-password.module.scss';
 
@@ -115,10 +115,10 @@ export const ChangePassword = () => {
                         ({ getFieldValue }) => ({
                             validator(_, value) {
                                 if (!value || getFieldValue('password') === value) {
-                                    setIsInvalidConfirm(true);
+                                    setIsInvalidConfirm(false);
                                     return Promise.resolve();
                                 }
-                                setIsInvalidConfirm(false);
+                                setIsInvalidConfirm(true);
                                 return Promise.reject(new Error('Пароли не совпадают'));
                             },
                         }),
@@ -134,6 +134,7 @@ export const ChangePassword = () => {
                     className={s.sign_in__btn}
                     type='primary'
                     htmlType='submit'
+                    disabled={isInvalidConfirm}
                     data-test-id='change-submit-button'
                 >
                     Сохранить
