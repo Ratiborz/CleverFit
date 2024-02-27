@@ -5,7 +5,7 @@ import { Card, Image, Typography } from 'antd';
 import { useState } from 'react';
 import VerificationInput from 'react-verification-input';
 import { confirmEmail } from '../../../api/requests';
-import s from './confirm-email.module.scss';
+import s from './confirmEmail.module.scss';
 
 export const ConfirmEmail = () => {
     const [loading, setLoading] = useState(false);

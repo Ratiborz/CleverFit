@@ -1,6 +1,6 @@
 import { Auth } from '@components/auth/auth/auth';
-import { ChangePassword } from '@components/auth/change-password/change-password';
-import { ConfirmEmail } from '@components/auth/confirm-email/confirm-email';
+import { ChangePassword } from '@components/auth/change-password/changePassword';
+import { ConfirmEmail } from '@components/auth/confirm-email/confirmEmail';
 import { EmailNoExist } from '@components/result/email-no-exist/email-no-exist';
 import { ErrorСhangePassword } from '@components/result/error-change-password/error-change-password';
 import { ErrorCheckEmail } from '@components/result/error-check-email/error-check-email';

@@ -10,7 +10,7 @@ import { isUserAuthenticated } from '@utils/storage';
 import { Layout } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import { Navigate } from 'react-router-dom';
-import s from './main-page.module.scss';
+import s from './mainPage.module.scss';
 
 const backgroundImage = '/Main_page_light.png';
 

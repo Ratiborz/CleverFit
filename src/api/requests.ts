@@ -1,6 +1,6 @@
-import { Values } from '@pages/registration-page/registration-page';
+import { Values } from '@pages/registration-page/registrationPage';
 import { AxiosResponse } from 'axios';
-import { RegistrValue, confirmPassword } from '../types/value-request';
+import { RegistrValue, confirmPassword } from '../types/valueRequest';
 import { http, httpClient } from './axiosConfig';
 
 export const registrationRequest = async (values: RegistrValue): Promise<AxiosResponse> => {

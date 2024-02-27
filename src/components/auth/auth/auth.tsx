@@ -76,13 +76,11 @@ export const Auth = () => {
                                 if (emailRegex.test(value)) {
                                     setIsInvalidEmail(false);
                                     setValidEmail(true);
-                                    console.log(isInvalidEmail);
                                     dispatch(actions.setEmail(value));
                                     return Promise.resolve();
                                 } else {
                                     setIsInvalidEmail(true);
                                     setValidEmail(false);
-                                    console.log(isInvalidEmail);
                                     return Promise.reject();
                                 }
                             },

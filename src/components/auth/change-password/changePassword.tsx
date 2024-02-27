@@ -5,8 +5,8 @@ import { actions } from '@redux/reducers/repeatRequests.slice';
 import { Button, Form, Input, Typography } from 'antd';
 import { useEffect, useState } from 'react';
 import { changePassword } from '../../../api/requests';
-import { confirmPassword } from '../../../types/value-request';
-import s from './change-password.module.scss';
+import { confirmPassword } from '../../../types/valueRequest';
+import s from './changePassword.module.scss';
 
 export const ChangePassword = () => {
     const dispatch = useAppDispatch();

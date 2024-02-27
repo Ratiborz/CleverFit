@@ -7,7 +7,7 @@ import { Form, Image, Layout, Tabs } from 'antd';
 import { useEffect, useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { authLogin, registrationRequest } from '../../api/requests';
-import s from './registration-page.module.scss';
+import s from './registrationPage.module.scss';
 
 export interface Values {
     email: string;
