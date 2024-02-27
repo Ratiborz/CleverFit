@@ -6,19 +6,18 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { checkEmail } from '../../../api/requests';
 import s from './error-check-email.module.scss';
+import { emaildataSelector } from '@constants/selectors/selectors';
 
 export const ErrorCheckEmail = () => {
-    const emaildata = useAppSelector((state) => state.repeatRequests.emailCheck);
+    const emaildata = useAppSelector(emaildataSelector);
     const [loading, setLoading] = useState(false);
 
     const checkData = () => {
         if (emaildata) {
-            console.log(emaildata);
             setLoading(true);
             checkEmail(emaildata)
                 .then(() => {
                     history.push('/auth/confirm-email', { forgotPass: true });
-                    console.log('redirect это я');
                 })
                 .catch((error) => {
                     if (

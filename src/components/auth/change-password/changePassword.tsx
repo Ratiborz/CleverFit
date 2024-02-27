@@ -7,10 +7,11 @@ import { useEffect, useState } from 'react';
 import { changePassword } from '../../../api/requests';
 import { confirmPassword } from '../../../types/valueRequest';
 import s from './changePassword.module.scss';
+import { newDataPassSelector } from '@constants/selectors/selectors';
 
 export const ChangePassword = () => {
     const dispatch = useAppDispatch();
-    const newDataPass = useAppSelector((state) => state.repeatRequests);
+    const newDataPass = useAppSelector(newDataPassSelector);
     const [isInvalidPassword, setIsInvalidPassword] = useState(true);
     const [isInvalidConfirm, setIsInvalidConfirm] = useState(false);
     const [loading, setLoading] = useState(false);

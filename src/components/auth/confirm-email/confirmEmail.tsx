@@ -6,11 +6,12 @@ import { useState } from 'react';
 import VerificationInput from 'react-verification-input';
 import { confirmEmail } from '../../../api/requests';
 import s from './confirmEmail.module.scss';
+import { emailValueRegistration } from '@constants/selectors/selectors';
 
 export const ConfirmEmail = () => {
     const [loading, setLoading] = useState(false);
     const [isValidConfirm, setIsValidConfirm] = useState(true);
-    const emailValue = useAppSelector((state) => state.registration.email);
+    const emailValue = useAppSelector(emailValueRegistration);
     const [value, setValue] = useState<string>('');
 
     const confirmCode = (code: string) => {

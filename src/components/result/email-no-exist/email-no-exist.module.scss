@@ -8,13 +8,13 @@
 
 .card :global .ant-btn.ant-btn-default {
     height: 40px;
-    padding: 7px 15px 7px 15px;
+    padding: 7px 15px;
     border: 1px solid rgb(47, 84, 235);
     background-color: rgb(47, 84, 235);
     color: #fff;
     width: 167px;
     border-radius: 2px;
-    box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
     font-size: 14px;
     font-weight: 400;
     line-height: 130%;

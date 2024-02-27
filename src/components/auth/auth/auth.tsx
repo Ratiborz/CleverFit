@@ -10,10 +10,11 @@ import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { useEffect, useState } from 'react';
 import { checkEmail } from '../../../api/requests';
 import s from './auth.module.scss';
+import { emailValueSelector } from '@constants/selectors/selectors';
 
 export const Auth = () => {
     const dispatch = useAppDispatch();
-    const emailValue = useAppSelector((state) => state.registration.email);
+    const emailValue = useAppSelector(emailValueSelector);
     const [loading, setLoading] = useState(false);
     const [validEmail, setValidEmail] = useState(false);
     const [isInvalidEmail, setIsInvalidEmail] = useState(false);

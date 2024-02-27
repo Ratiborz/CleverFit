@@ -9,7 +9,7 @@
     position: relative;
 }
 
-.container__errors::before {
+.container__errors:before {
     content: '';
     position: absolute;
     top: 0;

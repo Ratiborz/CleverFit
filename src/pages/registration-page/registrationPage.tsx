@@ -8,20 +8,16 @@ import { useEffect, useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { authLogin, registrationRequest } from '../../api/requests';
 import s from './registrationPage.module.scss';
-
-export interface Values {
-    email: string;
-    password: string;
-    confirm: string;
-    code: string;
-}
+import { Values } from '../../types/valueRequest';
+import { Paths } from '@constants/paths';
+import { rememberMeSelector, repeatRequestsSelector } from '@constants/selectors/selectors';
 
 export const RegistrationPage: React.FC = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const repeatRequestData = useAppSelector((state) => state.repeatRequests);
-    const rememberMe = useAppSelector((state) => state.registration.rememberMe);
+    const repeatRequestData = useAppSelector(repeatRequestsSelector);
+    const rememberMe = useAppSelector(rememberMeSelector);
     const [loading, setLoading] = useState(false);
 
     const activeTabKey = location.pathname === '/auth' ? '1' : '2';
@@ -67,7 +63,7 @@ export const RegistrationPage: React.FC = () => {
             authLogin(values)
                 .then((response) => {
                     storageToken.setItem('isAuthenticated', 'true');
-                    history.push('/main');
+                    history.push(`${Paths.MAIN}`);
                     if (rememberMe) {
                         storageToken.setItem('accessToken', response.data.accessToken);
                         storageToken.setItem('isAuthenticated', 'true');
