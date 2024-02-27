@@ -30,7 +30,7 @@ export const Footer = () => {
                     >
                         Android OS
                     </Button>
-                    
+
                     <Button
                         style={{ color: '#000000D9', padding: 0 }}
                         type='link'

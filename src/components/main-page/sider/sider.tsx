@@ -6,6 +6,7 @@ import {
     MenuUnfoldOutlined,
     TrophyFilled,
 } from '@ant-design/icons';
+import { history } from '@redux/configure-store';
 import type { MenuProps } from 'antd';
 import { Button, Image, Layout, Menu } from 'antd';
 import 'antd/dist/antd.css';
@@ -34,11 +35,20 @@ export const Aside: React.FC = () => {
     const [mobileWidth, setMobileWidth] = useState(false);
 
     const items: MenuItem[] = [
-        getItem('Календарь',  '1',  mobileWidth ? '' : <CalendarTwoTone twoToneColor='#10239E' />),
-        getItem('Тренировки', '2',  mobileWidth ? '' : <HeartFilled style={{ color: '#10239E' }} />),
-        getItem('Достижения', '3',  mobileWidth ? '' : <TrophyFilled style={{ color: '#10239E' }} />,),
-        getItem('Профиль',    '4',  mobileWidth ? '' : <IdcardOutlined style={{ color: '#10239E' }} />),
+        getItem('Календарь', '1', mobileWidth ? '' : <CalendarTwoTone twoToneColor='#10239E' />),
+        getItem('Тренировки', '2', mobileWidth ? '' : <HeartFilled style={{ color: '#10239E' }} />),
+        getItem(
+            'Достижения',
+            '3',
+            mobileWidth ? '' : <TrophyFilled style={{ color: '#10239E' }} />,
+        ),
+        getItem('Профиль', '4', mobileWidth ? '' : <IdcardOutlined style={{ color: '#10239E' }} />),
     ];
+
+    const exitFromAccount = () => {
+        localStorage.clear();
+        history.push('/auth');
+    };
 
     return (
         <Sider
@@ -92,6 +102,7 @@ export const Aside: React.FC = () => {
 
                 <Button
                     className={s.button}
+                    onClick={() => exitFromAccount()}
                     icon={
                         mobileWidth ? (
                             ''
