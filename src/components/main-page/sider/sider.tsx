@@ -47,6 +47,7 @@ export const Aside: React.FC = () => {
 
     const exitFromAccount = () => {
         localStorage.clear();
+        sessionStorage.clear();
         history.push('/auth');
     };
 
