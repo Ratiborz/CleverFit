@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { history } from '@redux/configure-store';
 import { actions } from '@redux/reducers/registration.slice';
 import { actions as repeatRequestsActions } from '@redux/reducers/repeatRequests.slice';
-import { isUserAuthenticated } from '@utils/storage';
+import { isUserAuthSession, isUserAuthLocal } from '@utils/storage';
 import { Button, Checkbox, Form, Input } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { useEffect, useState } from 'react';
@@ -20,7 +20,7 @@ export const Auth = () => {
     const [isInvalidEmail, setIsInvalidEmail] = useState(false);
 
     useEffect(() => {
-        if (isUserAuthenticated()) {
+        if (isUserAuthLocal() || isUserAuthSession()) {
             history.push('/main');
         }
     }, []);

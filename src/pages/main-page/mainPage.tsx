@@ -5,20 +5,21 @@ import React from 'react';
 import { Footer } from '@components/main-page/footer/footer';
 import { Main } from '@components/main-page/main/main';
 import { useAppSelector } from '@hooks/typed-react-redux-hooks';
-import { isUserAuthenticated } from '@utils/storage';
+import { isUserAuthSession, isUserAuthLocal } from '@utils/storage';
 import { Layout } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import { Navigate } from 'react-router-dom';
 import s from './mainPage.module.scss';
 import { loadingSelector } from '@constants/selectors/selectors';
+import { ModalError } from '@components/result/feedback-result/modal-error/modalError';
 const Loader = React.lazy(() => import('@components/loader/loader'));
 
 const backgroundImage = '/Main_page_light.png';
 
 export const MainPage: React.FC = () => {
     const loading = useAppSelector(loadingSelector);
-    if (!isUserAuthenticated()) {
-        console.log(isUserAuthenticated());
+
+    if (!isUserAuthLocal() && !isUserAuthSession()) {
         return <Navigate to='/auth' />;
     }
 

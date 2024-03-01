@@ -18,7 +18,6 @@ export const registrationSlice = createSlice({
     reducers: {
         setRemember: (state, action) => {
             state.rememberMe = action.payload;
-            console.log(state.rememberMe);
         },
         setEmail: (state, action) => {
             state.email = action.payload;

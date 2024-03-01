@@ -2,7 +2,7 @@ import { Loader } from '@components/loader/loader';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { history } from '@redux/configure-store';
 import { actions } from '@redux/reducers/repeatRequests.slice';
-import { storageToken } from '@utils/storage';
+import { sessionToken, storageToken } from '@utils/storage';
 import { Form, Image, Layout, Tabs } from 'antd';
 import { useEffect, useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
@@ -62,11 +62,14 @@ export const RegistrationPage: React.FC = () => {
             setLoading(true);
             authLogin(values)
                 .then((response) => {
-                    storageToken.setItem('isAuthenticated', 'true');
-                    history.push(`${Paths.MAIN}`);
                     if (rememberMe) {
                         storageToken.setItem('accessToken', response.data.accessToken);
                         storageToken.setItem('isAuthenticated', 'true');
+                        history.push(`${Paths.MAIN}`);
+                    } else {
+                        sessionToken.setItem('isAuthenticated', 'true');
+                        sessionToken.setItem('accessToken', response.data.accessToken);
+                        history.push(`${Paths.MAIN}`);
                     }
                 })
                 .catch(() => {

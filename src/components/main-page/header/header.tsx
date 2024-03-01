@@ -1,11 +1,12 @@
 import { SettingOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import s from './header.module.scss';
+import Breadcrumbs from '@components/breadcrumb/breadcrumb';
 
 export const Header = () => {
     return (
         <header className={s.header}>
-            <p className={s.general}>Главная</p>
+            <Breadcrumbs />
             <div className={s.title_settings}>
                 <h1 className={s.title}>
                     Приветствуем тебя в CleverFit — приложении, <br /> которое поможет тебе добиться
