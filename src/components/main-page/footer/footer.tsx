@@ -9,18 +9,21 @@ import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { actions } from '@redux/reducers/feedback.slice';
 import { ModalError } from '@components/result/feedback-result/modal-error/modalError';
+import { warningSelector } from '@constants/selectors';
 
 export const Footer: React.FC = () => {
     const dispatch = useAppDispatch();
     const [loading, setLoading] = useState(false);
-    const isModalOpen = useAppSelector((state) => state.feedback.warning);
+    const isModalOpen = useAppSelector(warningSelector);
 
     const feedback = () => {
         setLoading(true);
         getFeedBacks()
             .then((response) => {
                 console.log(response);
-                dispatch(actions.setFeedbackData(response.data));
+                dispatch(
+                    actions.setFeedbackData({ data: response.data, countFeedback: 'firstLoad' }),
+                );
                 history.push(Paths.FEEDBACKS);
 
                 if (!response.data) dispatch(actions.setStateFeedback(true));
