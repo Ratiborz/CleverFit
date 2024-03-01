@@ -11,7 +11,6 @@ import { Content } from 'antd/lib/layout/layout';
 import { Navigate } from 'react-router-dom';
 import s from './mainPage.module.scss';
 import { loadingSelector } from '@constants/selectors/selectors';
-import { ModalError } from '@components/result/feedback-result/modal-error/modalError';
 const Loader = React.lazy(() => import('@components/loader/loader'));
 
 const backgroundImage = '/Main_page_light.png';

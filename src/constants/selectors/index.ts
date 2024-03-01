@@ -9,4 +9,5 @@ export {
     warningSelector,
     beFeedbackSelector,
     feedbackDataSelector,
+    lastFeedbackSelector,
 } from './selectors';

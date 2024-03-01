@@ -11,3 +11,6 @@ export const emailValueRegistration = (state: RootState) => state.registration.e
 export const warningSelector = (state: RootState) => state.feedback.warning;
 export const beFeedbackSelector = (state: RootState) => state.feedback.isFeedbackData;
 export const feedbackDataSelector = (state: RootState) => state.feedback.feedbackData;
+export const lastFeedbackSelector = (state: RootState) => state.feedback.lastFeedback;
+export const isModalCreateFeedbackSelector = (state: RootState) =>
+    state.feedback.isModalCreateFeedbackOpen;
