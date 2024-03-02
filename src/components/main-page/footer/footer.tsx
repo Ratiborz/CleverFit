@@ -21,11 +21,7 @@ export const Footer: React.FC = () => {
         getFeedBacks()
             .then((response) => {
                 console.log(response);
-                dispatch(
-                    actions.setFeedbackData({ data: response.data, countFeedback: 'firstLoad' }),
-                );
                 history.push(Paths.FEEDBACKS);
-
                 if (!response.data) dispatch(actions.setStateFeedback(true));
             })
             .catch((error) => {

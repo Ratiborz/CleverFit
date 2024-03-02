@@ -14,3 +14,19 @@ export interface Values {
     confirm: string;
     code: string;
 }
+
+export type СreateFeedback = {
+    rating: number;
+    message: string;
+};
+
+export type Feedback = {
+    id: string;
+    fullName: string;
+    imageSrc: string;
+    message: string;
+    rating: number;
+    createdAt: string;
+};
+
+export type GetFeedbacksResponse = Feedback[];
