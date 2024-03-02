@@ -7,7 +7,8 @@
     font-weight: 700;
 }
 
-.form {
+.modal :global .ant-modal-body {
+    padding: 0;
 }
 
 .form :global .ant-form-item {
@@ -26,6 +27,21 @@
     color: #fff;
 }
 
+.wrapper__btn {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px 24px 10px;
+}
+
 .modal__rating {
     margin-bottom: 16px;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 24px;
+}
+
+.textarea {
+    padding-left: 24px;
+    padding-right: 24px;
 }

@@ -1,4 +1,4 @@
-export { getFeedBacks } from './feedbackRequests';
+export { getFeedBacks, createFeedbacks } from './feedbackRequests';
 export {
     registrationRequest,
     authLogin,
