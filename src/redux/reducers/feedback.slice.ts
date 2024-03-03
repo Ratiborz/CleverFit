@@ -1,24 +1,29 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-type feedbackData = {
-    createdAt: string;
-    fullName: string;
-    id: string;
-    imageSrc: string;
-    message: string;
+type DataReview = {
     rating: number;
+    message: string;
 };
 
 interface feedback {
     warning: boolean;
     isFeedbackData: boolean;
     isModalCreateFeedbackOpen: boolean;
+    isCreateFeedbackSuccess: boolean;
+    StateModalError: boolean;
+    dataReview: DataReview;
 }
 
 const initialState: feedback = {
     warning: false,
     isFeedbackData: false,
     isModalCreateFeedbackOpen: false,
+    isCreateFeedbackSuccess: false,
+    StateModalError: false,
+    dataReview: {
+        rating: 0,
+        message: '',
+    },
 };
 
 export const feedbackSlice = createSlice({
@@ -33,6 +38,16 @@ export const feedbackSlice = createSlice({
         },
         createFeedback: (state, { payload }) => {
             state.isModalCreateFeedbackOpen = payload;
+        },
+        setStateCreateFeedback: (state, { payload }) => {
+            state.isCreateFeedbackSuccess = payload;
+        },
+        setStateModalError: (state, { payload }) => {
+            state.StateModalError = payload;
+        },
+        setDataReview: (state, { payload }) => {
+            state.dataReview = payload;
+            console.log(state.dataReview);
         },
     },
 });

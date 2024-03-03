@@ -4,7 +4,7 @@ import { createReduxHistoryContext } from 'redux-first-history';
 import { reducer as registrationReducer } from './reducers/registration.slice';
 import { reducer as repeatRequestsSlice } from './reducers/repeatRequests.slice';
 import { reducer as feedback } from './reducers/feedback.slice';
-import { api } from './apiRtk/api';
+import { api } from './api-rtk/api';
 
 const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({
     history: createBrowserHistory(),
