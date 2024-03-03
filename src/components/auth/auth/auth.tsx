@@ -11,19 +11,24 @@ import { useEffect, useState } from 'react';
 import { checkEmail } from '../../../api/requests';
 import s from './auth.module.scss';
 import { emailValueSelector } from '@constants/selectors/selectors';
-
+import { useAuthGoogleQuery } from '@redux/api-rtk/feedback.api';
 export const Auth = () => {
     const dispatch = useAppDispatch();
     const emailValue = useAppSelector(emailValueSelector);
     const [loading, setLoading] = useState(false);
     const [validEmail, setValidEmail] = useState(false);
     const [isInvalidEmail, setIsInvalidEmail] = useState(false);
+    // const { data, error, isLoading } = useAuthGoogleQuery();
 
     useEffect(() => {
         if (isUserAuthLocal() || isUserAuthSession()) {
             history.push('/main');
         }
     }, []);
+
+    const handleGoogleAuth = () => {
+        window.location.href = 'https://accounts.google.com';
+    };
 
     const forgotPassword = () => {
         if (validEmail) {
@@ -153,7 +158,11 @@ export const Auth = () => {
                 >
                     Войти
                 </Button>
-                <Button className={s.google__btn} icon={<GooglePlusOutlined />}>
+                <Button
+                    onClick={handleGoogleAuth}
+                    className={s.google__btn}
+                    icon={<GooglePlusOutlined />}
+                >
                     Войти через Google
                 </Button>
             </div>

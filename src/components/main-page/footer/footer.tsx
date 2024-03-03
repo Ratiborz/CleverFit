@@ -1,49 +1,22 @@
 import { AndroidFilled, AppleFilled } from '@ant-design/icons';
-import { Button, Card, Divider, Image, Modal, Space, Typography } from 'antd';
+import { Button, Card, Divider, Space } from 'antd';
 import s from './footer.module.scss';
 import { Paths } from '@constants/paths';
-import { getFeedBacks } from '../../../api';
 import { history } from '@redux/configure-store';
 import Loader from '@components/loader/loader';
 import { useState } from 'react';
-import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
-import { actions } from '@redux/reducers/feedback.slice';
-import { ModalError } from '@components/result/feedback-result/modal-error/modalError';
-import { warningSelector } from '@constants/selectors';
 
 export const Footer: React.FC = () => {
-    const dispatch = useAppDispatch();
     const [loading, setLoading] = useState(false);
-    const isModalOpen = useAppSelector(warningSelector);
 
     const feedback = () => {
-        setLoading(true);
-        getFeedBacks()
-            .then((response) => {
-                console.log(response);
-                history.push(Paths.FEEDBACKS);
-                if (!response.data) dispatch(actions.setStateFeedback(true));
-            })
-            .catch((error) => {
-                console.log(error);
-                if (error.response.status === 403) {
-                    localStorage.clear();
-                    sessionStorage.clear();
-                    history.push(Paths.AUTH);
-                }
-                if (error.config.headers.Authorization) {
-                    dispatch(actions.setWarning(true));
-                }
-            })
-            .finally(() => {
-                setLoading(false);
-            });
+        history.push(Paths.FEEDBACKS);
     };
 
     return (
         <>
             {loading && <Loader />}
-            {isModalOpen && <ModalError />}
+
             <footer className={s.footer}>
                 <Button type='link' className={s.feedback_btn} onClick={() => feedback()}>
                     Смотреть отзывы

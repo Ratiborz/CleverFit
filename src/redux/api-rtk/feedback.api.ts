@@ -7,10 +7,13 @@ export const feedbackApi = api.injectEndpoints({
             query: () => 'feedback',
             providesTags: ['Feedback'],
         }),
+        authGoogle: builder.query<void, void>({
+            query: () => '/auth/google',
+        }),
         createFeedbacks: builder.mutation<GetFeedbacksResponse, СreateFeedback>({
             query: (feedback) => ({
                 body: feedback,
-                url: 'feedback',
+                url: 'feedbac',
                 method: 'POST',
             }),
             invalidatesTags: ['Feedback'],
@@ -18,4 +21,4 @@ export const feedbackApi = api.injectEndpoints({
     }),
 });
 
-export const { useCreateFeedbacksMutation, useGetFeedBacksQuery } = feedbackApi;
+export const { useCreateFeedbacksMutation, useGetFeedBacksQuery, useAuthGoogleQuery } = feedbackApi;
