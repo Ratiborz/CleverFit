@@ -45,3 +45,21 @@
     padding-left: 24px;
     padding-right: 24px;
 }
+
+.textArea {
+    resize: auto !important;
+}
+
+@media (max-width: 360px) {
+    .modal {
+        max-width: 328px;
+    }
+
+    .modal__rating {
+        font-size: 24px;
+    }
+
+    .modal_btn {
+        max-width: 296px;
+    }
+}

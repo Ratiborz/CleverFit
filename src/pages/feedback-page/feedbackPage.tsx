@@ -120,11 +120,15 @@ export const FeedbackPage: React.FC = () => {
                                                         character={({ index, value }) =>
                                                             value! >= index! + 1 ? (
                                                                 <StarFilled
-                                                                    style={{ color: '#FFD700' }}
+                                                                    style={{
+                                                                        color: '#FAAD14',
+                                                                    }}
                                                                 />
                                                             ) : (
                                                                 <StarOutlined
-                                                                    style={{ color: '#FFD700' }}
+                                                                    style={{
+                                                                        color: '#FAAD14',
+                                                                    }}
                                                                 />
                                                             )
                                                         }
@@ -142,12 +146,14 @@ export const FeedbackPage: React.FC = () => {
                                 </div>
                                 <div className={s.wrapper__buttons}>
                                     <Button
+                                        data-test-id='write-review'
                                         className={s.btn__create_feedback}
                                         onClick={() => dispatch(actions.createFeedback(true))}
                                     >
                                         Написать отзыв
                                     </Button>
                                     <Button
+                                        data-test-id='all-reviews-button'
                                         className={s.btn__all_feedback}
                                         type='link'
                                         onClick={() => {

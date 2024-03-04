@@ -15,7 +15,7 @@ export const WriteFeedbackModal = () => {
     const isModalCreateFeedback = useAppSelector(isModalCreateFeedbackSelector);
     const dataReview = useAppSelector(dataReviewSelector);
     const [createFeedback, { isSuccess, isError }] = useCreateFeedbacksMutation();
-    const [value, setValue] = useState(0);
+    const [valueRating, setValueRating] = useState(0);
     const [valueText, setValueText] = useState('');
 
     useEffect(() => {
@@ -36,7 +36,7 @@ export const WriteFeedbackModal = () => {
     };
 
     const handleChange = (value: number) => {
-        setValue(value);
+        setValueRating(value);
     };
 
     const handleChangeText = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -46,13 +46,13 @@ export const WriteFeedbackModal = () => {
 
     return (
         <Modal
+            maskStyle={{ backgroundColor: 'rgba(121, 156, 213, 0.5)', backdropFilter: 'blur(5px)' }}
             centered
             open={isModalCreateFeedback}
             className={s.modal}
             title='Ваш отзыв'
             onCancel={() => {
                 dispatch(actions.createFeedback(false));
-                console.log(dataReview);
             }}
             footer={false}
         >
@@ -68,28 +68,29 @@ export const WriteFeedbackModal = () => {
                 <Form.Item name='rating'>
                     <Rate
                         className={s.modal__rating}
-                        value={value}
                         onChange={handleChange}
                         character={({ index, value }) =>
                             value! >= index! + 1 ? (
-                                <StarFilled style={{ color: '#FFD700' }} />
+                                <StarFilled style={{ color: '#FAAD14' }} />
                             ) : (
-                                <StarOutlined style={{ color: '#FFD700' }} />
+                                <StarOutlined style={{ color: '#FAAD14' }} />
                             )
                         }
                     />
                 </Form.Item>
                 <Form.Item name='message' className={s.textarea}>
                     <TextArea
+                        className={s.textArea}
                         onChange={(e) => handleChangeText(e)}
                         autoSize={{ minRows: 2, maxRows: 6 }}
-                        placeholder='Оставьте свой отзыв'
+                        placeholder='Расскажите, почему Вам понравилось наше приложение'
                     />
                 </Form.Item>
                 <Divider style={{ marginBottom: 0 }} />
                 <div className={s.wrapper__btn}>
                     <Button
-                        disabled={value === 0 ? true : false}
+                        data-test-id='new-review-submit-button'
+                        disabled={dataReview.rating != 0 || valueRating != 0 ? false : true}
                         key='publish-btn'
                         type='primary'
                         htmlType='submit'

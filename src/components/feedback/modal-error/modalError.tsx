@@ -15,6 +15,7 @@ export const ModalFaildCreate = () => {
 
     return (
         <Modal
+            maskStyle={{ backgroundColor: 'rgba(121, 156, 213, 0.5)', backdropFilter: 'blur(5px)' }}
             centered
             open={isModalError}
             closable={false}
@@ -29,6 +30,7 @@ export const ModalFaildCreate = () => {
             </Typography>
             <div className={s.wrapper__btn}>
                 <Button
+                    data-test-id='write-review-not-saved-modal'
                     className={s.modal__btn}
                     onClick={() => {
                         handleChangeModal();

@@ -25,6 +25,15 @@ export const sessionToken = {
 };
 
 export function isUserAuthLocal() {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const accessToken = urlParams.get('accessToken');
+
+    if (accessToken) {
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('isAuthenticated', 'true');
+    }
+
     return localStorage.getItem('isAuthenticated') === 'true';
 }
 

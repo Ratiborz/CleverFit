@@ -12,6 +12,7 @@
 
 .overflow__wrapper {
     overflow-y: scroll;
+    scrollbar-width: none;
     height: 635px;
 }
 
@@ -30,7 +31,6 @@
 
 .comment :global .ant-card-body {
     display: flex;
-    align-items: center;
     justify-content: flex-start;
     padding: 16px;
 }
@@ -55,7 +55,7 @@
 }
 
 .wrapper__description {
-    height: 104px;
+    min-height: 104px;
 }
 
 .wrapper__rating_date {
@@ -75,7 +75,7 @@
 }
 
 .comment_text {
-    max-width: 966px;
+    max-width: 1110px;
     color: #8c8c8c;
     font-size: 14px;
     font-weight: 400;
@@ -103,4 +103,57 @@
     font-size: 16px;
     color: #2f54eb;
     margin-left: 23px;
+}
+
+@media (max-width: 360px) {
+    .comment :global .ant-card-body {
+        flex-direction: column;
+    }
+
+    .wrapper__img_name {
+        align-items: center;
+        flex-direction: row;
+        margin-bottom: 12px;
+    }
+
+    .comment_img {
+        margin-right: 16px;
+        margin-bottom: 0;
+    }
+
+    .wrapper__description {
+        min-height: 0;
+    }
+
+    .wrapper__buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 48px;
+        margin-left: 0;
+        margin-bottom: 42px;
+    }
+
+    .btn__create_feedback {
+        max-width: 328px;
+        width: 100%;
+        margin-bottom: 16px;
+    }
+
+    .btn__all_feedback {
+        margin-left: 0;
+    }
+
+    .comment {
+        max-width: 328px;
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .overflow__wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 }

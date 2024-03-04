@@ -2,13 +2,17 @@ import { Button, Image, Modal, Typography } from 'antd';
 import s from './modalError.module.scss';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { actions } from '@redux/reducers/feedback.slice';
+import { warningSelector } from '@constants/selectors';
+import { Paths } from '@constants/paths';
+import { history } from '@redux/configure-store';
 
 export const ModalError = () => {
     const dispatch = useAppDispatch();
-    const isModalOpen = useAppSelector((state) => state.feedback.warning);
+    const isModalOpen = useAppSelector(warningSelector);
 
     return (
         <Modal
+            maskStyle={{ backgroundColor: 'rgba(121, 156, 213, 0.5)', backdropFilter: 'blur(5px)' }}
             centered
             footer={null}
             closable={false}
@@ -32,7 +36,13 @@ export const ModalError = () => {
             <Typography className={s.card__descrip}>
                 Произошла ошибка, попробуйте ещё раз.
             </Typography>
-            <Button className={s.card__btn} onClick={() => dispatch(actions.setWarning(false))}>
+            <Button
+                className={s.card__btn}
+                onClick={() => {
+                    history.push(Paths.MAIN);
+                    dispatch(actions.setWarning(false));
+                }}
+            >
                 Назад
             </Button>
         </Modal>

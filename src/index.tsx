@@ -8,9 +8,18 @@ import { routes } from './routes/routes';
 
 import 'normalize.css';
 import './index.css';
+import { Paths } from './constants';
 
 const domNode = document.getElementById('root') as HTMLDivElement;
 const root = createRoot(domNode);
+
+window.addEventListener('load', () => {
+    sessionStorage.clear();
+
+    if (!localStorage.getItem('isAuthenticated')) {
+        history.push(Paths.AUTH);
+    }
+});
 
 root.render(
     <React.StrictMode>

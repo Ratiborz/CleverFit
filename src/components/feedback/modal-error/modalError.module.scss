@@ -47,3 +47,9 @@
     max-width: 368px;
     width: 100%;
 }
+
+@media (max-width: 360px) {
+    .modal :global .ant-modal-body {
+        padding: 16px;
+    }
+}

@@ -11,14 +11,12 @@ import { useEffect, useState } from 'react';
 import { checkEmail } from '../../../api/requests';
 import s from './auth.module.scss';
 import { emailValueSelector } from '@constants/selectors/selectors';
-import { useAuthGoogleQuery } from '@redux/api-rtk/feedback.api';
 export const Auth = () => {
     const dispatch = useAppDispatch();
     const emailValue = useAppSelector(emailValueSelector);
     const [loading, setLoading] = useState(false);
     const [validEmail, setValidEmail] = useState(false);
     const [isInvalidEmail, setIsInvalidEmail] = useState(false);
-    // const { data, error, isLoading } = useAuthGoogleQuery();
 
     useEffect(() => {
         if (isUserAuthLocal() || isUserAuthSession()) {
@@ -27,7 +25,7 @@ export const Auth = () => {
     }, []);
 
     const handleGoogleAuth = () => {
-        window.location.href = 'https://accounts.google.com';
+        window.location.href = 'https://marathon-api.clevertec.ru/auth/google';
     };
 
     const forgotPassword = () => {
