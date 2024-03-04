@@ -1,7 +1,10 @@
 import { Button, Card, Typography } from 'antd';
 import s from './firstFeedback.module.scss';
+import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
+import { actions } from '@redux/reducers/feedback.slice';
 
 export const FirstFeedback = () => {
+    const dispatch = useAppDispatch();
     return (
         <div className={s.wrapper_feedback}>
             <Card className={s.card}>
@@ -13,7 +16,13 @@ export const FirstFeedback = () => {
                 </Typography>
             </Card>
 
-            <Button className={s.card_btn}>Написать отзыв</Button>
+            <Button
+                data-test-id='write-review'
+                onClick={() => dispatch(actions.setStateModalError(true))}
+                className={s.card_btn}
+            >
+                Написать отзыв
+            </Button>
         </div>
     );
 };

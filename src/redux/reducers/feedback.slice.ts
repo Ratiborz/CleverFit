@@ -47,7 +47,6 @@ export const feedbackSlice = createSlice({
         },
         setDataReview: (state, { payload }) => {
             state.dataReview = payload;
-            console.log(state.dataReview);
         },
     },
 });

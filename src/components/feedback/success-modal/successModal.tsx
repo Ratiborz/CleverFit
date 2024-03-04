@@ -10,6 +10,7 @@ export const SuccessModal = () => {
 
     return (
         <Modal
+            maskStyle={{ backgroundColor: 'rgba(121, 156, 213, 0.5)', backdropFilter: 'blur(5px)' }}
             centered
             open={isCreateFeedbackSuccess}
             closable={false}

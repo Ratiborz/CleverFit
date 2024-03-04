@@ -11,6 +11,8 @@ import { Content } from 'antd/lib/layout/layout';
 import { Navigate } from 'react-router-dom';
 import s from './mainPage.module.scss';
 import { loadingSelector } from '@constants/selectors/selectors';
+import { Paths } from '@constants/paths';
+import { history } from '@redux/configure-store';
 const Loader = React.lazy(() => import('@components/loader/loader'));
 
 const backgroundImage = '/Main_page_light.png';

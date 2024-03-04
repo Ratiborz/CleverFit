@@ -8,6 +8,4 @@ export {
     emailValueRegistration,
     warningSelector,
     beFeedbackSelector,
-    feedbackDataSelector,
-    lastFeedbackSelector,
 } from './selectors';

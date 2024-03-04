@@ -18,7 +18,12 @@ export const Footer: React.FC = () => {
             {loading && <Loader />}
 
             <footer className={s.footer}>
-                <Button type='link' className={s.feedback_btn} onClick={() => feedback()}>
+                <Button
+                    data-test-id='see-reviews'
+                    type='link'
+                    className={s.feedback_btn}
+                    onClick={() => feedback()}
+                >
                     Смотреть отзывы
                 </Button>
 
