@@ -2,12 +2,12 @@ import { Loader } from '@components/loader/loader';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { history } from '@redux/configure-store';
 import { actions } from '@redux/reducers/repeatRequests.slice';
-import { storageToken } from '@utils/storage';
+import { sessionToken, storageToken } from '@utils/storage';
 import { Form, Image, Layout, Tabs } from 'antd';
 import { useEffect, useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { authLogin, registrationRequest } from '../../api/requests';
-import s from './registrationPage.module.scss';
+import styles from './registrationPage.module.scss';
 import { Values } from '../../types/valueRequest';
 import { Paths } from '@constants/paths';
 import { rememberMeSelector, repeatRequestsSelector } from '@constants/selectors/selectors';
@@ -62,11 +62,14 @@ export const RegistrationPage: React.FC = () => {
             setLoading(true);
             authLogin(values)
                 .then((response) => {
-                    storageToken.setItem('isAuthenticated', 'true');
-                    history.push(`${Paths.MAIN}`);
                     if (rememberMe) {
                         storageToken.setItem('accessToken', response.data.accessToken);
                         storageToken.setItem('isAuthenticated', 'true');
+                        history.push(`${Paths.MAIN}`);
+                    } else {
+                        sessionToken.setItem('isAuthenticated', 'true');
+                        sessionToken.setItem('accessToken', response.data.accessToken);
+                        history.push(`${Paths.MAIN}`);
                     }
                 })
                 .catch(() => {
@@ -77,10 +80,10 @@ export const RegistrationPage: React.FC = () => {
     };
 
     return (
-        <Layout className={s.container__registration}>
+        <Layout className={styles.container__registration}>
             {loading && <Loader />}
             <Form
-                className={s.form}
+                className={styles.form}
                 name='register'
                 onFinish={onFinish}
                 onFinishFailed={(error) => {
@@ -88,13 +91,18 @@ export const RegistrationPage: React.FC = () => {
                 }}
                 scrollToFirstError
             >
-                <Image src='/logo_auth.svg' className={s.form__logo} alt='logo' preview={false} />
+                <Image
+                    src='/logo_auth.svg'
+                    className={styles.form__logo}
+                    alt='logo'
+                    preview={false}
+                />
 
-                <div className={s.choice_buttons}>
+                <div className={styles.choice_buttons}>
                     <Tabs
                         defaultActiveKey={activeTabKey}
                         centered
-                        className={s.tabs}
+                        className={styles.tabs}
                         onTabClick={(key) => {
                             if (key === '1') navigate('/auth');
 

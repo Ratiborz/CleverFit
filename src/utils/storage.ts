@@ -11,6 +11,32 @@ export const storageToken = {
     },
 };
 
-export function isUserAuthenticated() {
+export const sessionToken = {
+    setItem: (name: string, item: string) => {
+        sessionStorage.setItem(name, item);
+    },
+    getItem: (name: string) => {
+        const item = sessionStorage.getItem(name);
+
+        if (item) {
+            return item;
+        }
+    },
+};
+
+export function isUserAuthLocal() {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const accessToken = urlParams.get('accessToken');
+
+    if (accessToken) {
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('isAuthenticated', 'true');
+    }
+
     return localStorage.getItem('isAuthenticated') === 'true';
+}
+
+export function isUserAuthSession() {
+    return sessionStorage.getItem('isAuthenticated') === 'true';
 }

@@ -5,11 +5,11 @@ import React from 'react';
 import { Footer } from '@components/main-page/footer/footer';
 import { Main } from '@components/main-page/main/main';
 import { useAppSelector } from '@hooks/typed-react-redux-hooks';
-import { isUserAuthenticated } from '@utils/storage';
+import { isUserAuthSession, isUserAuthLocal } from '@utils/storage';
 import { Layout } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import { Navigate } from 'react-router-dom';
-import s from './mainPage.module.scss';
+import styles from './mainPage.module.scss';
 import { loadingSelector } from '@constants/selectors/selectors';
 const Loader = React.lazy(() => import('@components/loader/loader'));
 
@@ -17,8 +17,8 @@ const backgroundImage = '/Main_page_light.png';
 
 export const MainPage: React.FC = () => {
     const loading = useAppSelector(loadingSelector);
-    if (!isUserAuthenticated()) {
-        console.log(isUserAuthenticated());
+
+    if (!isUserAuthLocal() && !isUserAuthSession()) {
         return <Navigate to='/auth' />;
     }
 
@@ -26,7 +26,7 @@ export const MainPage: React.FC = () => {
         <>
             {loading && <Loader />}
             <Layout
-                className={s.general_wrapper}
+                className={styles.general_wrapper}
                 style={{
                     backgroundImage: `url(${backgroundImage})`,
                     backgroundSize: 'cover',
@@ -35,7 +35,7 @@ export const MainPage: React.FC = () => {
                 }}
             >
                 <Aside />
-                <Layout className={s.main_container}>
+                <Layout className={styles.main_container}>
                     <Header />
                     <Content>
                         <Main />

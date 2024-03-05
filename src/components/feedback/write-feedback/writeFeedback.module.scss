@@ -1,0 +1,66 @@
+@import '/src/variables.scss';
+
+.modal {
+    max-width: 539px;
+    width: 100%;
+}
+
+.modal :global .ant-modal-title {
+    font-weight: 700;
+}
+
+.modal :global .ant-modal-body {
+    padding: 0;
+}
+
+.form :global .ant-form-item {
+    margin-bottom: 0;
+}
+
+.modal_btn {
+    height: 40px;
+    max-width: 130px;
+    width: 100%;
+    border: $border;
+    border-radius: $border-radius;
+    box-shadow: $button-shadow;
+    background: $primary-light-6;
+    color: #fff;
+}
+
+.wrapper__btn {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px 24px 10px;
+}
+
+.modal__rating {
+    margin-bottom: 16px;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 24px;
+}
+
+.textarea {
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+.textArea {
+    resize: auto !important;
+}
+
+@media (max-width: 360px) {
+    .modal {
+        max-width: 328px;
+    }
+
+    .modal__rating {
+        font-size: 24px;
+    }
+
+    .modal_btn {
+        max-width: 296px;
+    }
+}

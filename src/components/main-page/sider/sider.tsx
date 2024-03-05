@@ -11,7 +11,8 @@ import type { MenuProps } from 'antd';
 import { Button, Image, Layout, Menu } from 'antd';
 import 'antd/dist/antd.css';
 import React, { useState } from 'react';
-import s from './sider.module.scss';
+import styles from './sider.module.scss';
+import { Paths } from '@constants/paths';
 const { Sider } = Layout;
 
 type MenuItem = Required<MenuProps>['items'][number];
@@ -47,7 +48,8 @@ export const Aside: React.FC = () => {
 
     const exitFromAccount = () => {
         localStorage.clear();
-        history.push('/auth');
+        sessionStorage.clear();
+        history.push(Paths.AUTH);
     };
 
     return (
@@ -61,7 +63,7 @@ export const Aside: React.FC = () => {
                 }
             }}
             collapsedWidth={mobileWidth ? 1 : 60}
-            className={s.sider}
+            className={styles.sider}
             data-test-id={mobileWidth ? 'sider-switch-mobile' : 'sider-switch'}
             trigger={null}
             width={mobileWidth ? 106 : 208}
@@ -70,11 +72,11 @@ export const Aside: React.FC = () => {
             collapsed={collapsed}
             onCollapse={(value) => setCollapsed(value)}
         >
-            <div className={s.wrapper}>
+            <div className={styles.wrapper}>
                 <div>
                     {collapsed ? (
                         <Image
-                            className={s.logo_mini}
+                            className={styles.logo_mini}
                             preview={false}
                             width={mobileWidth ? 0 : 29}
                             src='/fit.svg'
@@ -82,7 +84,7 @@ export const Aside: React.FC = () => {
                         />
                     ) : (
                         <Image
-                            className={s.logo}
+                            className={styles.logo}
                             preview={false}
                             width={mobileWidth ? 72 : 133}
                             src='/Logo.svg'
@@ -91,7 +93,7 @@ export const Aside: React.FC = () => {
                     )}
 
                     <Menu
-                        className={s.menu}
+                        className={styles.menu}
                         style={{ overflow: 'hidden' }}
                         theme='light'
                         defaultSelectedKeys={['1']}
@@ -101,7 +103,7 @@ export const Aside: React.FC = () => {
                 </div>
 
                 <Button
-                    className={s.button}
+                    className={styles.button}
                     onClick={() => exitFromAccount()}
                     icon={
                         mobileWidth ? (
@@ -111,11 +113,11 @@ export const Aside: React.FC = () => {
                         )
                     }
                 >
-                    {!collapsed && <span className={s.button_text}>Выход</span>}
+                    {!collapsed && <span className={styles.button_text}>Выход</span>}
                 </Button>
             </div>
             {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-                className: `${s.trigger} `,
+                className: `${styles.trigger} `,
                 onClick: () => setCollapsed(!collapsed),
             })}
         </Sider>

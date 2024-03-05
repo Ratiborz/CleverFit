@@ -1,7 +1,7 @@
 import { GooglePlusOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Typography } from 'antd';
 import { useEffect, useState } from 'react';
-import s from './registration.module.scss';
+import styles from './registration.module.scss';
 
 export const Registration: React.FC = () => {
     const [isInvalidEmail, setIsInvalidEmail] = useState(false);
@@ -17,11 +17,11 @@ export const Registration: React.FC = () => {
 
     return (
         <>
-            <div className={s.email_placeholder}>
-                <span className={s.placeholder}>e-mail:</span>
+            <div className={styles.email_placeholder}>
+                <span className={styles.placeholder}>e-mail:</span>
                 <Form.Item
                     key='email'
-                    className={s.email_item}
+                    className={styles.email_item}
                     hasFeedback
                     name='email'
                     rules={[
@@ -49,11 +49,11 @@ export const Registration: React.FC = () => {
                         },
                     ]}
                 >
-                    <Input className={s.email_input} data-test-id='registration-email' />
+                    <Input className={styles.email_input} data-test-id='registration-email' />
                 </Form.Item>
             </div>
 
-            <Form.Item className={s.password_item}>
+            <Form.Item className={styles.password_item}>
                 <Form.Item
                     style={{ marginBottom: 0 }}
                     name='password'
@@ -78,12 +78,12 @@ export const Registration: React.FC = () => {
                 >
                     <Input.Password
                         placeholder='Пароль'
-                        className={s.password_input}
+                        className={styles.password_input}
                         data-test-id='registration-password'
                     />
                 </Form.Item>
                 <Typography
-                    className={s.password_requirements}
+                    className={styles.password_requirements}
                     style={{ color: isInvalidPassword ? '#8C8C8C' : 'red' }}
                 >
                     Пароль не менее 8 символов, с заглавной буквой и цифрой
@@ -91,7 +91,7 @@ export const Registration: React.FC = () => {
             </Form.Item>
 
             <Form.Item
-                className={s.confirm_item}
+                className={styles.confirm_item}
                 name='confirm'
                 dependencies={['password']}
                 hasFeedback
@@ -114,12 +114,12 @@ export const Registration: React.FC = () => {
             >
                 <Input.Password
                     placeholder='Повторите пароль'
-                    className={s.confirm_input}
+                    className={styles.confirm_input}
                     data-test-id='registration-confirm-password'
                 />
             </Form.Item>
             <Button
-                className={s.sign_in__btn}
+                className={styles.sign_in__btn}
                 type='primary'
                 htmlType='submit'
                 disabled={!isFormValid}
@@ -127,7 +127,7 @@ export const Registration: React.FC = () => {
             >
                 Войти
             </Button>
-            <Button className={s.google__btn} icon={<GooglePlusOutlined />}>
+            <Button className={styles.google__btn} icon={<GooglePlusOutlined />}>
                 Регистрация через Google
             </Button>
         </>

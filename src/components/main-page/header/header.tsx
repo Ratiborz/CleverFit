@@ -1,23 +1,24 @@
 import { SettingOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
-import s from './header.module.scss';
+import styles from './header.module.scss';
+import Breadcrumbs from '@components/breadcrumb/breadcrumb';
 
 export const Header = () => {
     return (
-        <header className={s.header}>
-            <p className={s.general}>Главная</p>
-            <div className={s.title_settings}>
-                <h1 className={s.title}>
+        <header className={styles.header}>
+            <Breadcrumbs />
+            <div className={styles.title_settings}>
+                <h1 className={styles.title}>
                     Приветствуем тебя в CleverFit — приложении, <br /> которое поможет тебе добиться
                     своей мечты!
                 </h1>
                 <Button
-                    className={s.settings_btn}
+                    className={styles.settings_btn}
                     type='link'
                     icon={<SettingOutlined style={{ color: '#000000D9' }} />}
                     style={{ padding: 0 }}
                 >
-                    <p className={s.button_text}>Настройки</p>
+                    <p className={styles.button_text}>Настройки</p>
                 </Button>
             </div>
         </header>

@@ -7,3 +7,12 @@ export const emaildataSelector = (state: RootState) => state.repeatRequests.emai
 export const emailValueSelector = (state: RootState) => state.registration.email;
 export const newDataPassSelector = (state: RootState) => state.repeatRequests;
 export const emailValueRegistration = (state: RootState) => state.registration.email;
+
+export const warningSelector = (state: RootState) => state.feedback.warning;
+export const beFeedbackSelector = (state: RootState) => state.feedback.isFeedbackData;
+export const isModalCreateFeedbackSelector = (state: RootState) =>
+    state.feedback.isModalCreateFeedbackOpen;
+export const isCreateFeedbackSuccessSelector = (state: RootState) =>
+    state.feedback.isCreateFeedbackSuccess;
+export const StateModalErrorSelector = (state: RootState) => state.feedback.StateModalError;
+export const dataReviewSelector = (state: RootState) => state.feedback.dataReview;

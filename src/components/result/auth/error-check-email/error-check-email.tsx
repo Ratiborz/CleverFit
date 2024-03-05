@@ -4,8 +4,8 @@ import { history } from '@redux/configure-store';
 import { Button, Card, Image, Typography } from 'antd';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { checkEmail } from '../../../api/requests';
-import s from './error-check-email.module.scss';
+import { checkEmail } from '../../../../api/requests';
+import styles from './error-check-email.module.scss';
 import { emaildataSelector } from '@constants/selectors/selectors';
 
 export const ErrorCheckEmail = () => {
@@ -37,7 +37,7 @@ export const ErrorCheckEmail = () => {
         <>
             {loading && <Loader />}
             <Card
-                className={s.card}
+                className={styles.card}
                 bodyStyle={{
                     display: 'flex',
                     flexDirection: 'column',
@@ -46,16 +46,16 @@ export const ErrorCheckEmail = () => {
             >
                 <Image
                     src='/result/Result.svg'
-                    className={s.card__img}
+                    className={styles.card__img}
                     alt='not-valid'
                     preview={false}
                 />
-                <h3 className={s.card__h3}>Что-то пошло не так</h3>
-                <Typography className={s.card__descrip}>
+                <h3 className={styles.card__h3}>Что-то пошло не так</h3>
+                <Typography className={styles.card__descrip}>
                     Произошла ошибка, попробуйте отправить форму ещё раз.
                 </Typography>
                 <Button
-                    className={s.card__btn}
+                    className={styles.card__btn}
                     onClick={() => checkData()}
                     data-test-id='check-back-button'
                 >

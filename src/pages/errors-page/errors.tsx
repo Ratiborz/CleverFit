@@ -1,7 +1,7 @@
 import { history } from '@redux/configure-store';
 import { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
-import s from './errors.module.scss';
+import styles from './errors.module.scss';
 
 export const ErrorsPage: React.FC = () => {
     const location = useLocation();
@@ -13,7 +13,7 @@ export const ErrorsPage: React.FC = () => {
     }, [location.state, history]);
 
     return (
-        <div className={s.container__errors}>
+        <div className={styles.container__errors}>
             <Outlet />
         </div>
     );

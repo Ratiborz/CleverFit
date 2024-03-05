@@ -1,30 +1,32 @@
 import { Auth } from '@components/auth/auth/auth';
 import { ChangePassword } from '@components/auth/change-password/changePassword';
 import { ConfirmEmail } from '@components/auth/confirm-email/confirmEmail';
-import { EmailNoExist } from '@components/result/email-no-exist/email-no-exist';
-import { ErrorСhangePassword } from '@components/result/error-change-password/error-change-password';
-import { ErrorCheckEmail } from '@components/result/error-check-email/error-check-email';
-import { ErrorLogin } from '@components/result/error-login/error-login';
-import { ErrorUserExist } from '@components/result/error-user-exist/error-user-exist';
-import { Error } from '@components/result/error/error';
-import { SuccessChangePassword } from '@components/result/success-change-password/success-change-password';
-import { Success } from '@components/result/success/success';
+import { EmailNoExist } from '@components/result/auth/email-no-exist/email-no-exist';
+import { ErrorСhangePassword } from '@components/result/auth/error-change-password/error-change-password';
+import { ErrorCheckEmail } from '@components/result/auth/error-check-email/error-check-email';
+import { ErrorLogin } from '@components/result/auth/error-login/error-login';
+import { ErrorUserExist } from '@components/result/auth/error-user-exist/error-user-exist';
+import { Error } from '@components/result/auth/error/error';
+import { SuccessChangePassword } from '@components/result/auth/success-change-password/success-change-password';
+import { Success } from '@components/result/auth/success/success';
 import { ErrorsPage } from '@pages/errors-page/errors';
 import { MainPage } from '@pages/main-page';
 import { PasswordRecoveryPage } from '@pages/password-recovery';
 import { RegistrationPage } from '@pages/registration-page';
-import { isUserAuthenticated } from '@utils/storage';
+import { isUserAuthLocal } from '@utils/storage';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { Registration } from '../components/auth/registration/registration';
 import { Paths } from '@constants/paths';
+import { FeedbackPage } from '@pages/feedback-page/feedbackPage';
 
 export const routes = (
     <Routes>
         <Route
             path={Paths.HOME}
-            element={<Navigate to={isUserAuthenticated() ? `${Paths.MAIN}` : `${Paths.AUTH}`} />}
+            element={<Navigate to={isUserAuthLocal() ? `${Paths.MAIN}` : `${Paths.AUTH}`} />}
         />
-        <Route path={Paths.MAIN} element={<MainPage />} />
+        <Route path={Paths.MAIN} element={<MainPage />}></Route>
+        <Route path={Paths.FEEDBACKS} element={<FeedbackPage />} />
         <Route path={`${Paths.AUTH}/*`} element={<RegistrationPage />}>
             <Route index element={<Auth />} />
             <Route path={Paths.REGISTRATION} element={<Registration />} />

@@ -4,14 +4,16 @@ import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { history } from '@redux/configure-store';
 import { actions } from '@redux/reducers/registration.slice';
 import { actions as repeatRequestsActions } from '@redux/reducers/repeatRequests.slice';
-import { isUserAuthenticated } from '@utils/storage';
+import { isUserAuthSession, isUserAuthLocal } from '@utils/storage';
 import { Button, Checkbox, Form, Input } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { useEffect, useState } from 'react';
 import { checkEmail } from '../../../api/requests';
-import s from './auth.module.scss';
+import styles from './auth.module.scss';
 import { emailValueSelector } from '@constants/selectors/selectors';
-
+import { Paths } from '@constants/paths';
+import { baseURL } from '@constants/constants';
+import { authGoogle } from '@constants/constants/constants';
 export const Auth = () => {
     const dispatch = useAppDispatch();
     const emailValue = useAppSelector(emailValueSelector);
@@ -20,10 +22,14 @@ export const Auth = () => {
     const [isInvalidEmail, setIsInvalidEmail] = useState(false);
 
     useEffect(() => {
-        if (isUserAuthenticated()) {
-            history.push('/main');
+        if (isUserAuthLocal() || isUserAuthSession()) {
+            history.push(Paths.MAIN);
         }
     }, []);
+
+    const handleGoogleAuth = () => {
+        window.location.href = `${baseURL}${authGoogle}`;
+    };
 
     const forgotPassword = () => {
         if (validEmail) {
@@ -61,11 +67,11 @@ export const Auth = () => {
     return (
         <>
             {loading && <Loader />}
-            <div className={s.email_placeholder}>
-                <span className={s.placeholder}>e-mail:</span>
+            <div className={styles.email_placeholder}>
+                <span className={styles.placeholder}>e-mail:</span>
                 <Form.Item
                     key='email'
-                    className={s.email_item}
+                    className={styles.email_item}
                     hasFeedback
                     name='email'
                     rules={[
@@ -96,11 +102,11 @@ export const Auth = () => {
                         },
                     ]}
                 >
-                    <Input className={s.email_input} data-test-id='login-email' />
+                    <Input className={styles.email_input} data-test-id='login-email' />
                 </Form.Item>
             </div>
 
-            <Form.Item className={s.password_item}>
+            <Form.Item className={styles.password_item}>
                 <Form.Item
                     name='password'
                     hasFeedback
@@ -122,20 +128,24 @@ export const Auth = () => {
                 >
                     <Input.Password
                         placeholder='Пароль'
-                        className={s.password_input}
+                        className={styles.password_input}
                         data-test-id='login-password'
                     />
                 </Form.Item>
             </Form.Item>
 
-            <div className={s.support_btn}>
-                <Checkbox onChange={onChange} className={s.checkbox} data-test-id='login-remember'>
+            <div className={styles.support_btn}>
+                <Checkbox
+                    onChange={onChange}
+                    className={styles.checkbox}
+                    data-test-id='login-remember'
+                >
                     Запомнить меня
                 </Checkbox>
                 <Button
                     type='link'
                     data-test-id='login-forgot-button'
-                    className={s.password__recover}
+                    className={styles.password__recover}
                     disabled={isInvalidEmail}
                     onClick={() => forgotPassword()}
                     style={{ padding: 0 }}
@@ -144,16 +154,20 @@ export const Auth = () => {
                 </Button>
             </div>
 
-            <div className={s.size__wrapper}>
+            <div className={styles.size__wrapper}>
                 <Button
-                    className={s.sign_in__btn}
+                    className={styles.sign_in__btn}
                     type='primary'
                     htmlType='submit'
                     data-test-id='login-submit-button'
                 >
                     Войти
                 </Button>
-                <Button className={s.google__btn} icon={<GooglePlusOutlined />}>
+                <Button
+                    onClick={handleGoogleAuth}
+                    className={styles.google__btn}
+                    icon={<GooglePlusOutlined />}
+                >
                     Войти через Google
                 </Button>
             </div>

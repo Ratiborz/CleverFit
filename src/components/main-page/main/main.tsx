@@ -1,13 +1,13 @@
 import { CalendarTwoTone, HeartFilled, IdcardOutlined } from '@ant-design/icons';
-import s from './main.module.scss';
+import styles from './main.module.scss';
 
 import { Button, Card, Divider, Layout } from 'antd';
 
 export const Main = () => {
     return (
-        <Layout className={s.wrapper}>
-            <Card className={s.card}>
-                <p className={s.card__text}>
+        <Layout className={styles.wrapper}>
+            <Card className={styles.card}>
+                <p className={styles.card__text}>
                     С CleverFit ты сможешь: <br /> — планировать свои тренировки на календаре,
                     выбирая тип и уровень нагрузки; <br /> — отслеживать свои достижения в разделе
                     статистики, сравнивая свои результаты с нормами и рекордами; <br /> — создавать
@@ -17,27 +17,31 @@ export const Main = () => {
                 </p>
             </Card>
 
-            <Card className={`${s.card} ${s.card_margin}`}>
-                <p className={s.card__descrip}>
+            <Card className={`${styles.card} ${styles.card_margin}`}>
+                <p className={styles.card__descrip}>
                     CleverFit — это не просто приложение, а твой личный помощник в мире фитнеса. Не
                     откладывай на завтра — начни тренироваться уже сегодня!
                 </p>
             </Card>
 
-            <div className={s.wrapper__card_mini}>
-                <Card bodyStyle={{ padding: 0 }} className={s.card_mini}>
-                    <p className={s.card_training__p}>Расписать тренировки</p>
+            <div className={styles.wrapper__card_mini}>
+                <Card bodyStyle={{ padding: 0 }} className={styles.card_mini}>
+                    <p className={styles.card_training__p}>Расписать тренировки</p>
                     <Divider style={{ margin: 0 }} />
-                    <Button className={s.card_training__btn} type='link' icon={<HeartFilled />}>
+                    <Button
+                        className={styles.card_training__btn}
+                        type='link'
+                        icon={<HeartFilled />}
+                    >
                         Тренировки
                     </Button>
                 </Card>
 
-                <Card bodyStyle={{ padding: 0 }} className={s.card_mini}>
-                    <p className={s.card_training__p}>Назначить календарь</p>
+                <Card bodyStyle={{ padding: 0 }} className={styles.card_mini}>
+                    <p className={styles.card_training__p}>Назначить календарь</p>
                     <Divider style={{ margin: 0 }} />
                     <Button
-                        className={s.card_training__btn}
+                        className={styles.card_training__btn}
                         type='link'
                         icon={<CalendarTwoTone twoToneColor='#10239E' />}
                     >
@@ -45,10 +49,14 @@ export const Main = () => {
                     </Button>
                 </Card>
 
-                <Card bodyStyle={{ padding: 0 }} className={s.card_mini}>
-                    <p className={s.card_training__p}>Заполнить профиль</p>
+                <Card bodyStyle={{ padding: 0 }} className={styles.card_mini}>
+                    <p className={styles.card_training__p}>Заполнить профиль</p>
                     <Divider style={{ margin: 0 }} />
-                    <Button className={s.card_training__btn} type='link' icon={<IdcardOutlined />}>
+                    <Button
+                        className={styles.card_training__btn}
+                        type='link'
+                        icon={<IdcardOutlined />}
+                    >
                         Профиль
                     </Button>
                 </Card>

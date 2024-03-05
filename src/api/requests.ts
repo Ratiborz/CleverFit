@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { RegistrValue, Values, confirmPassword } from '../types/valueRequest';
-import { http, httpClient } from './axiosConfig';
+import { httpClient } from './axiosConfig';
 
 export const registrationRequest = async (values: RegistrValue): Promise<AxiosResponse> => {
     return httpClient.post('auth/registration', {
@@ -30,7 +30,7 @@ export const confirmEmail = async (email: string, code: string): Promise<AxiosRe
 };
 
 export const changePassword = async (values: confirmPassword): Promise<AxiosResponse> => {
-    return http.post('auth/change-password', {
+    return httpClient.post('auth/change-password', {
         password: values.password,
         confirmPassword: values.confirm,
     });
