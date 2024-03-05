@@ -5,7 +5,7 @@ import { Card, Image, Typography } from 'antd';
 import { useState } from 'react';
 import VerificationInput from 'react-verification-input';
 import { confirmEmail } from '../../../api/requests';
-import s from './confirmEmail.module.scss';
+import styles from './confirmEmail.module.scss';
 import { emailValueRegistration } from '@constants/selectors/selectors';
 
 export const ConfirmEmail = () => {
@@ -32,7 +32,7 @@ export const ConfirmEmail = () => {
         <>
             {loading && <Loader />}
             <Card
-                className={s.card__confirm_email}
+                className={styles.card__confirm_email}
                 bodyStyle={{
                     display: 'flex',
                     flexDirection: 'column',
@@ -42,10 +42,10 @@ export const ConfirmEmail = () => {
                 <Image
                     src={`/result/${isValidConfirm ? 'Suggested_icon.svg' : 'cancel-cross.svg'}`}
                     alt='suggested'
-                    className={s.card__img}
+                    className={styles.card__img}
                     preview={false}
                 />
-                <h2 className={s.card__h2}>
+                <h2 className={styles.card__h2}>
                     {isValidConfirm ? (
                         <span>
                             Введите код <br /> для восстановления аккауанта
@@ -54,11 +54,15 @@ export const ConfirmEmail = () => {
                         `Неверный код. Введите код для восстановления аккауанта`
                     )}
                 </h2>
-                <Typography className={s.card__descrip}>
+                <Typography className={styles.card__descrip}>
                     Мы отправили вам на e-mail {emailValue} шестизначный код. Введите его в поле
                     ниже.
                 </Typography>
-                <div className={`${s.container} ${!isValidConfirm ? s.containerInactive : ''}`}>
+                <div
+                    className={`${styles.container} ${
+                        !isValidConfirm ? styles.containerInactive : ''
+                    }`}
+                >
                     <VerificationInput
                         autoFocus={false}
                         placeholder={''}
@@ -69,15 +73,15 @@ export const ConfirmEmail = () => {
                         onComplete={(code) => confirmCode(code)}
                         inputProps={{ 'data-test-id': 'verification-input' }}
                         classNames={{
-                            container: s.container,
-                            character: s.character,
-                            characterInactive: s.character + '--inactive',
-                            characterSelected: s.character + '--selected',
-                            characterFilled: s.character + '--filled',
+                            container: styles.container,
+                            character: styles.character,
+                            characterInactive: styles.character + '--inactive',
+                            characterSelected: styles.character + '--selected',
+                            characterFilled: styles.character + '--filled',
                         }}
                     />
                 </div>
-                <Typography className={s.card__support_descr}>
+                <Typography className={styles.card__support_descr}>
                     Не пришло письмо? Проверьте папку Спам.
                 </Typography>
             </Card>

@@ -10,3 +10,5 @@ export {
     warningSelector,
     beFeedbackSelector,
 } from './selectors';
+
+export { baseURL } from './constants';

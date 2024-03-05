@@ -1,6 +1,6 @@
 import { AndroidFilled, AppleFilled } from '@ant-design/icons';
 import { Button, Card, Divider, Space } from 'antd';
-import s from './footer.module.scss';
+import styles from './footer.module.scss';
 import { Paths } from '@constants/paths';
 import { history } from '@redux/configure-store';
 import Loader from '@components/loader/loader';
@@ -9,30 +9,28 @@ import { useState } from 'react';
 export const Footer: React.FC = () => {
     const [loading, setLoading] = useState(false);
 
-    const feedback = () => {
-        history.push(Paths.FEEDBACKS);
-    };
+    const feedback = () => history.push(Paths.FEEDBACKS);
 
     return (
         <>
             {loading && <Loader />}
 
-            <footer className={s.footer}>
+            <footer className={styles.footer}>
                 <Button
                     data-test-id='see-reviews'
                     type='link'
-                    className={s.feedback_btn}
+                    className={styles.feedback_btn}
                     onClick={() => feedback()}
                 >
                     Смотреть отзывы
                 </Button>
 
-                <Card bodyStyle={{ padding: 0 }} className={s.card}>
-                    <div className={s.dowloand_btn}>
-                        <Button type='link' style={{ padding: 0 }} className={s.dowloand}>
+                <Card bodyStyle={{ padding: 0 }} className={styles.card}>
+                    <div className={styles.dowloand_btn}>
+                        <Button type='link' style={{ padding: 0 }} className={styles.dowloand}>
                             Скачать на телефон
                         </Button>
-                        <p className={s.dowloand_btn__descrip}>Доступно в PRO-тарифе</p>
+                        <p className={styles.dowloand_btn__descrip}>Доступно в PRO-тарифе</p>
                     </div>
 
                     <Divider style={{ margin: 0 }} />

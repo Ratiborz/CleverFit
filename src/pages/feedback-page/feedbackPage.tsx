@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { isUserAuthSession, isUserAuthLocal, storageToken, sessionToken } from '@utils/storage';
 import { Button, Card, Image, Layout, Rate } from 'antd';
 import { Navigate } from 'react-router-dom';
-import s from './feedbackPage.module.scss';
+import styles from './feedbackPage.module.scss';
 import {
     StateModalErrorSelector,
     beFeedbackSelector,
@@ -28,6 +28,7 @@ import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { ModalError } from '@components/result/feedback-result/modal-error/modalError';
 import { ModalFaildCreate } from '@components/feedback/modal-error/modalError';
 import { SuccessModal } from '@components/feedback/success-modal/successModal';
+import { forbiddenStatus } from '@constants/constants/constants';
 
 const backgroundImage = '/Main_page_light.png';
 
@@ -50,7 +51,7 @@ export const FeedbackPage: React.FC = () => {
             const localAccessToken = storageToken.getItem('accessToken');
             const sessionAccessToken = sessionToken.getItem('accessToken');
             const token = localAccessToken ?? sessionAccessToken;
-            if ((error as FetchBaseQueryError).status === 403) {
+            if ((error as FetchBaseQueryError).status === forbiddenStatus) {
                 localStorage.clear();
                 sessionStorage.clear();
                 history.push(Paths.AUTH);
@@ -73,7 +74,7 @@ export const FeedbackPage: React.FC = () => {
             {isModalError && <ModalFaildCreate />}
             {isSuccessModal && <SuccessModal />}
             <Layout
-                className={s.general_wrapper}
+                className={styles.general_wrapper}
                 style={{
                     backgroundImage: `url(${backgroundImage})`,
                     backgroundSize: 'cover',
@@ -82,7 +83,7 @@ export const FeedbackPage: React.FC = () => {
                 }}
             >
                 <Aside />
-                <Layout className={s.main_container}>
+                <Layout className={styles.main_container}>
                     <Breadcrumbs />
                     {isModalCreateFeedback && <WriteFeedbackModal />}
                     {isSuccessFetching &&
@@ -90,71 +91,67 @@ export const FeedbackPage: React.FC = () => {
                             <FirstFeedback />
                         ) : (
                             <>
-                                <div className={s.overflow__wrapper}>
+                                <div className={styles.overflow__wrapper}>
                                     {(showFeedback
                                         ? feedbacks.slice().reverse()
                                         : feedbacks.slice(-4).reverse()
                                     ).map((data) => (
-                                        <Card className={s.comment} key={data.id}>
-                                            <div className={s.wrapper__img_name}>
+                                        <Card className={styles.comment} key={data.id}>
+                                            <div className={styles.wrapper__img_name}>
                                                 <Image
                                                     src={
                                                         data.imageSrc
                                                             ? data.imageSrc
                                                             : '/Avatar-mock.svg'
                                                     }
-                                                    className={s.comment_img}
+                                                    className={styles.comment_img}
                                                     alt='avatar'
                                                     preview={false}
                                                 />
-                                                <Typography className={s.comment_name}>
+                                                <Typography className={styles.comment_name}>
                                                     {data.fullName ? data.fullName : 'Пользователь'}
                                                 </Typography>
                                             </div>
-                                            <div className={s.wrapper__description}>
-                                                <div className={s.wrapper__rating_date}>
+                                            <div className={styles.wrapper__description}>
+                                                <div className={styles.wrapper__rating_date}>
                                                     <Rate
                                                         disabled
                                                         defaultValue={data.rating}
-                                                        className={s.comment_rate}
+                                                        className={styles.comment_rate}
                                                         character={({ index, value }) =>
                                                             value! >= index! + 1 ? (
                                                                 <StarFilled
-                                                                    style={{
-                                                                        color: '#FAAD14',
-                                                                    }}
+                                                                    style={{ color: '#FAAD14' }}
                                                                 />
                                                             ) : (
                                                                 <StarOutlined
-                                                                    style={{
-                                                                        color: '#FAAD14',
-                                                                    }}
+                                                                    style={{ color: '#FAAD14' }}
                                                                 />
                                                             )
                                                         }
                                                     />
-                                                    <span className={s.comment_date}>
+                                                    <span className={styles.comment_date}>
                                                         {currentTime(data.createdAt)}
                                                     </span>
                                                 </div>
-                                                <Typography className={s.comment_text}>
+                                                <Typography className={styles.comment_text}>
                                                     {data.message}
                                                 </Typography>
                                             </div>
                                         </Card>
                                     ))}
                                 </div>
-                                <div className={s.wrapper__buttons}>
+                                <div className={styles.wrapper__buttons}>
                                     <Button
                                         data-test-id='write-review'
-                                        className={s.btn__create_feedback}
+                                        className={styles.btn__create_feedback}
                                         onClick={() => dispatch(actions.createFeedback(true))}
                                     >
                                         Написать отзыв
                                     </Button>
                                     <Button
                                         data-test-id='all-reviews-button'
-                                        className={s.btn__all_feedback}
+                                        className={styles.btn__all_feedback}
                                         type='link'
                                         onClick={() => {
                                             setShowFeedback(!showFeedback);
