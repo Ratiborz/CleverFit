@@ -7,7 +7,7 @@ import { Form, Image, Layout, Tabs } from 'antd';
 import { useEffect, useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { authLogin, registrationRequest } from '../../api/requests';
-import s from './registrationPage.module.scss';
+import styles from './registrationPage.module.scss';
 import { Values } from '../../types/valueRequest';
 import { Paths } from '@constants/paths';
 import { rememberMeSelector, repeatRequestsSelector } from '@constants/selectors/selectors';
@@ -80,10 +80,10 @@ export const RegistrationPage: React.FC = () => {
     };
 
     return (
-        <Layout className={s.container__registration}>
+        <Layout className={styles.container__registration}>
             {loading && <Loader />}
             <Form
-                className={s.form}
+                className={styles.form}
                 name='register'
                 onFinish={onFinish}
                 onFinishFailed={(error) => {
@@ -91,13 +91,18 @@ export const RegistrationPage: React.FC = () => {
                 }}
                 scrollToFirstError
             >
-                <Image src='/logo_auth.svg' className={s.form__logo} alt='logo' preview={false} />
+                <Image
+                    src='/logo_auth.svg'
+                    className={styles.form__logo}
+                    alt='logo'
+                    preview={false}
+                />
 
-                <div className={s.choice_buttons}>
+                <div className={styles.choice_buttons}>
                     <Tabs
                         defaultActiveKey={activeTabKey}
                         centered
-                        className={s.tabs}
+                        className={styles.tabs}
                         onTabClick={(key) => {
                             if (key === '1') navigate('/auth');
 

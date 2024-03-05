@@ -1,5 +1,5 @@
 import { Button, Divider, Form, Modal, Rate } from 'antd';
-import s from './writeFeedback.module.scss';
+import styles from './writeFeedback.module.scss';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { dataReviewSelector, isModalCreateFeedbackSelector } from '@constants/selectors/selectors';
 import TextArea from 'antd/lib/input/TextArea';
@@ -16,7 +16,6 @@ export const WriteFeedbackModal = () => {
     const dataReview = useAppSelector(dataReviewSelector);
     const [createFeedback, { isSuccess, isError }] = useCreateFeedbacksMutation();
     const [valueRating, setValueRating] = useState(0);
-    const [valueText, setValueText] = useState('');
 
     useEffect(() => {
         if (isSuccess) {
@@ -39,21 +38,16 @@ export const WriteFeedbackModal = () => {
         setValueRating(value);
     };
 
-    const handleChangeText = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        const value = event.target.value;
-        setValueText(value);
-    };
+    const closeModal = () => dispatch(actions.createFeedback(false));
 
     return (
         <Modal
             maskStyle={{ backgroundColor: 'rgba(121, 156, 213, 0.5)', backdropFilter: 'blur(5px)' }}
             centered
             open={isModalCreateFeedback}
-            className={s.modal}
+            className={styles.modal}
             title='Ваш отзыв'
-            onCancel={() => {
-                dispatch(actions.createFeedback(false));
-            }}
+            onCancel={() => closeModal()}
             footer={false}
         >
             <Form
@@ -62,12 +56,12 @@ export const WriteFeedbackModal = () => {
                     rating: dataReview.rating,
                     message: dataReview.message,
                 }}
-                className={s.form}
+                className={styles.form}
                 onFinish={onFinish}
             >
                 <Form.Item name='rating'>
                     <Rate
-                        className={s.modal__rating}
+                        className={styles.modal__rating}
                         onChange={handleChange}
                         character={({ index, value }) =>
                             value! >= index! + 1 ? (
@@ -78,23 +72,22 @@ export const WriteFeedbackModal = () => {
                         }
                     />
                 </Form.Item>
-                <Form.Item name='message' className={s.textarea}>
+                <Form.Item name='message' className={styles.textarea}>
                     <TextArea
-                        className={s.textArea}
-                        onChange={(e) => handleChangeText(e)}
+                        className={styles.textArea}
                         autoSize={{ minRows: 2, maxRows: 6 }}
-                        placeholder='Расскажите, почему Вам понравилось наше приложение'
+                        placeholder='Оставьте свой отзыв'
                     />
                 </Form.Item>
                 <Divider style={{ marginBottom: 0 }} />
-                <div className={s.wrapper__btn}>
+                <div className={styles.wrapper__btn}>
                     <Button
                         data-test-id='new-review-submit-button'
                         disabled={dataReview.rating != 0 || valueRating != 0 ? false : true}
                         key='publish-btn'
                         type='primary'
                         htmlType='submit'
-                        className={s.modal_btn}
+                        className={styles.modal_btn}
                     >
                         Опубликовать
                     </Button>

@@ -6,7 +6,7 @@ import { Button, Form, Input, Typography } from 'antd';
 import { useEffect, useState } from 'react';
 import { changePassword } from '../../../api/requests';
 import { confirmPassword } from '../../../types/valueRequest';
-import s from './changePassword.module.scss';
+import styles from './changePassword.module.scss';
 import { newDataPassSelector } from '@constants/selectors/selectors';
 
 export const ChangePassword = () => {
@@ -52,7 +52,7 @@ export const ChangePassword = () => {
         <>
             {loading && <Loader />}
             <Form
-                className={s.form}
+                className={styles.form}
                 name='register'
                 onFinish={onFinish}
                 onFinishFailed={(error) => {
@@ -60,8 +60,8 @@ export const ChangePassword = () => {
                 }}
                 scrollToFirstError
             >
-                <h2 className={s.form__title}>Восстановление аккауанта</h2>
-                <Form.Item className={s.password_item}>
+                <h2 className={styles.form__title}>Восстановление аккауанта</h2>
+                <Form.Item className={styles.password_item}>
                     <Form.Item
                         style={{ marginBottom: 0 }}
                         name='password'
@@ -90,12 +90,12 @@ export const ChangePassword = () => {
                     >
                         <Input.Password
                             placeholder='Новый пароль'
-                            className={s.password_input}
+                            className={styles.password_input}
                             data-test-id='change-password'
                         />
                     </Form.Item>
                     <Typography
-                        className={s.password_requirements}
+                        className={styles.password_requirements}
                         style={{ color: isInvalidPassword ? '#8C8C8C' : 'red' }}
                     >
                         Пароль не менее 8 символов, с заглавной буквой и цифрой
@@ -103,7 +103,7 @@ export const ChangePassword = () => {
                 </Form.Item>
 
                 <Form.Item
-                    className={s.confirm_item}
+                    className={styles.confirm_item}
                     style={{ marginBottom: '62px' }}
                     name='confirm'
                     dependencies={['password']}
@@ -127,12 +127,12 @@ export const ChangePassword = () => {
                 >
                     <Input.Password
                         placeholder='Повторите пароль'
-                        className={s.confirm_input}
+                        className={styles.confirm_input}
                         data-test-id='change-confirm-password'
                     />
                 </Form.Item>
                 <Button
-                    className={s.sign_in__btn}
+                    className={styles.sign_in__btn}
                     type='primary'
                     htmlType='submit'
                     disabled={isInvalidConfirm}

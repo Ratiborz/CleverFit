@@ -2,13 +2,13 @@ import { Paths } from '@constants/paths';
 import { Breadcrumb } from 'antd';
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import s from './breadcrumb.module.scss';
+import styles from './breadcrumb.module.scss';
 
 const Breadcrumbs: React.FC = () => {
     const location = useLocation();
 
     return (
-        <Breadcrumb className={s.breadcrumb}>
+        <Breadcrumb className={styles.breadcrumb}>
             <Breadcrumb.Item>
                 <NavLink to={Paths.MAIN}>Главная</NavLink>
             </Breadcrumb.Item>
