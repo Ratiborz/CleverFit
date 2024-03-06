@@ -7,7 +7,7 @@ import { actions } from '@redux/reducers/feedback.slice';
 import { StarFilled, StarOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import { СreateFeedback } from '../../../types/valueRequest';
-import { useCreateFeedbacksMutation } from '@redux/api-rtk/feedback.api';
+import { useCreateFeedbacksMutation } from '@redux/api-rtk/feedbackRequests';
 
 export const WriteFeedbackModal = () => {
     const [form] = Form.useForm();

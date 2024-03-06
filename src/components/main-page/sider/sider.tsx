@@ -13,6 +13,7 @@ import 'antd/dist/antd.css';
 import React, { useState } from 'react';
 import styles from './sider.module.scss';
 import { Paths } from '@constants/paths';
+import { useLazyGetTrainingInfoQuery } from '@redux/api-rtk/calendarRequests';
 const { Sider } = Layout;
 
 type MenuItem = Required<MenuProps>['items'][number];
@@ -34,6 +35,17 @@ function getItem(
 export const Aside: React.FC = () => {
     const [collapsed, setCollapsed] = useState(false);
     const [mobileWidth, setMobileWidth] = useState(false);
+    const [trigger, result] = useLazyGetTrainingInfoQuery();
+
+    const switchToCalendar = (key: string) => {
+        if (key === '1') {
+            trigger()
+                .then((response) => console.log(response))
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+    };
 
     const items: MenuItem[] = [
         getItem('Календарь', '1', mobileWidth ? '' : <CalendarTwoTone twoToneColor='#10239E' />),
@@ -95,6 +107,7 @@ export const Aside: React.FC = () => {
                     <Menu
                         className={styles.menu}
                         style={{ overflow: 'hidden' }}
+                        onClick={({ key }) => switchToCalendar(key)}
                         theme='light'
                         defaultSelectedKeys={['1']}
                         mode='inline'
