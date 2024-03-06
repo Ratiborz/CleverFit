@@ -20,7 +20,6 @@ import { currentTime } from '@utils/utils';
 import { WriteFeedbackModal } from '@components/feedback/write-feedback/writeFeedback';
 import { actions } from '@redux/reducers/feedback.slice';
 import { StarFilled, StarOutlined } from '@ant-design/icons';
-import { useGetFeedBacksQuery } from '@redux/api-rtk/feedback.api';
 import { Loader } from '@components/loader/loader';
 import { history } from '@redux/configure-store';
 import { Paths } from '@constants/paths';
@@ -29,6 +28,7 @@ import { ModalError } from '@components/result/feedback-result/modal-error/modal
 import { ModalFaildCreate } from '@components/feedback/modal-error/modalError';
 import { SuccessModal } from '@components/feedback/success-modal/successModal';
 import { forbiddenStatus } from '@constants/constants/constants';
+import { useGetFeedBacksQuery } from '@redux/api-rtk/feedbackRequests';
 
 const backgroundImage = '/Main_page_light.png';
 
