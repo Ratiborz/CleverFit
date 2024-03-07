@@ -5,6 +5,7 @@ import { reducer as registrationReducer } from './reducers/registration.slice';
 import { reducer as repeatRequestsSlice } from './reducers/repeatRequests.slice';
 import { reducer as feedback } from './reducers/feedback.slice';
 import { api } from './api-rtk/api';
+import { reducer as commonModalSlice } from './reducers/commonModal.slice';
 
 const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({
     history: createBrowserHistory(),
@@ -15,6 +16,7 @@ const reducers = combineReducers({
     registration: registrationReducer,
     repeatRequests: repeatRequestsSlice,
     feedback: feedback,
+    commonModal: commonModalSlice,
     [api.reducerPath]: api.reducer,
 });
 

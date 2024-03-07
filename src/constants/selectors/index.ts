@@ -8,4 +8,5 @@ export {
     emailValueRegistration,
     warningSelector,
     beFeedbackSelector,
+    isModalOpenSelector,
 } from './selectors';

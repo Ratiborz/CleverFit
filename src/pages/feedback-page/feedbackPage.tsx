@@ -51,6 +51,7 @@ export const FeedbackPage: React.FC = () => {
             const localAccessToken = storageToken.getItem('accessToken');
             const sessionAccessToken = sessionToken.getItem('accessToken');
             const token = localAccessToken ?? sessionAccessToken;
+
             if ((error as FetchBaseQueryError).status === forbiddenStatus) {
                 localStorage.clear();
                 sessionStorage.clear();
