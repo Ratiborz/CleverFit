@@ -1,0 +1,59 @@
+.modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 539px;
+    width: 100%;
+}
+
+.card__btn {
+    height: 40px;
+    padding: 7px 15px;
+    border: 1px solid rgb(47, 84, 235);
+    background-color: rgb(47, 84, 235);
+    color: #fff;
+    width: 74px;
+    border-radius: 2px;
+    box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 130%;
+    &:hover {
+        background-color: #fff;
+        color: #2f54eb;
+    }
+}
+
+.card__img {
+    margin-bottom: 30px;
+}
+
+.card__h3 {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 130%;
+
+    margin-bottom: 0;
+}
+
+.card__descrip {
+    text-align: center;
+    max-width: 450px;
+    line-height: 130%;
+    margin-bottom: 24px;
+    color: #8c8c8c;
+}
+
+@media (max-width: 360px) {
+    .modal {
+        max-width: 328px;
+    }
+
+    .modal .ant-btn.ant-btn-default {
+        max-width: 296px;
+    }
+
+    .modal {
+        padding: 32px 16px;
+    }
+}

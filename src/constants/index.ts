@@ -9,6 +9,7 @@ export {
     emailValueRegistration,
     warningSelector,
     beFeedbackSelector,
+    isModalOpenSelector,
 } from './selectors';
 
-export { baseURL } from './constants';
+export { baseURL, backgroundImage, forbiddenStatus, authGoogle } from './constants';

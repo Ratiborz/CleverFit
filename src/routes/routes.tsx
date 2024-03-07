@@ -18,6 +18,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import { Registration } from '../components/auth/registration/registration';
 import { Paths } from '@constants/paths';
 import { FeedbackPage } from '@pages/feedback-page/feedbackPage';
+import { CalendarPage } from '@pages/calendar-page/calendarPage';
 
 export const routes = (
     <Routes>
@@ -27,6 +28,7 @@ export const routes = (
         />
         <Route path={Paths.MAIN} element={<MainPage />}></Route>
         <Route path={Paths.FEEDBACKS} element={<FeedbackPage />} />
+        <Route path={Paths.CALENDAR} element={<CalendarPage />} />
         <Route path={`${Paths.AUTH}/*`} element={<RegistrationPage />}>
             <Route index element={<Auth />} />
             <Route path={Paths.REGISTRATION} element={<Registration />} />
