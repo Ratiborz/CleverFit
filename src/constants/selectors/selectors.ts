@@ -16,4 +16,8 @@ export const isCreateFeedbackSuccessSelector = (state: RootState) =>
     state.feedback.isCreateFeedbackSuccess;
 export const StateModalErrorSelector = (state: RootState) => state.feedback.StateModalError;
 export const dataReviewSelector = (state: RootState) => state.feedback.dataReview;
+
 export const isModalOpenSelector = (state: RootState) => state.commonModal.warning;
+export const withOpenModalErrorSelector = (state: RootState) => state.calendar.warning;
+export const trainingListRepeatSelector = (state: RootState) => state.calendar.repeatRequest;
+export const createTrainingModalSelector = (state: RootState) => state.calendar.createTrainingModal;

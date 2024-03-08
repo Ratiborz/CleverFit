@@ -16,7 +16,7 @@ import { Paths } from '@constants/paths';
 import Loader from '@components/loader/loader';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 import { getTrainingInfo } from '../../../api/calendar';
-import { BadRequstModalError } from '@components/result/common-modal-result/badRequstModal';
+import { BadRequstModalError } from '@components/result/common-modal-result/badRequestModal/badRequstModal';
 import { actions } from '@redux/reducers/commonModal.slice';
 const { Sider } = Layout;
 
