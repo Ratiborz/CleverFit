@@ -11,9 +11,8 @@ import { Content } from 'antd/lib/layout/layout';
 import { Navigate } from 'react-router-dom';
 import styles from './mainPage.module.scss';
 import { loadingSelector } from '@constants/selectors/selectors';
+import { positionImage } from '@constants/constants';
 const Loader = React.lazy(() => import('@components/loader/loader'));
-
-const backgroundImage = '/Main_page_light.png';
 
 export const MainPage: React.FC = () => {
     const loading = useAppSelector(loadingSelector);
@@ -25,15 +24,7 @@ export const MainPage: React.FC = () => {
     return (
         <>
             {loading && <Loader />}
-            <Layout
-                className={styles.general_wrapper}
-                style={{
-                    backgroundImage: `url(${backgroundImage})`,
-                    backgroundSize: 'cover',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundPosition: 'top',
-                }}
-            >
+            <Layout className={styles.general_wrapper} style={positionImage}>
                 <Aside />
                 <Layout className={styles.main_container}>
                     <Header />

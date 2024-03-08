@@ -27,10 +27,8 @@ import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { ModalError } from '@components/result/feedback-result/modal-error/modalError';
 import { ModalFaildCreate } from '@components/feedback/modal-error/modalError';
 import { SuccessModal } from '@components/feedback/success-modal/successModal';
-import { forbiddenStatus } from '@constants/constants/constants';
+import { forbiddenStatus, positionImage } from '@constants/constants/constants';
 import { useGetFeedBacksQuery } from '@redux/api-rtk/feedbackRequests';
-
-const backgroundImage = '/Main_page_light.png';
 
 export const FeedbackPage: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -74,15 +72,7 @@ export const FeedbackPage: React.FC = () => {
             {isModalOpen && <ModalError />}
             {isModalError && <ModalFaildCreate />}
             {isSuccessModal && <SuccessModal />}
-            <Layout
-                className={styles.general_wrapper}
-                style={{
-                    backgroundImage: `url(${backgroundImage})`,
-                    backgroundSize: 'cover',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundPosition: 'top',
-                }}
-            >
+            <Layout className={styles.general_wrapper} style={positionImage}>
                 <Aside />
                 <Layout className={styles.main_container}>
                     <Breadcrumbs />

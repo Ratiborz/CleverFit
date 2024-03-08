@@ -20,7 +20,7 @@ export const RegistrationPage: React.FC = () => {
     const rememberMe = useAppSelector(rememberMeSelector);
     const [loading, setLoading] = useState(false);
 
-    const activeTabKey = location.pathname === '/auth' ? '1' : '2';
+    const activeTabKey = location.pathname === Paths.AUTH ? '1' : '2';
 
     useEffect(() => {
         if (repeatRequestData.email && repeatRequestData.password) {

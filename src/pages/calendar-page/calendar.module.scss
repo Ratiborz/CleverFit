@@ -1,7 +1,58 @@
+@import '/src/variables.scss';
+.main_container {
+    width: 100%;
+    background: none;
+    overflow: hidden;
+}
 .main_container :global .ant-breadcrumb {
-    padding: 16px 0 16px 24px;
+    padding: 16px 0 8px 24px;
+}
+
+.settings_btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 110px;
+    width: 100%;
+    color: black;
+    margin-right: 40px;
+    margin-bottom: 5px;
+}
+
+.wrapper_btn {
+    display: flex;
+    justify-content: flex-end;
+    background-color: #f0f5ff;
+}
+
+.wrapper_calendar {
+    display: flex;
+    justify-content: center;
+    background-color: #f0f5ff;
+    padding-bottom: 93px;
 }
 
 .calendar {
     max-width: 1184px;
+    background: #f0f5ff;
+}
+
+.calendar :global .ant-picker-body {
+    padding: 0 !important;
+}
+
+.calendar :global thead {
+    background-color: #f0f5ff;
+}
+
+.calendar :global .ant-picker-cell-inner.ant-picker-calendar-date {
+    background-color: #fff;
+}
+
+.calendar :global .ant-picker-panel {
+    background-color: #f0f5ff;
+}
+
+.calendar :global th {
+    color: $text-description-color;
 }
