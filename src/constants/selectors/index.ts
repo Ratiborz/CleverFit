@@ -11,5 +11,5 @@ export {
     isModalOpenSelector,
     withOpenModalErrorSelector,
     trainingListRepeatSelector,
-    createTrainingModalSelector,
+    trainingDataSelector,
 } from './selectors';

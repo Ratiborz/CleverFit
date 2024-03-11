@@ -20,4 +20,4 @@ export const dataReviewSelector = (state: RootState) => state.feedback.dataRevie
 export const isModalOpenSelector = (state: RootState) => state.commonModal.warning;
 export const withOpenModalErrorSelector = (state: RootState) => state.calendar.warning;
 export const trainingListRepeatSelector = (state: RootState) => state.calendar.repeatRequest;
-export const createTrainingModalSelector = (state: RootState) => state.calendar.createTrainingModal;
+export const trainingDataSelector = (state: RootState) => state.calendar.trainingData;

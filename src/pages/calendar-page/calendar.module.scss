@@ -1,4 +1,5 @@
 @import '/src/variables.scss';
+
 .main_container {
     width: 100%;
     background: none;
@@ -30,6 +31,7 @@
     justify-content: center;
     background-color: #f0f5ff;
     padding-bottom: 93px;
+    overflow: hidden;
 }
 
 .calendar {
@@ -45,8 +47,13 @@
     background-color: #f0f5ff;
 }
 
+.calendar :global .ant-picker-cell .ant-picker-cell-inner {
+    position: static;
+}
+
 .calendar :global .ant-picker-cell-inner.ant-picker-calendar-date {
     background-color: #fff;
+    height: 149px;
 }
 
 .calendar :global .ant-picker-panel {
