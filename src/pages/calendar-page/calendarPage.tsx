@@ -4,7 +4,11 @@ import styles from './calendar.module.scss';
 import { Aside } from '@components/main-page/sider/sider';
 import { Button, Calendar, Layout } from 'antd';
 import Breadcrumbs from '@components/breadcrumb/breadcrumb';
-import { useGetTrainingListInfoQuery } from '@redux/api-rtk/calendarRequests';
+import {
+    useCreateTrainingMutation,
+    useGetTrainingListInfoQuery,
+    useGetTrainingQuery,
+} from '@redux/api-rtk/calendarRequests';
 import Ru from 'antd/es/calendar/locale/ru_RU';
 import moment from 'moment';
 import 'moment/locale/ru';
@@ -13,9 +17,9 @@ import { WithOpenError } from '@components/result/calendar-modal-result/with-ope
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { actions } from '@redux/reducers/calendar.slice';
-import { trainingListRepeatSelector } from '@constants/selectors';
-import { CreateTrainingModal } from '@components/calendar/create-training-modal/createTrainingModal';
+import { trainingDataSelector, trainingListRepeatSelector } from '@constants/selectors';
 import type { Moment } from 'moment';
+import { CalendarCell } from '@components/calendar/calendar-cell/calendarCell';
 
 moment.updateLocale('ru', {
     weekdaysMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
@@ -39,24 +43,29 @@ moment.updateLocale('ru', {
 export const CalendarPage: React.FC = () => {
     const dispatch = useAppDispatch();
     const repeatRequest = useAppSelector(trainingListRepeatSelector);
-    const { isLoading, isError, refetch } = useGetTrainingListInfoQuery();
+    const { isLoading, isError, refetch, data } = useGetTrainingListInfoQuery();
+    const [activeDateModal, setActiveDateModal] = useState('');
+    const tranings = useAppSelector(trainingDataSelector);
 
-    const [popoverVisible, setPopoverVisible] = useState<{ [key: string]: boolean }>({});
+    const handleDateClick = (date: string) => {
+        setActiveDateModal(date);
+    };
 
-    // console.log(date.format('YYYY.MM.DD')
-    const onSelect = (date: Moment) => {
-        const parentBlock = document.querySelector('.ant-picker-body');
-        const currentBlock = parentBlock?.querySelector('.ant-picker-cell-selected');
+    const handleCloseModal = () => {
+        setActiveDateModal('');
+    };
 
-        if (currentBlock) {
-            const rect = currentBlock.getBoundingClientRect();
-            const top = rect.top; // координата верхнего края плитки
-            const left = rect.left; // координата левого края плитки
+    const dateCellRender = (date: Moment) => {
+        // const dateValue = value.format('DD.MM.yyyy');
 
-            // Показывать модальное окно с учетом координат top и left
-        }
-
-        console.log(date);
+        return (
+            <CalendarCell
+                tranings={tranings}
+                date={date}
+                handleCloseModal={handleCloseModal}
+                activeDateModal={activeDateModal}
+            />
+        );
     };
 
     useEffect(() => {
@@ -91,15 +100,21 @@ export const CalendarPage: React.FC = () => {
                         <Calendar
                             locale={Ru}
                             className={styles.calendar}
-                            dateCellRender={(date: Moment) => <CreateTrainingModal />}
-                            onSelect={onSelect}
+                            dateCellRender={(date) => dateCellRender(date)}
+                            onSelect={(value: Moment) => {
+                                const stringValue = value.format('DD.MM.yyyy');
+                                console.log(stringValue);
+
+                                if (stringValue !== activeDateModal) {
+                                    handleDateClick(stringValue);
+                                }
+                            }}
                         />
                     </div>
                 </Layout>
             </Layout>
 
             <WithOpenError />
-            {/* <CreateTrainingModal /> */}
         </>
     );
 };

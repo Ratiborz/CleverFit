@@ -12,7 +12,7 @@ export {
     isModalOpenSelector,
     withOpenModalErrorSelector,
     trainingListRepeatSelector,
-    createTrainingModalSelector,
+    trainingDataSelector,
 } from './selectors';
 
 export { baseURL, backgroundImage, forbiddenStatus, authGoogle, positionImage } from './constants';

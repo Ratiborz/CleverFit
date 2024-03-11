@@ -1,15 +1,16 @@
+import { Exercise, Training } from '../../types/calendarTypes';
 import { createSlice } from '@reduxjs/toolkit';
 
 interface Modal {
     warning: boolean;
     repeatRequest: boolean;
-    createTrainingModal: boolean;
+    trainingData: Training[];
 }
 
 const initialState: Modal = {
     warning: false,
     repeatRequest: false,
-    createTrainingModal: true,
+    trainingData: [],
 };
 
 export const calendarSlice = createSlice({
@@ -22,10 +23,25 @@ export const calendarSlice = createSlice({
         setRepeatRequest: (state, { payload }) => {
             state.repeatRequest = payload;
         },
-        setCreateTrainingModal: (state, { payload }) => {
-            state.createTrainingModal = payload;
+        setTrainingData: (state, { payload }) => {
+            state.trainingData = payload;
+            console.log(state.trainingData);
         },
     },
 });
 
 export const { actions, reducer } = calendarSlice;
+
+// trainingData: {
+//     id: '',
+//     name: '',
+//     date: '',
+//     userId: '',
+//     parameters: {
+//         repeat: false,
+//         period: 7,
+//         jointTraining: false,
+//         participants: [],
+//     },
+//     exercises: [],
+// }
