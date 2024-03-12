@@ -13,6 +13,7 @@ export {
     withOpenModalErrorSelector,
     trainingListRepeatSelector,
     trainingDataSelector,
+    trainingsListSelector,
 } from './selectors';
 
 export { baseURL, backgroundImage, forbiddenStatus, authGoogle, positionImage } from './constants';

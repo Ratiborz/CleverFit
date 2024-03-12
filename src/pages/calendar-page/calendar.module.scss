@@ -63,3 +63,7 @@
 .calendar :global th {
     color: $text-description-color;
 }
+
+.calendar :global .ant-picker-calendar-date-content {
+    height: 111px !important;
+}

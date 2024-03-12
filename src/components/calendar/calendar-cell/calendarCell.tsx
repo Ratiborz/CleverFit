@@ -1,24 +1,31 @@
-import { CreateTrainingModal } from '@components/calendar/create-training-modal/createTrainingModal';
 import styles from './calendarCell.module.scss';
 import { useRef } from 'react';
 import { Badge } from 'antd';
 import { Training } from '../../../types/calendarTypes';
-import { getBadgeColor } from '../choose-color-badge/chooseColorBadge';
+import { getCurrentColor } from '../choose-color-badge/chooseColorBadge';
 import type { Moment } from 'moment';
+import { CreateTrainingModal } from '../create-training-modal/createTrainingModal';
 
 type Props = {
-    date: Moment;
+    dateForBadge: Moment;
     activeDateModal: string;
     handleCloseModal: () => void;
     tranings: Training[];
+    dateForModal: string;
 };
-export const CalendarCell = ({ date, tranings, handleCloseModal, activeDateModal }: Props) => {
+export const CalendarCell = ({
+    dateForBadge,
+    tranings,
+    handleCloseModal,
+    activeDateModal,
+    dateForModal,
+}: Props) => {
     const positionRef = useRef<HTMLDivElement>(null);
 
     const filteredTrainings = tranings.filter((training) => {
         const trainingDate = new Date(training.date);
         const trainingDateString = trainingDate.toISOString().slice(0, 10);
-        return trainingDateString === date.format('YYYY-MM-DD');
+        return trainingDateString === dateForBadge.format('YYYY-MM-DD');
     });
 
     const trainingNames = filteredTrainings.map((training) => training.name);
@@ -26,24 +33,32 @@ export const CalendarCell = ({ date, tranings, handleCloseModal, activeDateModal
     return (
         <div className='modal' ref={positionRef}>
             {
-                <ul style={{ listStyle: 'none', margin: 0 }}>
+                <ul
+                    style={{
+                        listStyle: 'none',
+                        margin: 0,
+                        padding: 0,
+                    }}
+                >
                     {trainingNames.map((name) => (
                         <li style={{ fontSize: '12px' }} key={name}>
-                            <Badge color={getBadgeColor(name)} style={{ marginRight: '8px' }} />
+                            <Badge color={getCurrentColor(name)} style={{ marginRight: '8px' }} />
                             {name}
                         </li>
                     ))}
                 </ul>
             }
-            {/* {date === activeDateModal && (
+            {dateForModal === activeDateModal && (
                 <CreateTrainingModal
-                    date={date}
+                    date={dateForModal}
+                    dateMoment={dateForBadge}
                     handleClose={handleCloseModal}
                     isRightPosition={
                         (positionRef?.current?.getBoundingClientRect?.()?.left || 0) + 264 > 1500
                     }
+                    trainingNames={trainingNames}
                 />
-            )} */}
+            )}
         </div>
     );
 };
