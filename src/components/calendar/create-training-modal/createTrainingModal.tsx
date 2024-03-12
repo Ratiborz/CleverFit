@@ -1,54 +1,65 @@
-import { Button, Divider, Image, Typography } from 'antd';
 import styles from './createTrainingModal.module.scss';
-import { CloseIcon } from '../../../assets/close-icon/closeIcon';
-import { useCreateTrainingMutation } from '@redux/api-rtk/calendarRequests';
+import { useState } from 'react';
+import { ChooseTypeWorkout } from '../choose-type-workout/chooseTypeWorkout';
+import { TrainingList } from '../training-list/trainingList';
+import type { Moment } from 'moment';
 
 type Props = {
     date: string;
     handleClose: () => void;
     isRightPosition: boolean;
+    trainingNames: string[];
+    dateMoment: Moment;
 };
 
-export const CreateTrainingModal = ({ date, handleClose, isRightPosition }: Props) => {
-    const [createTraining, { isLoading, data, error }] = useCreateTrainingMutation();
-    console.log(error);
+export const CreateTrainingModal = ({
+    date,
+    handleClose,
+    isRightPosition,
+    trainingNames,
+    dateMoment,
+}: Props) => {
+    const [addExercises, setAddExercises] = useState(false);
 
-    const handleTraining = () => {
-        const test = {
-            name: 'Ноги',
-            date: '2024-03-10T13:47:30.548Z',
-            exercises: [
-                {
-                    name: 'Кардио',
-                    replays: 0,
-                    weight: 0,
-                    approaches: 0,
-                    isImplementation: false,
-                },
-            ],
-        };
-        createTraining(test);
+    const swapModal = () => {
+        setAddExercises(!addExercises);
     };
 
     return (
-        <div className={isRightPosition ? styles.modal_right : styles.modal}>
-            <div className={styles.wrapper_header}>
-                <div>
-                    <h3 className={styles.modal__h3}>{`Тренировки на ${date}`}</h3>
-                    <Typography className={styles.modal__descrip}>
-                        Нет активных тренировок
-                    </Typography>
-                </div>
-                <div onClick={handleClose}>
-                    <CloseIcon />
-                </div>
-            </div>
-
-            <Image src='/empty-image.svg' width={32} preview={false} className={styles.empty_img} />
-            <Divider />
-            <Button className={styles.modal__btn} onClick={handleTraining}>
-                Создать тренировку
-            </Button>
-        </div>
+        <>
+            {addExercises ? (
+                <ChooseTypeWorkout
+                    isRightPosition={isRightPosition}
+                    trainingNames={trainingNames}
+                    swapModal={swapModal}
+                    dateMoment={dateMoment}
+                />
+            ) : (
+                <TrainingList
+                    isRightPosition={isRightPosition}
+                    date={date}
+                    trainingNames={trainingNames}
+                    swapModal={swapModal}
+                    handleClose={handleClose}
+                />
+            )}
+        </>
     );
 };
+// const [createTraining, { isLoading, data, error }] = useCreateTrainingMutation();
+// const handleTraining = () => {
+//     const test = {
+//         name: 'Грудь',
+//         date: '2024-03-31T13:47:30.548Z',
+//         exercises: [
+//             {
+//                 name: 'Кардио',
+//                 replays: 0,
+//                 weight: 0,
+//                 approaches: 0,
+//                 isImplementation: false,
+//             },
+//         ],
+//     };
+//     createTraining(test);
+// };

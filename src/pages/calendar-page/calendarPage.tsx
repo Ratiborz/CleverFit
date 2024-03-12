@@ -4,11 +4,7 @@ import styles from './calendar.module.scss';
 import { Aside } from '@components/main-page/sider/sider';
 import { Button, Calendar, Layout } from 'antd';
 import Breadcrumbs from '@components/breadcrumb/breadcrumb';
-import {
-    useCreateTrainingMutation,
-    useGetTrainingListInfoQuery,
-    useGetTrainingQuery,
-} from '@redux/api-rtk/calendarRequests';
+import { useGetTrainingListInfoQuery } from '@redux/api-rtk/calendarRequests';
 import Ru from 'antd/es/calendar/locale/ru_RU';
 import moment from 'moment';
 import 'moment/locale/ru';
@@ -43,9 +39,22 @@ moment.updateLocale('ru', {
 export const CalendarPage: React.FC = () => {
     const dispatch = useAppDispatch();
     const repeatRequest = useAppSelector(trainingListRepeatSelector);
-    const { isLoading, isError, refetch, data } = useGetTrainingListInfoQuery();
+    const { isLoading, isError, isSuccess, refetch, data } = useGetTrainingListInfoQuery();
     const [activeDateModal, setActiveDateModal] = useState('');
     const tranings = useAppSelector(trainingDataSelector);
+
+    useEffect(() => {
+        if (isSuccess) {
+            dispatch(actions.setTrainingsList(data));
+        }
+        if (isError) {
+            dispatch(actions.setErrorWithOpen(isError));
+        }
+        if (repeatRequest) {
+            refetch();
+            dispatch(actions.setRepeatRequest(false));
+        }
+    }, [isError, repeatRequest, isSuccess]);
 
     const handleDateClick = (date: string) => {
         setActiveDateModal(date);
@@ -55,28 +64,19 @@ export const CalendarPage: React.FC = () => {
         setActiveDateModal('');
     };
 
-    const dateCellRender = (date: Moment) => {
-        // const dateValue = value.format('DD.MM.yyyy');
+    const dateCellRender = (value: Moment) => {
+        const dateValue = value.format('DD.MM.yyyy');
 
         return (
             <CalendarCell
                 tranings={tranings}
-                date={date}
+                dateForBadge={value}
+                dateForModal={dateValue}
                 handleCloseModal={handleCloseModal}
                 activeDateModal={activeDateModal}
             />
         );
     };
-
-    useEffect(() => {
-        if (isError) {
-            dispatch(actions.setErrorWithOpen(isError));
-        }
-        if (repeatRequest) {
-            refetch();
-            dispatch(actions.setRepeatRequest(false));
-        }
-    }, [isError, repeatRequest]);
 
     return (
         <>
@@ -100,10 +100,9 @@ export const CalendarPage: React.FC = () => {
                         <Calendar
                             locale={Ru}
                             className={styles.calendar}
-                            dateCellRender={(date) => dateCellRender(date)}
+                            dateCellRender={dateCellRender}
                             onSelect={(value: Moment) => {
                                 const stringValue = value.format('DD.MM.yyyy');
-                                console.log(stringValue);
 
                                 if (stringValue !== activeDateModal) {
                                     handleDateClick(stringValue);

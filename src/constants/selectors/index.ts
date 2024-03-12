@@ -12,4 +12,5 @@ export {
     withOpenModalErrorSelector,
     trainingListRepeatSelector,
     trainingDataSelector,
+    trainingsListSelector,
 } from './selectors';

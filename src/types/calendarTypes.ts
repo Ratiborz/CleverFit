@@ -26,21 +26,6 @@ export type Training = {
     exercises: Exercise[];
 };
 
-// export type Training = {
-//     id: string;
-//     name: string;
-//     date: string;
-//     isImplementation?: false;
-//     userId: string;
-//     parameters?: {
-//         repeat: boolean;
-//         period: number;
-//         jointTraining: boolean;
-//         participants: string[];
-//     };
-//     exercises: Exercise[];
-// }[];
-
 export type CreateTraining = {
     name: string;
     date: string;
@@ -51,4 +36,9 @@ export type CreateTraining = {
         approaches: number;
         isImplementation: boolean;
     }[];
+};
+
+export type TrainingsListItem = {
+    name: string;
+    key: string;
 };
