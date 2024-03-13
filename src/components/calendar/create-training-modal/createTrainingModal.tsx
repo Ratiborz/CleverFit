@@ -46,20 +46,3 @@ export const CreateTrainingModal = ({
         </>
     );
 };
-// const [createTraining, { isLoading, data, error }] = useCreateTrainingMutation();
-// const handleTraining = () => {
-//     const test = {
-//         name: 'Грудь',
-//         date: '2024-03-31T13:47:30.548Z',
-//         exercises: [
-//             {
-//                 name: 'Кардио',
-//                 replays: 0,
-//                 weight: 0,
-//                 approaches: 0,
-//                 isImplementation: false,
-//             },
-//         ],
-//     };
-//     createTraining(test);
-// };

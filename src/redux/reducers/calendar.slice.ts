@@ -1,4 +1,4 @@
-import { Training, TrainingsListItem } from '../../types/calendarTypes';
+import { InputsData, Training, TrainingsListItem } from '../../types/calendarTypes';
 import { createSlice } from '@reduxjs/toolkit';
 
 interface Modal {
@@ -6,6 +6,8 @@ interface Modal {
     repeatRequest: boolean;
     trainingData: Training[];
     trainingsList: TrainingsListItem[];
+    inputsData: InputsData[];
+    selectedTraining: string;
 }
 
 const initialState: Modal = {
@@ -13,6 +15,8 @@ const initialState: Modal = {
     repeatRequest: false,
     trainingData: [],
     trainingsList: [],
+    inputsData: [],
+    selectedTraining: '',
 };
 
 export const calendarSlice = createSlice({
@@ -30,6 +34,13 @@ export const calendarSlice = createSlice({
         },
         setTrainingsList: (state, { payload }) => {
             state.trainingsList = payload;
+        },
+        setInputsData: (state, { payload }) => {
+            state.inputsData = payload;
+            console.log(state.inputsData);
+        },
+        setSelectedTraining: (state, { payload }) => {
+            state.selectedTraining = payload;
         },
     },
 });

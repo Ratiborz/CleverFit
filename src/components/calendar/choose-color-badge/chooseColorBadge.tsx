@@ -3,7 +3,7 @@ export const getCurrentColor = (value: string): string => {
         case 'ноги':
             return 'red';
         case 'силовая':
-            return 'green';
+            return 'yellow';
         case 'руки':
             return 'blue';
         case 'грудь':

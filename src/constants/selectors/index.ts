@@ -13,4 +13,6 @@ export {
     trainingListRepeatSelector,
     trainingDataSelector,
     trainingsListSelector,
+    inputsDataSelector,
+    selectedTrainingSelector,
 } from './selectors';
