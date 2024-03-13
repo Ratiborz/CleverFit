@@ -1,3 +1,5 @@
+import type { Moment } from 'moment';
+
 export type Exercise = {
     id: string;
     name: string;
@@ -41,4 +43,12 @@ export type CreateTraining = {
 export type TrainingsListItem = {
     name: string;
     key: string;
+};
+
+export type InputsData = {
+    name: string;
+    replays: number;
+    weight: number;
+    count: number;
+    date: string;
 };

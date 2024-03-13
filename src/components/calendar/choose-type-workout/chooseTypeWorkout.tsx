@@ -1,12 +1,16 @@
-import { Button, Divider, Drawer, Select } from 'antd';
+import { Button, Divider, Image, Select, Spin } from 'antd';
 import { ArrowBack } from '../../../assets/arrow-back/arrowBack';
 import styles from './chooseTypeWorkout.module.scss';
 import classNames from 'classnames';
-import { useAppSelector } from '@hooks/typed-react-redux-hooks';
-import { trainingsListSelector } from '@constants/selectors';
-import { useState } from 'react';
+import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { inputsDataSelector, trainingsListSelector } from '@constants/selectors';
+import { useEffect, useState } from 'react';
 import type { Moment } from 'moment';
 import { Drawerz } from '../drawer/drawer';
+import { EditOutlined, LoadingOutlined } from '@ant-design/icons';
+import { useCreateTrainingMutation } from '@redux/api-rtk/calendarRequests';
+import { selectedTrainingSelector } from '@constants/selectors/selectors';
+import { actions } from '@redux/reducers/calendar.slice';
 
 type Props = {
     swapModal: () => void;
@@ -21,13 +25,42 @@ export const ChooseTypeWorkout = ({
     swapModal,
     dateMoment,
 }: Props) => {
+    const dispatch = useAppDispatch();
     const [open, setOpen] = useState(false);
-    const [selectedTraining, setSelectedTraining] = useState('');
+    const selectedTraining = useAppSelector(selectedTrainingSelector);
+    const inputsData = useAppSelector(inputsDataSelector);
+    const [createTraining, { isLoading, data, error, isSuccess }] = useCreateTrainingMutation();
+    console.log(error);
+
+    useEffect(() => {
+        if (isSuccess) {
+            swapModal();
+        }
+    }, [isSuccess]);
 
     const trainingsList = useAppSelector(trainingsListSelector);
     const currentTrainingForSelect = trainingsList.filter(
         (trainingItem) => !trainingNames.includes(trainingItem.name),
     );
+
+    const currentTime = dateMoment.format('DD.MM.YYYY') === inputsData[0]?.date;
+
+    const saveExercises = () => {
+        const training = {
+            name: selectedTraining,
+            date: dateMoment.toISOString(),
+            exercises: inputsData.map((input) => {
+                return {
+                    name: input.name,
+                    replays: input.replays,
+                    weight: input.weight,
+                    approaches: input.count,
+                    isImplementation: false,
+                };
+            }),
+        };
+        createTraining(training);
+    };
 
     return (
         <>
@@ -45,7 +78,7 @@ export const ChooseTypeWorkout = ({
                         <Select
                             defaultValue='Выбор типа тренировки'
                             style={{ width: 220 }}
-                            onSelect={(training) => setSelectedTraining(training)}
+                            onSelect={(training) => dispatch(actions.setSelectedTraining(training))}
                             bordered={false}
                             options={currentTrainingForSelect?.map(({ name }) => ({
                                 value: name,
@@ -55,6 +88,25 @@ export const ChooseTypeWorkout = ({
                     </div>
                     <Divider className={styles.divider_top} />
                 </div>
+                {currentTime ? (
+                    <div className={styles.container__exercises}>
+                        {inputsData.map((item, index) => (
+                            <div key={index} className={styles.exercise}>
+                                <p>{item.name}</p>
+                                <div className={styles.change} onClick={() => setOpen(true)}>
+                                    <EditOutlined style={{ color: '#2F54EB' }} />
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <Image
+                        src='/empty-image.svg'
+                        width={32}
+                        preview={false}
+                        className={styles.empty_img}
+                    />
+                )}
                 <div className={styles.buttons}>
                     <Divider className={styles.divider_bottom} />
                     <Button
@@ -64,7 +116,22 @@ export const ChooseTypeWorkout = ({
                     >
                         Добавить упражнения
                     </Button>
-                    <Button type='text' disabled>
+                    <Button
+                        className={styles.add__training_btn}
+                        type='link'
+                        disabled={currentTime ? false : true}
+                        onClick={() => saveExercises()}
+                    >
+                        {isLoading && (
+                            <Spin
+                                indicator={
+                                    <LoadingOutlined
+                                        style={{ fontSize: 14, marginRight: 8, color: '#2F54EBFF' }}
+                                        spin
+                                    />
+                                }
+                            />
+                        )}
                         Сохранить
                     </Button>
                 </div>
