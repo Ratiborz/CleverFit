@@ -1,10 +1,8 @@
-import type { Moment } from 'moment';
-
 export type Exercise = {
     id: string;
     name: string;
     replays: number;
-    wight: number;
+    weight: number;
     approaches: number;
     isImplementation: boolean;
 };

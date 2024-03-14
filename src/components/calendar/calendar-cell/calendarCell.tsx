@@ -57,6 +57,7 @@ export const CalendarCell = ({
                         (positionRef?.current?.getBoundingClientRect?.()?.left || 0) + 264 > 1500
                     }
                     trainingNames={trainingNames}
+                    tranings={tranings}
                 />
             )}
         </div>

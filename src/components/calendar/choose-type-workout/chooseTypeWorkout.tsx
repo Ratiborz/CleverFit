@@ -11,6 +11,7 @@ import { EditOutlined, LoadingOutlined } from '@ant-design/icons';
 import { useCreateTrainingMutation } from '@redux/api-rtk/calendarRequests';
 import { selectedTrainingSelector } from '@constants/selectors/selectors';
 import { actions } from '@redux/reducers/calendar.slice';
+import { getTrainingInfo } from '../../../api/calendar';
 
 type Props = {
     swapModal: () => void;
@@ -29,16 +30,25 @@ export const ChooseTypeWorkout = ({
     const [open, setOpen] = useState(false);
     const selectedTraining = useAppSelector(selectedTrainingSelector);
     const inputsData = useAppSelector(inputsDataSelector);
-    const [createTraining, { isLoading, data, error, isSuccess }] = useCreateTrainingMutation();
-    console.log(error);
+    const trainingsList = useAppSelector(trainingsListSelector);
+    const [createTraining, { isLoading, isSuccess, isError }] = useCreateTrainingMutation();
 
     useEffect(() => {
         if (isSuccess) {
             swapModal();
+            getTrainingInfo()
+                .then((response) => {
+                    dispatch(actions.setTrainingData(response.data));
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         }
-    }, [isSuccess]);
+        if (isError) {
+            dispatch(actions.setModalError(isError));
+        }
+    }, [isSuccess, isError]);
 
-    const trainingsList = useAppSelector(trainingsListSelector);
     const currentTrainingForSelect = trainingsList.filter(
         (trainingItem) => !trainingNames.includes(trainingItem.name),
     );
@@ -76,8 +86,8 @@ export const ChooseTypeWorkout = ({
                             <ArrowBack />
                         </div>
                         <Select
-                            defaultValue='Выбор типа тренировки'
                             style={{ width: 220 }}
+                            value={selectedTraining ? selectedTraining : 'Выбор типа тренировки'}
                             onSelect={(training) => dispatch(actions.setSelectedTraining(training))}
                             bordered={false}
                             options={currentTrainingForSelect?.map(({ name }) => ({
