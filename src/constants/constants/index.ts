@@ -1,1 +1,8 @@
-export { baseURL, backgroundImage, forbiddenStatus, authGoogle, positionImage } from './constants';
+export {
+    baseURL,
+    backgroundImage,
+    forbiddenStatus,
+    authGoogle,
+    positionImage,
+    maskStyle,
+} from './constants';

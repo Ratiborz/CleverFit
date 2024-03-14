@@ -15,4 +15,5 @@ export {
     trainingsListSelector,
     inputsDataSelector,
     selectedTrainingSelector,
+    modalErrorWithSaveSelector,
 } from './selectors';

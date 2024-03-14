@@ -3,6 +3,7 @@ import styles from './modalError.module.scss';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { actions } from '@redux/reducers/feedback.slice';
 import { StateModalErrorSelector } from '@constants/selectors/selectors';
+import { maskStyle } from '@constants/constants';
 
 export const ModalFaildCreate = () => {
     const dispatch = useAppDispatch();
@@ -17,7 +18,7 @@ export const ModalFaildCreate = () => {
 
     return (
         <Modal
-            maskStyle={{ backgroundColor: 'rgba(121, 156, 213, 0.5)', backdropFilter: 'blur(5px)' }}
+            maskStyle={maskStyle}
             centered
             open={isModalError}
             closable={false}

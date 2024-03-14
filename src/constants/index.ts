@@ -16,6 +16,14 @@ export {
     trainingsListSelector,
     inputsDataSelector,
     selectedTrainingSelector,
+    modalErrorWithSaveSelector,
 } from './selectors';
 
-export { baseURL, backgroundImage, forbiddenStatus, authGoogle, positionImage } from './constants';
+export {
+    baseURL,
+    backgroundImage,
+    forbiddenStatus,
+    authGoogle,
+    positionImage,
+    maskStyle,
+} from './constants';
