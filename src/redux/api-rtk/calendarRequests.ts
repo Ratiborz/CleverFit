@@ -16,8 +16,19 @@ export const calendarRequests = api.injectEndpoints({
         getTrainingListInfo: builder.query<string, void>({
             query: () => 'catalogs/training-list',
         }),
+        editTraining: builder.mutation<Training, { id: string; training: Training }>({
+            query: ({ training, id }) => ({
+                url: `training/${id}`,
+                body: training,
+                method: 'PUT',
+            }),
+        }),
     }),
 });
 
-export const { useGetTrainingListInfoQuery, useGetTrainingQuery, useCreateTrainingMutation } =
-    calendarRequests;
+export const {
+    useGetTrainingListInfoQuery,
+    useGetTrainingQuery,
+    useCreateTrainingMutation,
+    useEditTrainingMutation,
+} = calendarRequests;

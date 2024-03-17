@@ -49,6 +49,7 @@ export const Aside: React.FC = () => {
             getTrainingInfo()
                 .then((response) => {
                     dispatch(actionsCalendar.setTrainingData(response.data));
+                    console.log(response.data);
                     history.push(Paths.CALENDAR);
                 })
                 .catch((error) => {

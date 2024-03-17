@@ -29,7 +29,7 @@ export const CalendarCell = ({
     });
 
     const trainingNames = filteredTrainings.map((training) => training.name);
-
+    // console.log(dateForBadge.toISOString());
     return (
         <div className='modal' ref={positionRef}>
             {

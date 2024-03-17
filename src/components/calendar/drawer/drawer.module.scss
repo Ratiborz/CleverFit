@@ -1,3 +1,4 @@
+@import '/src/variables.scss';
 div.drawer {
     :global {
         .ant-drawer-close {
@@ -29,66 +30,10 @@ div.drawer {
             width: 120px;
         }
 
-        .ant-input-number-input {
+        .ant-input {
             height: 24px;
         }
     }
-}
-
-.exercises {
-    height: 24px;
-    margin-bottom: 8px;
-}
-
-.descrip__text {
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
-    margin-bottom: 8px;
-}
-
-.repeat,
-.weight,
-.count {
-    font-size: 12px;
-    background: #f0f0f0;
-    max-width: 120px;
-    width: 100%;
-    padding: 3px 8px;
-    height: 24px;
-}
-
-.weight,
-.count {
-    max-width: 89px;
-}
-
-.inputs__wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #bfbfbf;
-    margin-bottom: 24px;
-}
-
-.wrapper__weight_count {
-    display: flex;
-}
-
-.separator {
-    margin-left: 7px;
-    margin-right: 7px;
-}
-
-.addMore_btn {
-    display: flex;
-    align-items: center;
-
-    padding: 7px 12px;
-    border-radius: 0 0 5px 5px;
-    width: 100%;
-    height: 40px;
-    background-color: #f0f0f0;
 }
 
 .badge__content {
@@ -100,5 +45,5 @@ div.drawer {
 
 .selected_trainings,
 .date {
-    color: #8c8c8c;
+    color: $text-description-color;
 }

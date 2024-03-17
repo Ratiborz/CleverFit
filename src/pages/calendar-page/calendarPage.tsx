@@ -66,7 +66,6 @@ export const CalendarPage: React.FC = () => {
 
     const dateCellRender = (value: Moment) => {
         const dateValue = value.format('DD.MM.yyyy');
-
         return (
             <CalendarCell
                 tranings={tranings}

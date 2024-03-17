@@ -8,16 +8,25 @@ import { useEffect, useState } from 'react';
 import type { Moment } from 'moment';
 import { Drawerz } from '../drawer/drawer';
 import { EditOutlined, LoadingOutlined } from '@ant-design/icons';
-import { useCreateTrainingMutation } from '@redux/api-rtk/calendarRequests';
-import { selectedTrainingSelector } from '@constants/selectors/selectors';
+import {
+    useCreateTrainingMutation,
+    useEditTrainingMutation,
+} from '@redux/api-rtk/calendarRequests';
+import {
+    editFlowSelector,
+    firstSelectedTrainingSelector,
+    selectedTrainingSelector,
+} from '@constants/selectors/selectors';
 import { actions } from '@redux/reducers/calendar.slice';
 import { getTrainingInfo } from '../../../api/calendar';
+import { Training } from '../../../types/calendarTypes';
 
 type Props = {
     swapModal: () => void;
     isRightPosition: boolean;
     trainingNames: string[];
     dateMoment: Moment;
+    tranings: Training[];
 };
 
 export const ChooseTypeWorkout = ({
@@ -25,16 +34,23 @@ export const ChooseTypeWorkout = ({
     trainingNames,
     swapModal,
     dateMoment,
+    tranings,
 }: Props) => {
     const dispatch = useAppDispatch();
     const [open, setOpen] = useState(false);
     const selectedTraining = useAppSelector(selectedTrainingSelector);
+    const firstSelectedTraining = useAppSelector(firstSelectedTrainingSelector);
     const inputsData = useAppSelector(inputsDataSelector);
     const trainingsList = useAppSelector(trainingsListSelector);
+    const editFlow = useAppSelector(editFlowSelector);
     const [createTraining, { isLoading, isSuccess, isError }] = useCreateTrainingMutation();
+    const [
+        editTraining,
+        { isSuccess: editIsSuccess, isError: editIsError, isLoading: editIsLoading },
+    ] = useEditTrainingMutation();
 
     useEffect(() => {
-        if (isSuccess) {
+        if (isSuccess || editIsSuccess) {
             swapModal();
             getTrainingInfo()
                 .then((response) => {
@@ -44,18 +60,19 @@ export const ChooseTypeWorkout = ({
                     console.log(error);
                 });
         }
-        if (isError) {
-            dispatch(actions.setModalError(isError));
+        if (isError || editIsError) {
+            dispatch(actions.setModalError(true));
         }
-    }, [isSuccess, isError]);
+    }, [isSuccess, isError, editIsSuccess, editIsError]);
 
     const currentTrainingForSelect = trainingsList.filter(
         (trainingItem) => !trainingNames.includes(trainingItem.name),
     );
-
+    console.log(selectedTraining);
     const currentTime = dateMoment.format('DD.MM.YYYY') === inputsData[0]?.date;
 
     const saveExercises = () => {
+        const currentIndex = inputsData[0].id;
         const training = {
             name: selectedTraining,
             date: dateMoment.toISOString(),
@@ -66,10 +83,23 @@ export const ChooseTypeWorkout = ({
                     weight: input.weight,
                     approaches: input.count,
                     isImplementation: false,
+                    id: input.id,
                 };
             }),
         };
-        createTraining(training);
+
+        console.log({ id: currentIndex, training });
+
+        if (editFlow) {
+            editTraining({ id: currentIndex, training });
+        } else {
+            createTraining(training);
+        }
+    };
+
+    const selectProcess = (training: string) => {
+        dispatch(actions.setSelectedTraining(training));
+        dispatch(actions.setEditFlow(false));
     };
 
     return (
@@ -88,7 +118,7 @@ export const ChooseTypeWorkout = ({
                         <Select
                             style={{ width: 220 }}
                             value={selectedTraining ? selectedTraining : 'Выбор типа тренировки'}
-                            onSelect={(training) => dispatch(actions.setSelectedTraining(training))}
+                            onSelect={(training) => selectProcess(training)}
                             bordered={false}
                             options={currentTrainingForSelect?.map(({ name }) => ({
                                 value: name,
@@ -98,7 +128,7 @@ export const ChooseTypeWorkout = ({
                     </div>
                     <Divider className={styles.divider_top} />
                 </div>
-                {currentTime ? (
+                {currentTime && firstSelectedTraining === selectedTraining ? (
                     <div className={styles.container__exercises}>
                         {inputsData.map((item, index) => (
                             <div key={index} className={styles.exercise}>
@@ -132,16 +162,21 @@ export const ChooseTypeWorkout = ({
                         disabled={currentTime ? false : true}
                         onClick={() => saveExercises()}
                     >
-                        {isLoading && (
-                            <Spin
-                                indicator={
-                                    <LoadingOutlined
-                                        style={{ fontSize: 14, marginRight: 8, color: '#2F54EBFF' }}
-                                        spin
-                                    />
-                                }
-                            />
-                        )}
+                        {isLoading ||
+                            (editIsLoading && (
+                                <Spin
+                                    indicator={
+                                        <LoadingOutlined
+                                            style={{
+                                                fontSize: 14,
+                                                marginRight: 8,
+                                                color: '#2F54EBFF',
+                                            }}
+                                            spin
+                                        />
+                                    }
+                                />
+                            ))}
                         Сохранить
                     </Button>
                 </div>
