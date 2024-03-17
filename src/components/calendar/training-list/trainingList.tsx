@@ -31,13 +31,17 @@ export const TrainingList = ({
 
     const handleEditTraining = (name: string, dateMoment: Moment) => {
         swapModal();
+        dispatch(actions.setEditFlow(true));
+        dispatch(actions.setFirstSelectedTraining(name));
         dispatch(actions.setSelectedTraining(name));
-
-        const exercisesData = tranings.filter(
-            (training) =>
+        const exercisesData = tranings.filter((training) => {
+            return (
                 training.name === name &&
-                dateMoment.toISOString().slice(0, 10) === training.date.slice(0, 10),
-        );
+                dateMoment.toISOString().slice(0, 10) === training.date.slice(0, 10)
+            );
+        });
+
+        const idTraining = exercisesData[0]._id;
 
         const updatedExercisesData = exercisesData[0].exercises.map((training) => ({
             name: training.name,
@@ -45,11 +49,12 @@ export const TrainingList = ({
             weight: training.weight,
             count: training.approaches,
             date: dateMoment.format('DD.MM.YYYY'),
+            id: idTraining,
         }));
-        console.log(updatedExercisesData);
 
         dispatch(actions.setInputsData(updatedExercisesData));
     };
+
     return (
         <div className={isRightPosition ? styles.modal_right : styles.modal}>
             <div className={styles.wrapper_header}>

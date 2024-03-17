@@ -17,7 +17,7 @@ type Parameters = {
 };
 
 export type Training = {
-    id?: string;
+    _id?: string;
     name: string;
     date: string;
     isImplementation?: boolean;
@@ -49,4 +49,5 @@ export type InputsData = {
     weight: number;
     count: number;
     date: string;
+    id: string;
 };

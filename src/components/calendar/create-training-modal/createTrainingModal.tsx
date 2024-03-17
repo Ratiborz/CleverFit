@@ -34,6 +34,7 @@ export const CreateTrainingModal = ({
 
     const swapModal = () => {
         dispatch(actions.setSelectedTraining(''));
+        dispatch(actions.setInputsData([]));
         setAddExercises(!addExercises);
     };
 
@@ -50,6 +51,7 @@ export const CreateTrainingModal = ({
                     trainingNames={trainingNames}
                     swapModal={swapModal}
                     dateMoment={dateMoment}
+                    tranings={tranings}
                 />
             ) : (
                 <TrainingList

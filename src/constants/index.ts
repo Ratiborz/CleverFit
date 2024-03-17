@@ -17,6 +17,8 @@ export {
     inputsDataSelector,
     selectedTrainingSelector,
     modalErrorWithSaveSelector,
+    editFlowSelector,
+    firstSelectedTrainingSelector,
 } from './selectors';
 
 export {

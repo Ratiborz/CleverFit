@@ -8,7 +8,9 @@ interface Modal {
     trainingsList: TrainingsListItem[];
     inputsData: InputsData[];
     selectedTraining: string;
+    firtsSelectedTraining: string;
     modalError: boolean;
+    editFlow: boolean;
 }
 
 const initialState: Modal = {
@@ -18,7 +20,9 @@ const initialState: Modal = {
     trainingsList: [],
     inputsData: [],
     selectedTraining: '',
+    firtsSelectedTraining: '',
     modalError: false,
+    editFlow: false,
 };
 
 export const calendarSlice = createSlice({
@@ -43,8 +47,14 @@ export const calendarSlice = createSlice({
         setSelectedTraining: (state, { payload }) => {
             state.selectedTraining = payload;
         },
+        setFirstSelectedTraining: (state, { payload }) => {
+            state.firtsSelectedTraining = payload;
+        },
         setModalError: (state, { payload }) => {
             state.modalError = payload;
+        },
+        setEditFlow: (state, { payload }) => {
+            state.editFlow = payload;
         },
     },
 });
