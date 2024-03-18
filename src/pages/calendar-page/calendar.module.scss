@@ -27,16 +27,20 @@
 }
 
 .wrapper_calendar {
-    display: flex;
-    justify-content: center;
     background-color: #f0f5ff;
     padding-bottom: 93px;
     overflow: hidden;
 }
 
+.mobile_wrapper {
+    background-color: #f0f5ff;
+    padding-bottom: 20px;
+}
+
 .calendar {
-    max-width: 1184px;
     background: #f0f5ff;
+    margin-left: 24px;
+    margin-right: 24px;
 }
 
 .calendar :global .ant-picker-body {
@@ -66,4 +70,87 @@
 
 .calendar :global .ant-picker-calendar-date-content {
     height: 111px !important;
+    overflow: hidden;
+}
+
+.bluBackground {
+    background-color: #f0f5ff;
+}
+
+.mobile_calendar {
+    margin-left: 24px;
+    margin-right: 24px;
+}
+
+.select_cell {
+    border: 1px solid #2f54eb;
+    border-radius: 3px;
+}
+
+div.mobile_calendar {
+    :global {
+        .ant-picker-calendar-header .ant-picker-calendar-year-select {
+            width: 77px;
+        }
+
+        .ant-picker-body {
+            position: relative;
+        }
+
+        .ant-picker-calendar-header .ant-picker-calendar-month-select {
+            width: 68px;
+        }
+
+        .ant-radio-button-wrapper:first-child {
+            width: 62px;
+        }
+
+        .ant-radio-button-wrapper:last-child {
+            width: 41px;
+        }
+
+        .ant-picker-calendar-header {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .ant-picker-calendar-header .ant-picker-calendar-mode-switch {
+            margin-top: 0;
+            margin-left: 8px;
+            width: auto;
+        }
+
+        .ant-picker-calendar .ant-picker-panel .ant-picker-body {
+            padding: 8px 8px;
+        }
+
+        tr {
+            position: relative;
+        }
+
+        .ant-picker-content th,
+        .ant-picker-content td {
+            position: static;
+        }
+    }
+}
+
+@media (max-width: 834px) {
+    .calendar :global .ant-picker-cell-inner.ant-picker-calendar-date {
+        height: 143px;
+        margin: 0 2px;
+    }
+
+    .settings_btn {
+        display: block;
+        max-width: 110px;
+        width: auto;
+        margin-right: 33px;
+        margin-bottom: 28px;
+    }
+
+    .main_container {
+        height: 100vh;
+    }
 }

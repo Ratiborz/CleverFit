@@ -18,7 +18,10 @@ export {
     selectedTrainingSelector,
     modalErrorWithSaveSelector,
     editFlowSelector,
-    firstSelectedTrainingSelector,
+    idKeySelector,
+    pastFlowSelector,
+    readOnlyFlowSelector,
+    isMobileSelector,
 } from './selectors';
 
 export {

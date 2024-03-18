@@ -14,7 +14,9 @@ import {
 } from '@redux/api-rtk/calendarRequests';
 import {
     editFlowSelector,
-    firstSelectedTrainingSelector,
+    idKeySelector,
+    isMobileSelector,
+    pastFlowSelector,
     selectedTrainingSelector,
 } from '@constants/selectors/selectors';
 import { actions } from '@redux/reducers/calendar.slice';
@@ -24,7 +26,7 @@ import { Training } from '../../../types/calendarTypes';
 type Props = {
     swapModal: () => void;
     isRightPosition: boolean;
-    trainingNames: string[];
+    trainingNames: { name: string; isImplementation: boolean | undefined }[];
     dateMoment: Moment;
     tranings: Training[];
 };
@@ -39,15 +41,17 @@ export const ChooseTypeWorkout = ({
     const dispatch = useAppDispatch();
     const [open, setOpen] = useState(false);
     const selectedTraining = useAppSelector(selectedTrainingSelector);
-    const firstSelectedTraining = useAppSelector(firstSelectedTrainingSelector);
     const inputsData = useAppSelector(inputsDataSelector);
     const trainingsList = useAppSelector(trainingsListSelector);
     const editFlow = useAppSelector(editFlowSelector);
+    const pastFlow = useAppSelector(pastFlowSelector);
+    const idKey = useAppSelector(idKeySelector);
     const [createTraining, { isLoading, isSuccess, isError }] = useCreateTrainingMutation();
     const [
         editTraining,
         { isSuccess: editIsSuccess, isError: editIsError, isLoading: editIsLoading },
     ] = useEditTrainingMutation();
+    const isMobile = useAppSelector(isMobileSelector);
 
     useEffect(() => {
         if (isSuccess || editIsSuccess) {
@@ -65,32 +69,25 @@ export const ChooseTypeWorkout = ({
         }
     }, [isSuccess, isError, editIsSuccess, editIsError]);
 
-    const currentTrainingForSelect = trainingsList.filter(
-        (trainingItem) => !trainingNames.includes(trainingItem.name),
-    );
-    console.log(selectedTraining);
-    const currentTime = dateMoment.format('DD.MM.YYYY') === inputsData[0]?.date;
-
     const saveExercises = () => {
-        const currentIndex = inputsData[0].id;
+        const currentIndex = inputsData[0]?.id || idKey;
         const training = {
             name: selectedTraining,
             date: dateMoment.toISOString(),
+            isImplementation: pastFlow ? true : false,
             exercises: inputsData.map((input) => {
                 return {
                     name: input.name,
                     replays: input.replays,
                     weight: input.weight,
                     approaches: input.count,
-                    isImplementation: false,
+                    isImplementation: pastFlow ? true : false,
                     id: input.id,
                 };
             }),
         };
 
-        console.log({ id: currentIndex, training });
-
-        if (editFlow) {
+        if (editFlow || pastFlow) {
             editTraining({ id: currentIndex, training });
         } else {
             createTraining(training);
@@ -100,6 +97,27 @@ export const ChooseTypeWorkout = ({
     const selectProcess = (training: string) => {
         dispatch(actions.setSelectedTraining(training));
         dispatch(actions.setEditFlow(false));
+        dispatch(actions.setInputsData([]));
+    };
+
+    const currentTime = dateMoment.format('DD.MM.YYYY') === inputsData[0]?.date;
+
+    const newTrainingNames = trainingNames
+        .filter((item) => !item.isImplementation)
+        .map((item) => item.name);
+
+    const currentTrainingForSelect = trainingsList.filter(
+        (trainingItem) => !newTrainingNames.includes(trainingItem.name),
+    );
+    const currentTrainingInPast = trainingsList.filter((trainingItem) =>
+        newTrainingNames.includes(trainingItem.name),
+    );
+
+    const openDrawer = () => {
+        const currentIndex = inputsData[0].id;
+        dispatch(actions.setEditFlow(true));
+        dispatch(actions.setIdKey(currentIndex));
+        setOpen(true);
     };
 
     return (
@@ -107,7 +125,11 @@ export const ChooseTypeWorkout = ({
             <div
                 className={classNames(
                     styles.wrapper__add_exercises,
-                    isRightPosition ? styles.right_position : styles.left_position,
+                    isMobile
+                        ? styles.mobile
+                        : isRightPosition
+                        ? styles.right_position
+                        : styles.left_position,
                 )}
             >
                 <div className={styles.container}>
@@ -120,7 +142,10 @@ export const ChooseTypeWorkout = ({
                             value={selectedTraining ? selectedTraining : 'Выбор типа тренировки'}
                             onSelect={(training) => selectProcess(training)}
                             bordered={false}
-                            options={currentTrainingForSelect?.map(({ name }) => ({
+                            options={(pastFlow
+                                ? currentTrainingInPast
+                                : currentTrainingForSelect
+                            ).map(({ name }) => ({
                                 value: name,
                                 label: name,
                             }))}
@@ -128,12 +153,12 @@ export const ChooseTypeWorkout = ({
                     </div>
                     <Divider className={styles.divider_top} />
                 </div>
-                {currentTime && firstSelectedTraining === selectedTraining ? (
+                {currentTime ? (
                     <div className={styles.container__exercises}>
                         {inputsData.map((item, index) => (
                             <div key={index} className={styles.exercise}>
                                 <p>{item.name}</p>
-                                <div className={styles.change} onClick={() => setOpen(true)}>
+                                <div className={styles.change} onClick={() => openDrawer()}>
                                     <EditOutlined style={{ color: '#2F54EB' }} />
                                 </div>
                             </div>
@@ -159,7 +184,7 @@ export const ChooseTypeWorkout = ({
                     <Button
                         className={styles.add__training_btn}
                         type='link'
-                        disabled={currentTime ? false : true}
+                        disabled={currentTime || editFlow ? false : true}
                         onClick={() => saveExercises()}
                     >
                         {isLoading ||
@@ -177,7 +202,7 @@ export const ChooseTypeWorkout = ({
                                     }
                                 />
                             ))}
-                        Сохранить
+                        {pastFlow ? 'Сохранить изменения' : 'Сохранить'}
                     </Button>
                 </div>
             </div>

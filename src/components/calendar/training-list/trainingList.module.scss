@@ -32,6 +32,22 @@
     right: 0;
 }
 
+.mobile {
+    position: absolute;
+    width: 312px;
+    z-index: 10;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 0 12px 0;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+    border-radius: 2px;
+    top: 70px;
+    right: 0;
+}
+
 .modal :global .ant-divider-horizontal {
     margin-top: 16px;
     margin-bottom: 12px;
@@ -82,6 +98,13 @@
     background: $primary-light-6;
 }
 
+.btn__edit {
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: #fff !important;
+}
+
 .container_trainings {
     width: 100%;
     margin-top: 16px;
@@ -98,4 +121,16 @@
 .trainings_li {
     display: flex;
     justify-content: space-between;
+}
+
+.trainings_li :global .ant-btn {
+    height: auto;
+}
+
+.editOutlined {
+    color: #2b4acbff;
+}
+
+.past__color {
+    color: #bfbfbf;
 }
