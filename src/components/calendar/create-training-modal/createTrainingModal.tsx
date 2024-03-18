@@ -15,7 +15,7 @@ type Props = {
     date: string;
     handleClose: () => void;
     isRightPosition: boolean;
-    trainingNames: string[];
+    trainingNames: { name: string; isImplementation: boolean | undefined }[];
     dateMoment: Moment;
     tranings: Training[];
 };
@@ -35,6 +35,9 @@ export const CreateTrainingModal = ({
     const swapModal = () => {
         dispatch(actions.setSelectedTraining(''));
         dispatch(actions.setInputsData([]));
+        dispatch(actions.setEditFlow(false));
+        dispatch(actions.setPastFlow(false));
+        dispatch(actions.setReadOnlyFlow(false));
         setAddExercises(!addExercises);
     };
 

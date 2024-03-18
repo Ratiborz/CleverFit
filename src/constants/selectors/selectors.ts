@@ -26,5 +26,7 @@ export const inputsDataSelector = (state: RootState) => state.calendar.inputsDat
 export const selectedTrainingSelector = (state: RootState) => state.calendar.selectedTraining;
 export const modalErrorWithSaveSelector = (state: RootState) => state.calendar.modalError;
 export const editFlowSelector = (state: RootState) => state.calendar.editFlow;
-export const firstSelectedTrainingSelector = (state: RootState) =>
-    state.calendar.firtsSelectedTraining;
+export const idKeySelector = (state: RootState) => state.calendar.idKey;
+export const pastFlowSelector = (state: RootState) => state.calendar.pastFlow;
+export const readOnlyFlowSelector = (state: RootState) => state.calendar.readOnlyFlow;
+export const isMobileSelector = (state: RootState) => state.calendar.isMobile;

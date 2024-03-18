@@ -16,6 +16,11 @@ import { actions } from '@redux/reducers/calendar.slice';
 import { trainingDataSelector, trainingListRepeatSelector } from '@constants/selectors';
 import type { Moment } from 'moment';
 import { CalendarCell } from '@components/calendar/calendar-cell/calendarCell';
+import useWindowResize from '@hooks/useWindowResize';
+import { TrainingList } from '@components/calendar/training-list/trainingList';
+import classNames from 'classnames';
+import { CreateTrainingModal } from '@components/calendar/create-training-modal/createTrainingModal';
+import { CalendarMode } from 'antd/lib/calendar/generateCalendar';
 
 moment.updateLocale('ru', {
     weekdaysMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
@@ -42,6 +47,12 @@ export const CalendarPage: React.FC = () => {
     const { isLoading, isError, isSuccess, refetch, data } = useGetTrainingListInfoQuery();
     const [activeDateModal, setActiveDateModal] = useState('');
     const tranings = useAppSelector(trainingDataSelector);
+    const { width } = useWindowResize();
+    const isMobile = width <= 830;
+
+    useEffect(() => {
+        dispatch(actions.setIsMobile(isMobile));
+    }, [isMobile]);
 
     useEffect(() => {
         if (isSuccess) {
@@ -62,10 +73,15 @@ export const CalendarPage: React.FC = () => {
 
     const handleCloseModal = () => {
         setActiveDateModal('');
+        dispatch(actions.setEditFlow(false));
+        dispatch(actions.setPastFlow(false));
+        dispatch(actions.setReadOnlyFlow(false));
+        dispatch(actions.setIdKey(''));
     };
 
     const dateCellRender = (value: Moment) => {
-        const dateValue = value.format('DD.MM.yyyy');
+        const dateValue = value.format('DD.MM.YYYY');
+
         return (
             <CalendarCell
                 tranings={tranings}
@@ -75,6 +91,40 @@ export const CalendarPage: React.FC = () => {
                 activeDateModal={activeDateModal}
             />
         );
+    };
+    const [activeDate, setActiveDate] = useState('');
+
+    const dateFullCellMobileRender = (value: Moment) => {
+        const date = value.format('DD.MM.YYYY');
+        const dateForColorCell = value.format('YYYY-MM-DD');
+        const isColorDate = tranings.some(
+            (training) => training.date.slice(0, 10) === dateForColorCell,
+        );
+        const isSelected = date === activeDate;
+
+        return (
+            <div
+                className={classNames(
+                    isColorDate && styles.bluBackground,
+                    isSelected && styles.select_cell,
+                )}
+            >
+                {value.date()}
+                {date === activeDateModal && (
+                    <CalendarCell
+                        tranings={tranings}
+                        dateForBadge={value}
+                        dateForModal={date}
+                        handleCloseModal={handleCloseModal}
+                        activeDateModal={activeDateModal}
+                    />
+                )}
+            </div>
+        );
+    };
+
+    const onPanelChange = (value: Moment, mode: CalendarMode) => {
+        console.log(value.format('YYYY-MM-DD'), mode);
     };
 
     return (
@@ -91,19 +141,23 @@ export const CalendarPage: React.FC = () => {
                             icon={<SettingOutlined style={{ color: '#000000D9' }} />}
                             style={{ padding: 0 }}
                         >
-                            <p className={styles.button_text}>Настройки</p>
+                            {isMobile ? '' : <p className={styles.button_text}>Настройки</p>}
                         </Button>
                     </div>
 
-                    <div className={styles.wrapper_calendar}>
+                    <div className={isMobile ? styles.mobile_wrapper : styles.wrapper_calendar}>
                         <Calendar
                             locale={Ru}
-                            className={styles.calendar}
+                            onPanelChange={onPanelChange}
+                            fullscreen={isMobile ? false : true}
+                            className={isMobile ? styles.mobile_calendar : styles.calendar}
+                            dateFullCellRender={isMobile ? dateFullCellMobileRender : undefined}
                             dateCellRender={dateCellRender}
                             onSelect={(value: Moment) => {
                                 const stringValue = value.format('DD.MM.yyyy');
 
                                 if (stringValue !== activeDateModal) {
+                                    setActiveDate(stringValue);
                                     handleDateClick(stringValue);
                                 }
                             }}

@@ -33,7 +33,16 @@ div.drawer {
         .ant-input {
             height: 24px;
         }
+
+        .ant-drawer-content,
+        .ant-drawer-content-wrapper {
+            border-radius: 50px 50px 0 0;
+        }
     }
+}
+
+.drawer_mobile {
+    margin-top: 85px;
 }
 
 .badge__content {
@@ -46,4 +55,17 @@ div.drawer {
 .selected_trainings,
 .date {
     color: $text-description-color;
+}
+
+.drawer__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.warning__text {
+    text-align: center;
+    color: $text-description-color;
+    margin-bottom: 32px;
 }

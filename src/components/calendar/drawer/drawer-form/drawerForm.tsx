@@ -3,7 +3,7 @@ import styles from './drawerForm.module.scss';
 import { CloseOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
-import { editFlowSelector, inputsDataSelector } from '@constants/selectors';
+import { editFlowSelector, inputsDataSelector, readOnlyFlowSelector } from '@constants/selectors';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { actions } from '@redux/reducers/calendar.slice';
 import type { Moment } from 'moment';
@@ -28,9 +28,10 @@ export const DrawerForm = ({ setOpen, dateMoment }: Props) => {
     const dispatch = useAppDispatch();
     const inputsData = useAppSelector(inputsDataSelector);
     const editFlow = useAppSelector(editFlowSelector);
+    const readOnlyFlow = useAppSelector(readOnlyFlowSelector);
+    const [form] = Form.useForm<FormFieldsType>();
     const [itemsToRemove, setItemsToRemove] = useState<{ [key: number]: boolean }>({});
     const [buttonDelete, setButtonDelete] = useState(false);
-    const [form] = Form.useForm<FormFieldsType>();
 
     const initialFormValues =
         inputsData.length > 0
@@ -45,8 +46,6 @@ export const DrawerForm = ({ setOpen, dateMoment }: Props) => {
               }))
             : [
                   {
-                      key: 'empty',
-                      name: 'empty',
                       exercise: '',
                       replays: 1,
                       weight: 0,
@@ -86,16 +85,16 @@ export const DrawerForm = ({ setOpen, dateMoment }: Props) => {
         const exercisesData = values.inputsBlock
             .filter((exercise) => exercise.exercise && exercise.exercise !== '')
             .map((exercise) => ({
-                name: exercise.exercise,
-                replays: exercise.replays,
-                weight: exercise.weight,
-                count: exercise.count,
+                name: exercise.exercise || '',
+                replays: exercise.replays || 1,
+                weight: exercise.weight || 0,
+                count: exercise.count || 1,
                 date: dateMoment.format('DD.MM.YYYY'),
                 id: exercise.id,
             }));
 
         console.log(exercisesData);
-        if (exercisesData.length > 0) {
+        if (exercisesData.length > 0 || editFlow) {
             dispatch(actions.setInputsData(exercisesData));
         }
 
@@ -120,10 +119,12 @@ export const DrawerForm = ({ setOpen, dateMoment }: Props) => {
                                             <Input
                                                 placeholder='Упражнение'
                                                 className={styles.exercises}
+                                                disabled={readOnlyFlow}
                                                 addonAfter={
                                                     editFlow ? (
                                                         <Checkbox
                                                             checked={itemsToRemove[name]}
+                                                            disabled={readOnlyFlow}
                                                             name='checkbox'
                                                             onChange={(e) =>
                                                                 setDeleteExercises(e, name)
@@ -145,6 +146,7 @@ export const DrawerForm = ({ setOpen, dateMoment }: Props) => {
                                                         className={styles.repeat_input}
                                                         placeholder='1'
                                                         addonBefore='+'
+                                                        disabled={readOnlyFlow}
                                                         min={1}
                                                     />
                                                 </Form.Item>
@@ -155,6 +157,7 @@ export const DrawerForm = ({ setOpen, dateMoment }: Props) => {
                                                         <InputNumber
                                                             className={styles.weight_input}
                                                             placeholder='0'
+                                                            disabled={readOnlyFlow}
                                                             min={0}
                                                         />
                                                     </Form.Item>
@@ -165,6 +168,7 @@ export const DrawerForm = ({ setOpen, dateMoment }: Props) => {
                                                         <InputNumber
                                                             className={styles.count_input}
                                                             placeholder='3'
+                                                            disabled={readOnlyFlow}
                                                             min={1}
                                                         />
                                                     </Form.Item>
@@ -175,29 +179,33 @@ export const DrawerForm = ({ setOpen, dateMoment }: Props) => {
                                 );
                             })}
 
-                            <div className={styles.wrapper__btns}>
-                                <Button
-                                    type='link'
-                                    className={styles.addMore_btn}
-                                    onClick={() => add()}
-                                >
-                                    <PlusOutlined style={{ marginRight: '8px' }} />
-                                    Добавить ещё
-                                </Button>
-                                {editFlow && (
+                            {readOnlyFlow ? (
+                                ''
+                            ) : (
+                                <div className={styles.wrapper__btns}>
                                     <Button
                                         type='link'
-                                        className={styles.delete_btn}
-                                        disabled={buttonDelete}
-                                        onClick={() => deleteExercise(remove)}
+                                        className={styles.addMore_btn}
+                                        onClick={() => add()}
                                     >
-                                        <MinusOutlined
-                                            style={{ marginRight: '8px', marginTop: '2px' }}
-                                        />
-                                        Удалить
+                                        <PlusOutlined style={{ marginRight: '8px' }} />
+                                        Добавить ещё
                                     </Button>
-                                )}
-                            </div>
+                                    {editFlow && (
+                                        <Button
+                                            type='link'
+                                            className={styles.delete_btn}
+                                            disabled={buttonDelete}
+                                            onClick={() => deleteExercise(remove)}
+                                        >
+                                            <MinusOutlined
+                                                style={{ marginRight: '8px', marginTop: '2px' }}
+                                            />
+                                            Удалить
+                                        </Button>
+                                    )}
+                                </div>
+                            )}
                         </>
                     );
                 }}
