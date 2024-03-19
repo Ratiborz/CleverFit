@@ -93,7 +93,6 @@ export const DrawerForm = ({ setOpen, dateMoment }: Props) => {
                 id: exercise.id,
             }));
 
-        console.log(exercisesData);
         if (exercisesData.length > 0 || editFlow) {
             dispatch(actions.setInputsData(exercisesData));
         }
@@ -114,10 +113,10 @@ export const DrawerForm = ({ setOpen, dateMoment }: Props) => {
                         <>
                             {fields.map(({ key, name }) => {
                                 return (
-                                    <div key={key} className={styles.container}>
+                                    <div key={name} className={styles.container}>
                                         <Form.Item name={[name, 'exercise']}>
                                             <Input
-                                                data-test-id={`modal-drawer-right-input-exercise${key}`}
+                                                data-test-id={`modal-drawer-right-input-exercise${name}`}
                                                 placeholder='Упражнение'
                                                 autoFocus={true}
                                                 className={styles.exercises}
@@ -125,7 +124,7 @@ export const DrawerForm = ({ setOpen, dateMoment }: Props) => {
                                                 addonAfter={
                                                     editFlow ? (
                                                         <Checkbox
-                                                            data-test-id={`modal-drawer-right-checkbox-exercise${key}`}
+                                                            data-test-id={`modal-drawer-right-checkbox-exercise${name}`}
                                                             checked={itemsToRemove[name]}
                                                             disabled={readOnlyFlow}
                                                             name='checkbox'
@@ -146,7 +145,7 @@ export const DrawerForm = ({ setOpen, dateMoment }: Props) => {
                                             <div className={styles.input__container}>
                                                 <Form.Item name={[name, 'replays']}>
                                                     <InputNumber
-                                                        data-test-id={`modal-drawer-right-input-approach${key}`}
+                                                        data-test-id={`modal-drawer-right-input-approach${name}`}
                                                         className={styles.repeat_input}
                                                         placeholder='1'
                                                         addonBefore='+'
@@ -159,7 +158,7 @@ export const DrawerForm = ({ setOpen, dateMoment }: Props) => {
                                                 <div className={styles.input__container}>
                                                     <Form.Item name={[name, 'weight']}>
                                                         <InputNumber
-                                                            data-test-id={`modal-drawer-right-input-weight${key}`}
+                                                            data-test-id={`modal-drawer-right-input-weight${name}`}
                                                             className={styles.weight_input}
                                                             placeholder='0'
                                                             disabled={readOnlyFlow}
@@ -171,7 +170,7 @@ export const DrawerForm = ({ setOpen, dateMoment }: Props) => {
                                                 <div className={styles.input__container}>
                                                     <Form.Item name={[name, 'count']}>
                                                         <InputNumber
-                                                            data-test-id={`modal-drawer-right-input-quantity${key}`}
+                                                            data-test-id={`modal-drawer-right-input-quantity${name}`}
                                                             className={styles.count_input}
                                                             placeholder='3'
                                                             disabled={readOnlyFlow}

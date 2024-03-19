@@ -9,6 +9,7 @@ import Loader from '@components/loader/loader';
 import { getTrainingInfo } from '../../../api/calendar';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 import { actions } from '@redux/reducers/commonModal.slice';
+import { actions as actionsCalendar } from '@redux/reducers/calendar.slice';
 
 export const Main = () => {
     const dispatch = useAppDispatch();
@@ -18,6 +19,7 @@ export const Main = () => {
         setLoading(true);
         getTrainingInfo()
             .then((response) => {
+                dispatch(actionsCalendar.setTrainingData(response.data));
                 history.push(Paths.CALENDAR);
             })
             .catch((error) => {

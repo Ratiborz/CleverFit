@@ -102,7 +102,7 @@ export const CalendarPage: React.FC = () => {
         const date = value.format('DD.MM.YYYY');
         const dateForColorCell = value.format('YYYY-MM-DD');
         const isColorDate = tranings.some(
-            (training) => training.date.slice(0, 10) === dateForColorCell,
+            (training) => training.date.toString().slice(0, 10) === dateForColorCell,
         );
         const isSelected = date === activeDate;
         const currentMonth = moment().month() === Number(activeDateMoment?.format('MM')) - 1;

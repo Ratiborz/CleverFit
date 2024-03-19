@@ -33,8 +33,8 @@ export const CreateTrainingModal = ({
     const modalErrorWithSave = useAppSelector(modalErrorWithSaveSelector);
 
     const swapModal = () => {
-        dispatch(actions.setSelectedTraining(''));
         dispatch(actions.setInputsData([]));
+        dispatch(actions.setSelectedTraining(''));
         dispatch(actions.setEditFlow(false));
         dispatch(actions.setPastFlow(false));
         dispatch(actions.setReadOnlyFlow(false));
@@ -63,7 +63,6 @@ export const CreateTrainingModal = ({
                     trainingNames={trainingNames}
                     swapModal={swapModal}
                     handleClose={handleClose}
-                    tranings={tranings}
                     dateMoment={dateMoment}
                 />
             )}
@@ -78,10 +77,24 @@ export const CreateTrainingModal = ({
             >
                 <CloseCircleOutlined style={{ color: 'red', fontSize: 22, marginRight: 16 }} />
                 <div className={styles.modal_description}>
-                    <h2 className={styles.modal_title}>При сохранении данных произошла ошибка </h2>
-                    <p className={styles.modal_message}>Придётся попробовать ещё раз</p>
+                    <h2
+                        className={styles.modal_title}
+                        data-test-id='modal-error-user-training-title'
+                    >
+                        При сохранении данных произошла ошибка{' '}
+                    </h2>
+                    <p
+                        className={styles.modal_message}
+                        data-test-id='modal-error-user-training-subtitle'
+                    >
+                        Придётся попробовать ещё раз
+                    </p>
                     <div className={styles.wrapper__btn}>
-                        <Button className={styles.btn__close} onClick={() => closeModals()}>
+                        <Button
+                            className={styles.btn__close}
+                            onClick={() => closeModals()}
+                            data-test-id='modal-error-user-training-button'
+                        >
                             Закрыть
                         </Button>
                     </div>

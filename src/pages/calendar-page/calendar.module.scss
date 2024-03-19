@@ -3,7 +3,7 @@
 .main_container {
     width: 100%;
     background: none;
-    overflow: hidden;
+    // overflow: hidden;
 }
 .main_container :global .ant-breadcrumb {
     padding: 16px 0 8px 24px;
@@ -29,7 +29,7 @@
 .wrapper_calendar {
     background-color: #f0f5ff;
     padding-bottom: 93px;
-    overflow: hidden;
+    // overflow: hidden;
 }
 
 .mobile_wrapper {
@@ -70,7 +70,11 @@
 
 .calendar :global .ant-picker-calendar-date-content {
     height: 111px !important;
-    overflow: hidden;
+    overflow: visible !important;
+}
+
+.calendar :global .ant-picker-calendar-full .ant-picker-panel .ant-picker-calendar-date-content {
+    overflow-y: visible;
 }
 
 .bluBackground {

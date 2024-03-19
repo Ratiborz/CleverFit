@@ -11,8 +11,13 @@ import moment from 'moment';
 import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { Drawerz } from '../drawer/drawer';
-import { isMobileSelector, selectedTrainingSelector } from '@constants/selectors';
+import {
+    isMobileSelector,
+    selectedTrainingSelector,
+    trainingDataSelector,
+} from '@constants/selectors';
 import useWindowResize from '@hooks/useWindowResize';
+import { timeConverter } from '@utils/utils';
 
 type Props = {
     isRightPosition: boolean;
@@ -20,7 +25,6 @@ type Props = {
     trainingNames: { name: string; isImplementation: boolean | undefined }[];
     swapModal: () => void;
     handleClose: () => void;
-    tranings: Training[];
     dateMoment: Moment;
 };
 
@@ -30,21 +34,24 @@ export const TrainingList = ({
     trainingNames,
     swapModal,
     handleClose,
-    tranings,
     dateMoment,
 }: Props) => {
     const dispatch = useAppDispatch();
     const [open, setOpen] = useState(false);
+    const tranings = useAppSelector(trainingDataSelector);
     const selectedTraining = useAppSelector(selectedTrainingSelector);
+    const isMobile = useAppSelector(isMobileSelector);
+
     const mirrorDate = (dateString: string) =>
         dateString.split('-').reverse().join('.').replace(/-/g, '.');
     const today = moment().format('DD.MM.YYYY');
-    const isMobile = useAppSelector(isMobileSelector);
 
     const isDateBeforeOrEqualToday = moment(date, 'DD.MM.YYYY').isSameOrBefore(
         moment(today, 'DD.MM.YYYY'),
         'day',
     );
+
+    const isDateBefore = moment(date, 'DD.MM.YYYY').isBefore(moment(today, 'DD.MM.YYYY'), 'day');
 
     useEffect(() => {
         dispatch(actions.setPastFlow(isDateBeforeOrEqualToday));
@@ -57,16 +64,25 @@ export const TrainingList = ({
         }
         dispatch(actions.setEditFlow(true));
         dispatch(actions.setSelectedTraining(name));
-        const exercisesData = tranings.filter(
-            (training) => training.name === name && date === mirrorDate(training.date.slice(0, 10)),
-        );
-        const idTraining = exercisesData[0]._id;
 
-        const updatedExercisesData = exercisesData[0].exercises.map((training) => ({
-            name: training.name,
-            replays: training.replays,
-            weight: training.weight,
-            count: training.approaches,
+        const exercisesData = tranings.filter((training) => {
+            const trainingDate = typeof training.date === 'number' && timeConverter(training.date);
+
+            return (
+                training?.name === name &&
+                (typeof training.date === 'number'
+                    ? trainingDate
+                    : mirrorDate(training.date.toString().slice(0, 10))) === date
+            );
+        });
+
+        const idTraining = exercisesData[0]?._id;
+
+        const updatedExercisesData = exercisesData[0]?.exercises?.map((training) => ({
+            name: training?.name || '',
+            replays: training?.replays || 1,
+            weight: training?.weight || 0,
+            count: training?.approaches || 1,
             date: date,
             id: idTraining,
         }));
@@ -75,24 +91,26 @@ export const TrainingList = ({
     };
 
     const handlePasteTraining = (name: string) => {
-        const exercisesData = tranings.filter(
-            (training) => training.name === name && date === mirrorDate(training.date.slice(0, 10)),
+        const exercisesData = tranings?.filter(
+            (training) =>
+                training?.name === name &&
+                date === mirrorDate(training.date.toString().slice(0, 10)),
         );
 
-        const idTraining = exercisesData[0]._id;
+        const idTraining = exercisesData[0]?._id;
 
-        const updatedExercisesData = exercisesData[0].exercises.map((training) => ({
-            name: training.name,
-            replays: training.replays,
-            weight: training.weight,
-            count: training.approaches,
+        const updatedExercisesData = exercisesData[0]?.exercises?.map((training) => ({
+            name: training?.name,
+            replays: training?.replays,
+            weight: training?.weight,
+            count: training?.approaches,
             date: date,
             id: idTraining,
         }));
+        dispatch(actions.setInputsData(updatedExercisesData));
         dispatch(actions.setPastFlow(true));
         dispatch(actions.setReadOnlyFlow(true));
         dispatch(actions.setEditFlow(false));
-        dispatch(actions.setInputsData(updatedExercisesData));
         dispatch(actions.setSelectedTraining(name));
         setOpen(true);
     };
@@ -112,7 +130,11 @@ export const TrainingList = ({
                             {trainingNames?.length === 0 ? 'Нет активных тренировок' : ''}
                         </Typography>
                     </div>
-                    <div onClick={handleClose} data-test-id='modal-create-training-button-close'>
+                    <div
+                        onClick={handleClose}
+                        data-test-id='modal-create-training-button-close'
+                        className={styles.close__icon}
+                    >
                         <CloseIcon />
                     </div>
                 </div>
@@ -143,6 +165,7 @@ export const TrainingList = ({
                                         {name}
                                     </span>
                                     <Button
+                                        disabled={isImplementation}
                                         className={styles.btn__edit}
                                         data-test-id={`modal-update-training-edit-button${key}`}
                                     >

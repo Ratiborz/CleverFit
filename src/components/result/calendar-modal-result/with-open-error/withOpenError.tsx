@@ -3,7 +3,8 @@ import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { withOpenModalErrorSelector } from '@constants/selectors';
 import styles from './withOpenError.module.scss';
 import { actions } from '@redux/reducers/calendar.slice';
-import { CloseCircleTwoTone } from '@ant-design/icons';
+import { CloseCircleTwoTone, CloseOutlined } from '@ant-design/icons';
+import { maskStyle } from '@constants/constants';
 
 export const WithOpenError = () => {
     const dispatch = useAppDispatch();
@@ -16,6 +17,12 @@ export const WithOpenError = () => {
 
     return (
         <Modal
+            maskStyle={maskStyle}
+            closeIcon={
+                <div data-test-id='modal-error-user-training-button-close'>
+                    <CloseOutlined />
+                </div>
+            }
             centered
             footer={null}
             closable={true}
@@ -23,9 +30,8 @@ export const WithOpenError = () => {
             onCancel={() => dispatch(actions.setErrorWithOpen(false))}
             className={styles.modal}
         >
-            <div data-test-id='modal-error-user-training-button-close'>
-                <CloseCircleTwoTone className={styles.cancel_icon} />
-            </div>
+            <CloseCircleTwoTone className={styles.cancel_icon} />
+
             <div className={styles.main__wrapper}>
                 <h3 className={styles.card__h3} data-test-id='modal-error-user-training-title'>
                     При открытии данных произошла ошибка
