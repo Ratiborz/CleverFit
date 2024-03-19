@@ -100,7 +100,8 @@ export const ChooseTypeWorkout = ({
         dispatch(actions.setInputsData([]));
     };
 
-    const currentTime = dateMoment.format('DD.MM.YYYY') === inputsData[0]?.date;
+    const currentTime =
+        inputsData[0]?.date && dateMoment.format('DD.MM.YYYY') === inputsData[0].date;
 
     const newTrainingNames = trainingNames
         .filter((item) => !item.isImplementation)
@@ -164,7 +165,11 @@ export const ChooseTypeWorkout = ({
                         {inputsData.map((item, index) => (
                             <div key={index} className={styles.exercise}>
                                 <p>{item.name}</p>
-                                <div className={styles.change} onClick={() => openDrawer()}>
+                                <div
+                                    className={styles.change}
+                                    onClick={() => openDrawer()}
+                                    data-test-id={`modal-update-training-edit-button${index}`}
+                                >
                                     <EditOutlined style={{ color: '#2F54EB' }} />
                                 </div>
                             </div>

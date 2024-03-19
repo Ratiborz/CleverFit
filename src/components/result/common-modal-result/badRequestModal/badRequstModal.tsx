@@ -5,6 +5,7 @@ import { Paths } from '@constants/paths';
 import { history } from '@redux/configure-store';
 import { actions } from '@redux/reducers/commonModal.slice';
 import { isModalOpenSelector } from '@constants/selectors';
+import { maskStyle } from '@constants/constants';
 
 export const BadRequstModalError = () => {
     const dispatch = useAppDispatch();
@@ -13,7 +14,7 @@ export const BadRequstModalError = () => {
     return (
         <Modal
             data-test-id='modal-no-review'
-            maskStyle={{ backgroundColor: 'rgba(121, 156, 213, 0.5)', backdropFilter: 'blur(5px)' }}
+            maskStyle={maskStyle}
             centered
             footer={null}
             closable={false}
