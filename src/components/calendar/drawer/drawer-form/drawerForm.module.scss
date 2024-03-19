@@ -25,11 +25,6 @@
     height: 24px;
 }
 
-.weight,
-.count {
-    max-width: 89px;
-}
-
 .inputs__wrapper {
     display: flex;
     justify-content: space-between;
@@ -77,4 +72,18 @@
     text-align: start;
     top: 23px;
     right: 32px;
+}
+
+@media (max-width: 360px) {
+    .count_input :global .ant-input-number-input {
+        height: 24px;
+    }
+
+    .weight_input :global .ant-input-number-input {
+        height: 24px;
+    }
+
+    .repeat_input :global .ant-input-number-input {
+        height: 24px;
+    }
 }

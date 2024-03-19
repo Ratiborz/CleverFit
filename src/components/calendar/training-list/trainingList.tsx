@@ -100,6 +100,7 @@ export const TrainingList = ({
     return (
         <>
             <div
+                data-test-id='modal-create-training'
                 className={
                     isMobile ? styles.mobile : isRightPosition ? styles.modal_right : styles.modal
                 }
@@ -111,7 +112,7 @@ export const TrainingList = ({
                             {trainingNames?.length === 0 ? 'Нет активных тренировок' : ''}
                         </Typography>
                     </div>
-                    <div onClick={handleClose}>
+                    <div onClick={handleClose} data-test-id='modal-create-training-button-close'>
                         <CloseIcon />
                     </div>
                 </div>
@@ -141,7 +142,10 @@ export const TrainingList = ({
                                         />
                                         {name}
                                     </span>
-                                    <Button className={styles.btn__edit}>
+                                    <Button
+                                        className={styles.btn__edit}
+                                        data-test-id={`modal-update-training-edit-button${key}`}
+                                    >
                                         {isImplementation ? (
                                             <EditFilled
                                                 className={styles.past__color}

@@ -49,6 +49,8 @@ export const CalendarPage: React.FC = () => {
     const tranings = useAppSelector(trainingDataSelector);
     const { width } = useWindowResize();
     const isMobile = width <= 830;
+    const [activeDate, setActiveDate] = useState('');
+    const [activeDateMoment, setActiveDateMoment] = useState<Moment>();
 
     useEffect(() => {
         dispatch(actions.setIsMobile(isMobile));
@@ -81,18 +83,20 @@ export const CalendarPage: React.FC = () => {
 
     const dateCellRender = (value: Moment) => {
         const dateValue = value.format('DD.MM.YYYY');
+        // const currentMonth = moment().month() === Number(activeDateMoment?.format('MM')) - 1;
 
         return (
-            <CalendarCell
-                tranings={tranings}
-                dateForBadge={value}
-                dateForModal={dateValue}
-                handleCloseModal={handleCloseModal}
-                activeDateModal={activeDateModal}
-            />
+            <>
+                <CalendarCell
+                    tranings={tranings}
+                    dateForBadge={value}
+                    dateForModal={dateValue}
+                    handleCloseModal={handleCloseModal}
+                    activeDateModal={activeDateModal}
+                />
+            </>
         );
     };
-    const [activeDate, setActiveDate] = useState('');
 
     const dateFullCellMobileRender = (value: Moment) => {
         const date = value.format('DD.MM.YYYY');
@@ -101,6 +105,7 @@ export const CalendarPage: React.FC = () => {
             (training) => training.date.slice(0, 10) === dateForColorCell,
         );
         const isSelected = date === activeDate;
+        const currentMonth = moment().month() === Number(activeDateMoment?.format('MM')) - 1;
 
         return (
             <div
@@ -110,7 +115,7 @@ export const CalendarPage: React.FC = () => {
                 )}
             >
                 {value.date()}
-                {date === activeDateModal && (
+                {currentMonth && date === activeDateModal && (
                     <CalendarCell
                         tranings={tranings}
                         dateForBadge={value}
@@ -121,10 +126,6 @@ export const CalendarPage: React.FC = () => {
                 )}
             </div>
         );
-    };
-
-    const onPanelChange = (value: Moment, mode: CalendarMode) => {
-        console.log(value.format('YYYY-MM-DD'), mode);
     };
 
     return (
@@ -148,7 +149,6 @@ export const CalendarPage: React.FC = () => {
                     <div className={isMobile ? styles.mobile_wrapper : styles.wrapper_calendar}>
                         <Calendar
                             locale={Ru}
-                            onPanelChange={onPanelChange}
                             fullscreen={isMobile ? false : true}
                             className={isMobile ? styles.mobile_calendar : styles.calendar}
                             dateFullCellRender={isMobile ? dateFullCellMobileRender : undefined}
@@ -159,6 +159,7 @@ export const CalendarPage: React.FC = () => {
                                 if (stringValue !== activeDateModal) {
                                     setActiveDate(stringValue);
                                     handleDateClick(stringValue);
+                                    setActiveDateMoment(value);
                                 }
                             }}
                         />

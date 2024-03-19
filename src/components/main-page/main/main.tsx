@@ -67,6 +67,7 @@ export const Main = () => {
                         <p className={styles.card_training__p}>Назначить календарь</p>
                         <Divider style={{ margin: 0 }} />
                         <Button
+                            data-test-id='menu-button-calendar'
                             className={styles.card_training__btn}
                             onClick={() => switchToCalendar()}
                             type='link'

@@ -24,6 +24,7 @@ export const CalendarCell = ({
     const positionRef = useRef<HTMLDivElement>(null);
     const { width } = useWindowResize();
     const isMobile = width <= 830;
+    const isMiddleWidth = width <= 835;
 
     const filteredTrainings = tranings.filter((training) => {
         const trainingDate = new Date(training.date);
@@ -65,7 +66,8 @@ export const CalendarCell = ({
                     dateMoment={dateForBadge}
                     handleClose={handleCloseModal}
                     isRightPosition={
-                        (positionRef?.current?.getBoundingClientRect?.()?.left || 0) + 264 > 400
+                        (positionRef?.current?.getBoundingClientRect?.()?.left || 0) + 264 >
+                        (isMiddleWidth ? 700 : 1500)
                     }
                     trainingNames={trainingNames}
                     tranings={tranings}
