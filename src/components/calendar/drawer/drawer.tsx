@@ -31,6 +31,7 @@ export const Drawerz = ({ showDrawer, setOpen, dateMoment, selectedTraining }: P
     };
     return (
         <Drawer
+            data-test-id='modal-drawer-right'
             width={isMobile ? 360 : 408}
             className={classNames(styles.drawer, isMobile && styles.drawer_mobile)}
             title={

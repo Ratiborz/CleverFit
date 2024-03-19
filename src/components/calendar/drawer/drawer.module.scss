@@ -33,16 +33,7 @@ div.drawer {
         .ant-input {
             height: 24px;
         }
-
-        .ant-drawer-content,
-        .ant-drawer-content-wrapper {
-            border-radius: 50px 50px 0 0;
-        }
     }
-}
-
-.drawer_mobile {
-    margin-top: 85px;
 }
 
 .badge__content {
@@ -68,4 +59,23 @@ div.drawer {
     text-align: center;
     color: $text-description-color;
     margin-bottom: 32px;
+}
+
+.drawer_mobile {
+    margin-top: 85px;
+}
+
+@media (max-width: 830px) {
+    div.drawer {
+        :global {
+            .ant-drawer-content,
+            .ant-drawer-content-wrapper {
+                border-radius: 50px 50px 0 0;
+            }
+
+            .ant-drawer-body {
+                padding: 24px 16px 0 16px;
+            }
+        }
+    }
 }

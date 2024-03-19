@@ -123,6 +123,7 @@ export const ChooseTypeWorkout = ({
     return (
         <>
             <div
+                data-test-id='modal-create-exercise'
                 className={classNames(
                     styles.wrapper__add_exercises,
                     isMobile
@@ -134,10 +135,15 @@ export const ChooseTypeWorkout = ({
             >
                 <div className={styles.container}>
                     <div className={styles.header}>
-                        <div style={{ height: 16 }} onClick={swapModal}>
+                        <div
+                            style={{ height: 16 }}
+                            onClick={swapModal}
+                            data-test-id='modal-exercise-training-button-close'
+                        >
                             <ArrowBack />
                         </div>
                         <Select
+                            data-test-id='modal-create-exercise-select'
                             style={{ width: 220 }}
                             value={selectedTraining ? selectedTraining : 'Выбор типа тренировки'}
                             onSelect={(training) => selectProcess(training)}

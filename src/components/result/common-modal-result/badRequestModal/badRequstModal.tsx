@@ -12,6 +12,7 @@ export const BadRequstModalError = () => {
 
     return (
         <Modal
+            data-test-id='modal-no-review'
             maskStyle={{ backgroundColor: 'rgba(121, 156, 213, 0.5)', backdropFilter: 'blur(5px)' }}
             centered
             footer={null}

@@ -23,12 +23,25 @@ export const WithOpenError = () => {
             onCancel={() => dispatch(actions.setErrorWithOpen(false))}
             className={styles.modal}
         >
-            <CloseCircleTwoTone className={styles.cancel_icon} />
+            <div data-test-id='modal-error-user-training-button-close'>
+                <CloseCircleTwoTone className={styles.cancel_icon} />
+            </div>
             <div className={styles.main__wrapper}>
-                <h3 className={styles.card__h3}>При открытии данных произошла ошибка </h3>
-                <Typography className={styles.card__descrip}>Попробуйте ещё раз.</Typography>
+                <h3 className={styles.card__h3} data-test-id='modal-error-user-training-title'>
+                    При открытии данных произошла ошибка
+                </h3>
+                <Typography
+                    className={styles.card__descrip}
+                    data-test-id='modal-error-user-training-subtitle'
+                >
+                    Попробуйте ещё раз.
+                </Typography>
                 <div className={styles.wrapper_btn}>
-                    <Button className={styles.card__btn} onClick={() => repeatRequest()}>
+                    <Button
+                        className={styles.card__btn}
+                        onClick={() => repeatRequest()}
+                        data-test-id='modal-error-user-training-button'
+                    >
                         Обновить
                     </Button>
                 </div>

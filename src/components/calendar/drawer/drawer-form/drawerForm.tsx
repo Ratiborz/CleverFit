@@ -117,12 +117,15 @@ export const DrawerForm = ({ setOpen, dateMoment }: Props) => {
                                     <div key={key} className={styles.container}>
                                         <Form.Item name={[name, 'exercise']}>
                                             <Input
+                                                data-test-id={`modal-drawer-right-input-exercise${key}`}
                                                 placeholder='Упражнение'
+                                                autoFocus={true}
                                                 className={styles.exercises}
                                                 disabled={readOnlyFlow}
                                                 addonAfter={
                                                     editFlow ? (
                                                         <Checkbox
+                                                            data-test-id={`modal-drawer-right-checkbox-exercise${key}`}
                                                             checked={itemsToRemove[name]}
                                                             disabled={readOnlyFlow}
                                                             name='checkbox'
@@ -143,6 +146,7 @@ export const DrawerForm = ({ setOpen, dateMoment }: Props) => {
                                             <div className={styles.input__container}>
                                                 <Form.Item name={[name, 'replays']}>
                                                     <InputNumber
+                                                        data-test-id={`modal-drawer-right-input-approach${key}`}
                                                         className={styles.repeat_input}
                                                         placeholder='1'
                                                         addonBefore='+'
@@ -155,6 +159,7 @@ export const DrawerForm = ({ setOpen, dateMoment }: Props) => {
                                                 <div className={styles.input__container}>
                                                     <Form.Item name={[name, 'weight']}>
                                                         <InputNumber
+                                                            data-test-id={`modal-drawer-right-input-weight${key}`}
                                                             className={styles.weight_input}
                                                             placeholder='0'
                                                             disabled={readOnlyFlow}
@@ -166,6 +171,7 @@ export const DrawerForm = ({ setOpen, dateMoment }: Props) => {
                                                 <div className={styles.input__container}>
                                                     <Form.Item name={[name, 'count']}>
                                                         <InputNumber
+                                                            data-test-id={`modal-drawer-right-input-quantity${key}`}
                                                             className={styles.count_input}
                                                             placeholder='3'
                                                             disabled={readOnlyFlow}
@@ -210,7 +216,12 @@ export const DrawerForm = ({ setOpen, dateMoment }: Props) => {
                     );
                 }}
             </Form.List>
-            <Button htmlType='submit' type='text' className={styles.close__icon}>
+            <Button
+                htmlType='submit'
+                type='text'
+                className={styles.close__icon}
+                data-test-id='modal-drawer-right-button-close'
+            >
                 <CloseOutlined />
             </Button>
         </Form>
