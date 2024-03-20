@@ -17,10 +17,7 @@ import { trainingDataSelector, trainingListRepeatSelector } from '@constants/sel
 import type { Moment } from 'moment';
 import { CalendarCell } from '@components/calendar/calendar-cell/calendarCell';
 import useWindowResize from '@hooks/useWindowResize';
-import { TrainingList } from '@components/calendar/training-list/trainingList';
 import classNames from 'classnames';
-import { CreateTrainingModal } from '@components/calendar/create-training-modal/createTrainingModal';
-import { CalendarMode } from 'antd/lib/calendar/generateCalendar';
 
 moment.updateLocale('ru', {
     weekdaysMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
@@ -83,7 +80,6 @@ export const CalendarPage: React.FC = () => {
 
     const dateCellRender = (value: Moment) => {
         const dateValue = value.format('DD.MM.YYYY');
-        // const currentMonth = moment().month() === Number(activeDateMoment?.format('MM')) - 1;
 
         return (
             <>

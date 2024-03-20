@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { changePassword } from '../../../api/requests';
 import { confirmPassword } from '../../../types/valueRequest';
 import styles from './changePassword.module.scss';
-import { newDataPassSelector } from '@constants/selectors/selectors';
+import { newDataPassSelector } from '@constants/selectors';
 
 export const ChangePassword = () => {
     const dispatch = useAppDispatch();

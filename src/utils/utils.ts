@@ -14,3 +14,6 @@ export function timeConverter(UNIX_timestamp: number) {
     const time = `${date}.${month}.${year}`;
     return time;
 }
+
+export const mirrorDate = (dateString: string) =>
+    dateString.split('-').reverse().join('.').replace(/-/g, '.');

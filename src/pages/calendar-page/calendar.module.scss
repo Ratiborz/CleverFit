@@ -3,7 +3,6 @@
 .main_container {
     width: 100%;
     background: none;
-    // overflow: hidden;
 }
 .main_container :global .ant-breadcrumb {
     padding: 16px 0 8px 24px;
@@ -29,7 +28,6 @@
 .wrapper_calendar {
     background-color: #f0f5ff;
     padding-bottom: 93px;
-    // overflow: hidden;
 }
 
 .mobile_wrapper {
@@ -126,7 +124,7 @@ div.mobile_calendar {
         }
 
         .ant-picker-calendar .ant-picker-panel .ant-picker-body {
-            padding: 8px 8px;
+            padding: 8px;
         }
 
         tr {

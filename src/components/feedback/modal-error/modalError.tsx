@@ -2,8 +2,8 @@ import { Button, Image, Modal, Typography } from 'antd';
 import styles from './modalError.module.scss';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { actions } from '@redux/reducers/feedback.slice';
-import { StateModalErrorSelector } from '@constants/selectors/selectors';
 import { maskStyle } from '@constants/constants';
+import { StateModalErrorSelector } from '@constants/selectors';
 
 export const ModalFaildCreate = () => {
     const dispatch = useAppDispatch();

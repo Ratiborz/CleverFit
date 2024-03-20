@@ -2,7 +2,7 @@ import { Button, Image, Modal } from 'antd';
 import styles from './successModal.module.scss';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { actions } from '@redux/reducers/feedback.slice';
-import { isCreateFeedbackSuccessSelector } from '@constants/selectors/selectors';
+import { isCreateFeedbackSuccessSelector } from '@constants/selectors';
 import { maskStyle } from '@constants/constants';
 
 export const SuccessModal = () => {

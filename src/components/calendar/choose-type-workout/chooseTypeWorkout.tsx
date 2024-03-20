@@ -18,17 +18,15 @@ import {
     isMobileSelector,
     pastFlowSelector,
     selectedTrainingSelector,
-} from '@constants/selectors/selectors';
+} from '@constants/selectors';
 import { actions } from '@redux/reducers/calendar.slice';
 import { getTrainingInfo } from '../../../api/calendar';
-import { Training } from '../../../types/calendarTypes';
 
 type Props = {
     swapModal: () => void;
     isRightPosition: boolean;
     trainingNames: { name: string; isImplementation: boolean | undefined }[];
     dateMoment: Moment;
-    tranings: Training[];
 };
 
 export const ChooseTypeWorkout = ({
@@ -36,7 +34,6 @@ export const ChooseTypeWorkout = ({
     trainingNames,
     swapModal,
     dateMoment,
-    tranings,
 }: Props) => {
     const dispatch = useAppDispatch();
     const [open, setOpen] = useState(false);
