@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { checkEmail } from '../../../../api/requests';
 import styles from './error-check-email.module.scss';
-import { emaildataSelector } from '@constants/selectors/selectors';
+import { emaildataSelector } from '@constants/selectors';
 
 export const ErrorCheckEmail = () => {
     const emaildata = useAppSelector(emaildataSelector);

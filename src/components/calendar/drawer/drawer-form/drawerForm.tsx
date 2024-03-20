@@ -7,22 +7,12 @@ import { editFlowSelector, inputsDataSelector, readOnlyFlowSelector } from '@con
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { actions } from '@redux/reducers/calendar.slice';
 import type { Moment } from 'moment';
+import { FormFieldsType } from '../../../../types/calendarTypes';
 
 type Props = {
     setOpen: (value: boolean) => void;
     dateMoment: Moment;
 };
-
-type FormFieldType = {
-    key: string;
-    name: string;
-    exercise: string;
-    replays: number;
-    weight: number;
-    count: number;
-    id: string;
-};
-export type FormFieldsType = { inputsBlock: FormFieldType[] };
 
 export const DrawerForm = ({ setOpen, dateMoment }: Props) => {
     const dispatch = useAppDispatch();
@@ -111,7 +101,7 @@ export const DrawerForm = ({ setOpen, dateMoment }: Props) => {
                 {(fields, { add, remove }) => {
                     return (
                         <>
-                            {fields.map(({ key, name }) => {
+                            {fields.map(({ name }) => {
                                 return (
                                     <div key={name} className={styles.container}>
                                         <Form.Item name={[name, 'exercise']}>

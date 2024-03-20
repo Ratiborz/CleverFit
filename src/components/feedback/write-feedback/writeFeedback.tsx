@@ -1,13 +1,13 @@
 import { Button, Divider, Form, Modal, Rate } from 'antd';
 import styles from './writeFeedback.module.scss';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
-import { dataReviewSelector, isModalCreateFeedbackSelector } from '@constants/selectors/selectors';
 import TextArea from 'antd/lib/input/TextArea';
 import { actions } from '@redux/reducers/feedback.slice';
 import { StarFilled, StarOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import { СreateFeedback } from '../../../types/valueRequest';
 import { useCreateFeedbacksMutation } from '@redux/api-rtk/feedbackRequests';
+import { dataReviewSelector, isModalCreateFeedbackSelector } from '@constants/selectors';
 
 export const WriteFeedbackModal = () => {
     const [form] = Form.useForm();

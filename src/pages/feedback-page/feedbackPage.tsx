@@ -12,7 +12,7 @@ import {
     isCreateFeedbackSuccessSelector,
     isModalCreateFeedbackSelector,
     warningSelector,
-} from '@constants/selectors/selectors';
+} from '@constants/selectors';
 import Breadcrumbs from '@components/breadcrumb/breadcrumb';
 import { FirstFeedback } from '@components/feedback/first-feedback/firstFeedback';
 import Typography from 'antd/lib/typography/Typography';

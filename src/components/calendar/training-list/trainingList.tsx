@@ -5,7 +5,6 @@ import styles from './trainingList.module.scss';
 import { getCurrentColor } from '../choose-color-badge/chooseColorBadge';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { actions } from '@redux/reducers/calendar.slice';
-import { Training } from '../../../types/calendarTypes';
 import type { Moment } from 'moment';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
@@ -16,8 +15,7 @@ import {
     selectedTrainingSelector,
     trainingDataSelector,
 } from '@constants/selectors';
-import useWindowResize from '@hooks/useWindowResize';
-import { timeConverter } from '@utils/utils';
+import { mirrorDate, timeConverter } from '@utils/utils';
 
 type Props = {
     isRightPosition: boolean;
@@ -42,16 +40,12 @@ export const TrainingList = ({
     const selectedTraining = useAppSelector(selectedTrainingSelector);
     const isMobile = useAppSelector(isMobileSelector);
 
-    const mirrorDate = (dateString: string) =>
-        dateString.split('-').reverse().join('.').replace(/-/g, '.');
     const today = moment().format('DD.MM.YYYY');
 
     const isDateBeforeOrEqualToday = moment(date, 'DD.MM.YYYY').isSameOrBefore(
         moment(today, 'DD.MM.YYYY'),
         'day',
     );
-
-    const isDateBefore = moment(date, 'DD.MM.YYYY').isBefore(moment(today, 'DD.MM.YYYY'), 'day');
 
     useEffect(() => {
         dispatch(actions.setPastFlow(isDateBeforeOrEqualToday));

@@ -7,14 +7,10 @@ import Loader from '@components/loader/loader';
 import { useState } from 'react';
 
 export const Footer: React.FC = () => {
-    const [loading, setLoading] = useState(false);
-
     const feedback = () => history.push(Paths.FEEDBACKS);
 
     return (
         <>
-            {loading && <Loader />}
-
             <footer className={styles.footer}>
                 <Button
                     data-test-id='see-reviews'

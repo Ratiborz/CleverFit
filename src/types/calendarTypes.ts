@@ -17,13 +17,13 @@ type Parameters = {
 };
 
 export type Training = {
-    _id?: string;
     name: string;
     date: string;
     isImplementation?: boolean;
+    exercises: Exercise[];
+    _id?: string;
     userId?: string;
     parameters?: Parameters;
-    exercises: Exercise[];
 };
 
 export type CreateTraining = {
@@ -51,3 +51,14 @@ export type InputsData = {
     date: string;
     id: string;
 };
+
+export type FormFieldType = {
+    key: string;
+    name: string;
+    exercise: string;
+    replays: number;
+    weight: number;
+    count: number;
+    id: string;
+};
+export type FormFieldsType = { inputsBlock: FormFieldType[] };

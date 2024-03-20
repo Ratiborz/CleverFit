@@ -1,3 +1,5 @@
+export { isModalOpenSelector } from './selectors';
+
 export {
     repeatRequestsSelector,
     rememberMeSelector,
@@ -6,9 +8,9 @@ export {
     emailValueSelector,
     newDataPassSelector,
     emailValueRegistration,
-    warningSelector,
-    beFeedbackSelector,
-    isModalOpenSelector,
+} from './authentication';
+
+export {
     withOpenModalErrorSelector,
     trainingListRepeatSelector,
     trainingDataSelector,
@@ -21,4 +23,13 @@ export {
     pastFlowSelector,
     readOnlyFlowSelector,
     isMobileSelector,
-} from './selectors';
+} from './calendar';
+
+export {
+    warningSelector,
+    beFeedbackSelector,
+    isModalCreateFeedbackSelector,
+    isCreateFeedbackSuccessSelector,
+    StateModalErrorSelector,
+    dataReviewSelector,
+} from './feedbak';

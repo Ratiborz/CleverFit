@@ -10,8 +10,8 @@ import { Layout } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import { Navigate } from 'react-router-dom';
 import styles from './mainPage.module.scss';
-import { loadingSelector } from '@constants/selectors/selectors';
 import { positionImage } from '@constants/constants';
+import { loadingSelector } from '@constants/selectors';
 const Loader = React.lazy(() => import('@components/loader/loader'));
 
 export const MainPage: React.FC = () => {
