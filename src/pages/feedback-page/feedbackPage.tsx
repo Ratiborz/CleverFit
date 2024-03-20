@@ -12,7 +12,7 @@ import {
     isCreateFeedbackSuccessSelector,
     isModalCreateFeedbackSelector,
     warningSelector,
-} from '@constants/selectors/selectors';
+} from '@constants/selectors';
 import Breadcrumbs from '@components/breadcrumb/breadcrumb';
 import { FirstFeedback } from '@components/feedback/first-feedback/firstFeedback';
 import Typography from 'antd/lib/typography/Typography';
@@ -20,7 +20,6 @@ import { currentTime } from '@utils/utils';
 import { WriteFeedbackModal } from '@components/feedback/write-feedback/writeFeedback';
 import { actions } from '@redux/reducers/feedback.slice';
 import { StarFilled, StarOutlined } from '@ant-design/icons';
-import { useGetFeedBacksQuery } from '@redux/api-rtk/feedback.api';
 import { Loader } from '@components/loader/loader';
 import { history } from '@redux/configure-store';
 import { Paths } from '@constants/paths';
@@ -28,9 +27,8 @@ import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { ModalError } from '@components/result/feedback-result/modal-error/modalError';
 import { ModalFaildCreate } from '@components/feedback/modal-error/modalError';
 import { SuccessModal } from '@components/feedback/success-modal/successModal';
-import { forbiddenStatus } from '@constants/constants/constants';
-
-const backgroundImage = '/Main_page_light.png';
+import { forbiddenStatus, positionImage } from '@constants/constants/constants';
+import { useGetFeedBacksQuery } from '@redux/api-rtk/feedbackRequests';
 
 export const FeedbackPage: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -51,6 +49,7 @@ export const FeedbackPage: React.FC = () => {
             const localAccessToken = storageToken.getItem('accessToken');
             const sessionAccessToken = sessionToken.getItem('accessToken');
             const token = localAccessToken ?? sessionAccessToken;
+
             if ((error as FetchBaseQueryError).status === forbiddenStatus) {
                 localStorage.clear();
                 sessionStorage.clear();
@@ -73,15 +72,7 @@ export const FeedbackPage: React.FC = () => {
             {isModalOpen && <ModalError />}
             {isModalError && <ModalFaildCreate />}
             {isSuccessModal && <SuccessModal />}
-            <Layout
-                className={styles.general_wrapper}
-                style={{
-                    backgroundImage: `url(${backgroundImage})`,
-                    backgroundSize: 'cover',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundPosition: 'top',
-                }}
-            >
+            <Layout className={styles.general_wrapper} style={positionImage}>
                 <Aside />
                 <Layout className={styles.main_container}>
                     <Breadcrumbs />

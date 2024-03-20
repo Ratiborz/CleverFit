@@ -1,0 +1,95 @@
+@import '/src/variables.scss';
+.wrapper__add_exercises {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    width: 264px;
+    z-index: 10;
+    background: #fff;
+    padding: 18px 0 19px;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+    border-radius: 2px;
+    top: 0;
+}
+
+.right_position {
+    right: 0;
+}
+
+.left_position {
+    left: 0;
+}
+
+.mobile {
+    width: 312px;
+    top: 70px;
+    right: 0;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.addExecsise_btn {
+    max-width: 240px;
+    width: 100%;
+}
+
+.divider_top {
+    margin-top: 5px;
+    margin-bottom: 0;
+}
+
+.divider_bottom {
+    margin-bottom: 12px;
+    margin-top: 0;
+}
+
+.container__exercises {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    height: 100px;
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+
+.empty_img {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.exercise {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 240px;
+    align-items: center;
+    color: $text-description-color;
+    margin-bottom: 2px;
+    align-items: center;
+}
+
+.add__training_btn {
+    margin-top: 10px;
+}

@@ -1,0 +1,82 @@
+@import '/src/variables.scss';
+div.drawer {
+    :global {
+        .ant-drawer-close {
+            margin: 0;
+        }
+
+        .ant-drawer-header {
+            background: #fff;
+            border-bottom: none;
+            padding: 24px 32px 0;
+        }
+
+        .ant-drawer-header-title {
+            flex-direction: row-reverse;
+        }
+
+        .ant-drawer-title {
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .ant-drawer-body {
+            padding: 24px 32px 0;
+            box-shadow: -9px 0 28px -35px rgba(0, 0, 0, 0.05);
+            border-radius: 8px 0 0 8px;
+        }
+
+        .ant-input-number-group-wrapper {
+            width: 120px;
+        }
+
+        .ant-input {
+            height: 24px;
+        }
+    }
+}
+
+.badge__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+}
+
+.selected_trainings,
+.date {
+    color: $text-description-color;
+}
+
+.drawer__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.warning__text {
+    text-align: center;
+    color: $text-description-color;
+    margin-bottom: 32px;
+}
+
+.drawer_mobile {
+    margin-top: 85px;
+}
+
+@media (max-width: 830px) {
+    div.drawer {
+        :global {
+            .ant-drawer-content,
+            .ant-drawer-content-wrapper {
+                border-top-right-radius: 24px;
+                border-top-left-radius: 24px;
+            }
+
+            .ant-drawer-body {
+                padding: 24px 16px 0;
+            }
+        }
+    }
+}

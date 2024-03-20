@@ -10,7 +10,7 @@ import { authLogin, registrationRequest } from '../../api/requests';
 import styles from './registrationPage.module.scss';
 import { Values } from '../../types/valueRequest';
 import { Paths } from '@constants/paths';
-import { rememberMeSelector, repeatRequestsSelector } from '@constants/selectors/selectors';
+import { rememberMeSelector, repeatRequestsSelector } from '@constants/selectors';
 
 export const RegistrationPage: React.FC = () => {
     const location = useLocation();
@@ -20,7 +20,7 @@ export const RegistrationPage: React.FC = () => {
     const rememberMe = useAppSelector(rememberMeSelector);
     const [loading, setLoading] = useState(false);
 
-    const activeTabKey = location.pathname === '/auth' ? '1' : '2';
+    const activeTabKey = location.pathname === Paths.AUTH ? '1' : '2';
 
     useEffect(() => {
         if (repeatRequestData.email && repeatRequestData.password) {

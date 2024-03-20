@@ -5,6 +5,8 @@ import { reducer as registrationReducer } from './reducers/registration.slice';
 import { reducer as repeatRequestsSlice } from './reducers/repeatRequests.slice';
 import { reducer as feedback } from './reducers/feedback.slice';
 import { api } from './api-rtk/api';
+import { reducer as commonModalSlice } from './reducers/commonModal.slice';
+import { reducer as calendarSlice } from './reducers/calendar.slice';
 
 const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({
     history: createBrowserHistory(),
@@ -12,10 +14,12 @@ const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHisto
 
 const reducers = combineReducers({
     router: routerReducer,
+    [api.reducerPath]: api.reducer,
     registration: registrationReducer,
     repeatRequests: repeatRequestsSlice,
     feedback: feedback,
-    [api.reducerPath]: api.reducer,
+    commonModal: commonModalSlice,
+    calendar: calendarSlice,
 });
 
 export const store = configureStore({

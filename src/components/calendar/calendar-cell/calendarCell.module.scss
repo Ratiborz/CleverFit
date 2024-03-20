@@ -1,0 +1,18 @@
+.modal {
+    position: static;
+}
+
+.modal :global .ant-picker-content.ant-picker-content td {
+    position: static;
+}
+
+.past__color {
+    color: #bfbfbf;
+}
+
+@media (max-width: 834px) {
+    .default_li {
+        width: 65px;
+        height: 16px;
+    }
+}

@@ -1,7 +1,7 @@
 .sider {
     padding-top: 47px;
     height: 100vh;
-    z-index: 10;
+    z-index: 20;
 }
 
 .wrapper {
@@ -14,11 +14,13 @@
 .logo {
     padding-left: 29px;
     margin-bottom: 67px;
+    cursor: pointer;
 }
 
 .logo_mini {
     margin-left: 18px;
     margin-bottom: 68px;
+    cursor: pointer;
 }
 
 .button {

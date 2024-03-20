@@ -10,10 +10,10 @@ import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { useEffect, useState } from 'react';
 import { checkEmail } from '../../../api/requests';
 import styles from './auth.module.scss';
-import { emailValueSelector } from '@constants/selectors/selectors';
 import { Paths } from '@constants/paths';
 import { baseURL } from '@constants/constants';
 import { authGoogle } from '@constants/constants/constants';
+import { emailValueSelector } from '@constants/selectors';
 export const Auth = () => {
     const dispatch = useAppDispatch();
     const emailValue = useAppSelector(emailValueSelector);
