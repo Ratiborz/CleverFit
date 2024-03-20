@@ -70,7 +70,6 @@ export const CalendarCell = ({
                         (isMiddleWidth ? 700 : 1500)
                     }
                     trainingNames={trainingNames}
-                    tranings={tranings}
                 />
             )}
         </div>
