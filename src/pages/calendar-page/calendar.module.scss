@@ -3,6 +3,7 @@
 .main_container {
     width: 100%;
     background: none;
+    overflow: hidden;
 }
 .main_container :global .ant-breadcrumb {
     padding: 16px 0 8px 24px;
@@ -28,6 +29,7 @@
 .wrapper_calendar {
     background-color: #f0f5ff;
     padding-bottom: 93px;
+    overflow: hidden;
 }
 
 .mobile_wrapper {
@@ -145,14 +147,30 @@ div.mobile_calendar {
     }
 
     .settings_btn {
-        display: block;
         max-width: 110px;
-        width: auto;
+        width: 100%;
         margin-right: 33px;
         margin-bottom: 28px;
+    }
+}
+
+@media (max-width: 830px) {
+    .settings_btn {
+        width: auto;
+    }
+}
+
+@media (max-width: 360px) {
+    .settings_btn :global .anticon.anticon-setting {
+        color: #262626;
+        width: auto;
     }
 
     .main_container {
         height: 100vh;
+    }
+
+    .settings_btn {
+        width: auto;
     }
 }
