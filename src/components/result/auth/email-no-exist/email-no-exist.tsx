@@ -1,9 +1,9 @@
-import { Button, Card, Image, Typography } from 'antd';
 import { NavLink } from 'react-router-dom';
+import { Button, Card, Image, Typography } from 'antd';
+
 import styles from './email-no-exist.module.scss';
 
-export const EmailNoExist = () => {
-    return (
+export const EmailNoExist = () => (
         <Card
             className={styles.card}
             bodyStyle={{
@@ -23,8 +23,7 @@ export const EmailNoExist = () => {
                 Мы не нашли в базе вашего e-mail. Попробуйте войти с другим e-mail.
             </Typography>
             <Button className={styles.card__btn} data-test-id='check-retry-button'>
-                <NavLink to={'/auth'}>Попробовать снова</NavLink>
+                <NavLink to="/auth">Попробовать снова</NavLink>
             </Button>
         </Card>
     );
-};

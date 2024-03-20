@@ -1,10 +1,10 @@
 import { SettingOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
-import styles from './header.module.scss';
 import Breadcrumbs from '@components/breadcrumb/breadcrumb';
+import { Button } from 'antd';
 
-export const Header = () => {
-    return (
+import styles from './header.module.scss';
+
+export const Header = () => (
         <header className={styles.header}>
             <Breadcrumbs />
             <div className={styles.title_settings}>
@@ -23,4 +23,3 @@ export const Header = () => {
             </div>
         </header>
     );
-};

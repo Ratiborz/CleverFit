@@ -8,6 +8,8 @@ export const storageToken = {
         if (item) {
             return item;
         }
+
+        return null;
     },
 };
 
@@ -21,6 +23,8 @@ export const sessionToken = {
         if (item) {
             return item;
         }
+
+        return null;
     },
 };
 

@@ -1,0 +1,153 @@
+.general_wrapper {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+}
+
+.main_container {
+    width: 100%;
+    background: none;
+    margin-bottom: 122px;
+}
+
+.overflow__wrapper {
+    overflow-y: scroll;
+    scrollbar-width: none;
+    height: 635px;
+}
+
+.main_container :global .ant-breadcrumb {
+    padding: 16px 0 16px 24px;
+}
+
+.comment {
+    border-radius: 2px;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+    background: rgb(255, 255, 255);
+    margin: 0 24px;
+    margin-top: 20px;
+}
+
+.comment :global .ant-card-body {
+    display: flex;
+    justify-content: flex-start;
+    padding: 16px;
+}
+
+.wrapper__img_name {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 13px;
+    width: 174px;
+}
+
+.comment_img {
+    width: 42px;
+    margin-bottom: 12px;
+}
+
+.comment_name {
+    font-size: 16px;
+    text-align: center;
+    max-width: 120px;
+}
+
+.wrapper__description {
+    min-height: 104px;
+}
+
+.wrapper__rating_date {
+    display: flex;
+    align-items: center;
+    margin-bottom: 13px;
+}
+
+.comment_date {
+    color: #bfbfbf;
+    font-size: 13px;
+}
+
+.comment_text {
+    max-width: 1110px;
+    color: #8c8c8c;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 130%;
+}
+
+.wrapper__buttons {
+    margin-top: 132px;
+    margin-left: 24px;
+}
+
+.btn__create_feedback {
+    height: 40px;
+    padding: 7px 15px;
+    border: 1px solid rgb(47, 84, 235);
+    background-color: rgb(47, 84, 235);
+    color: #fff;
+    width: 142px;
+    border-radius: 2px;
+    box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
+    font-size: 14px;
+}
+
+.btn__all_feedback {
+    font-size: 16px;
+    color: #2f54eb;
+    margin-left: 23px;
+}
+
+@media (max-width: 360px) {
+    .comment :global .ant-card-body {
+        flex-direction: column;
+    }
+
+    .wrapper__img_name {
+        align-items: center;
+        flex-direction: row;
+        margin-bottom: 12px;
+    }
+
+    .comment_img {
+        margin-right: 16px;
+        margin-bottom: 0;
+    }
+
+    .wrapper__description {
+        min-height: 0;
+    }
+
+    .wrapper__buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 48px;
+        margin-left: 0;
+        margin-bottom: 42px;
+    }
+
+    .btn__create_feedback {
+        max-width: 328px;
+        width: 100%;
+        margin-bottom: 16px;
+    }
+
+    .btn__all_feedback {
+        margin-left: 0;
+    }
+
+    .comment {
+        max-width: 328px;
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .overflow__wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}

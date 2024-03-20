@@ -1,5 +1,6 @@
-import { InputsData, Training, TrainingsListItem } from '../../types/calendarTypes';
 import { createSlice } from '@reduxjs/toolkit';
+
+import { InputsData, Training, TrainingsListItem } from '../../types/calendar-types';
 
 interface Modal {
     warning: boolean;

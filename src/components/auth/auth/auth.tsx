@@ -1,19 +1,22 @@
+import React, { useEffect, useState } from 'react';
 import { GooglePlusOutlined } from '@ant-design/icons';
 import { Loader } from '@components/loader/loader';
+import { baseURL } from '@constants/constants';
+import { authGoogle } from '@constants/constants/constants';
+import { Paths } from '@constants/paths';
+import { emailValueSelector } from '@constants/selectors';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { history } from '@redux/configure-store';
 import { actions } from '@redux/reducers/registration.slice';
-import { actions as repeatRequestsActions } from '@redux/reducers/repeatRequests.slice';
-import { isUserAuthSession, isUserAuthLocal } from '@utils/storage';
+import { actions as repeatRequestsActions } from '@redux/reducers/repeat-requests.slice';
+import { isUserAuthLocal, isUserAuthSession } from '@utils/storage';
 import { Button, Checkbox, Form, Input } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
-import { useEffect, useState } from 'react';
+
 import { checkEmail } from '../../../api/requests';
+
 import styles from './auth.module.scss';
-import { Paths } from '@constants/paths';
-import { baseURL } from '@constants/constants';
-import { authGoogle } from '@constants/constants/constants';
-import { emailValueSelector } from '@constants/selectors';
+
 export const Auth = () => {
     const dispatch = useAppDispatch();
     const emailValue = useAppSelector(emailValueSelector);
@@ -61,18 +64,19 @@ export const Auth = () => {
 
     const onChange = (e: CheckboxChangeEvent) => {
         const state = e.target.checked;
+
         dispatch(actions.setRemember(state));
     };
 
     return (
-        <>
+        <React.Fragment>
             {loading && <Loader />}
             <div className={styles.email_placeholder}>
                 <span className={styles.placeholder}>e-mail:</span>
                 <Form.Item
                     key='email'
                     className={styles.email_item}
-                    hasFeedback
+                    hasFeedback={true}
                     name='email'
                     rules={[
                         () => ({
@@ -84,12 +88,13 @@ export const Auth = () => {
                                     setIsInvalidEmail(false);
                                     setValidEmail(true);
                                     dispatch(actions.setEmail(value));
+
                                     return Promise.resolve();
-                                } else {
-                                    setIsInvalidEmail(true);
-                                    setValidEmail(false);
-                                    return Promise.reject();
                                 }
+                                setIsInvalidEmail(true);
+                                setValidEmail(false);
+
+                                return Promise.reject();
                             },
                         }),
                         {
@@ -109,13 +114,14 @@ export const Auth = () => {
             <Form.Item className={styles.password_item}>
                 <Form.Item
                     name='password'
-                    hasFeedback
+                    hasFeedback={true}
                     rules={[
                         () => ({
                             validator(_, value) {
                                 if (value?.length >= 8 && /[A-Z]/.test(value) && /\d/.test(value)) {
                                     return Promise.resolve();
                                 }
+
                                 return Promise.reject();
                             },
                         }),
@@ -171,6 +177,6 @@ export const Auth = () => {
                     Войти через Google
                 </Button>
             </div>
-        </>
+        </React.Fragment>
     );
 };

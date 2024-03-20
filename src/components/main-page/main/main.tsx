@@ -1,15 +1,16 @@
+import React, { useState } from 'react';
 import { CalendarTwoTone, HeartFilled, IdcardOutlined } from '@ant-design/icons';
-import styles from './main.module.scss';
-
-import { Button, Card, Divider, Layout } from 'antd';
-import { Paths } from '@constants/paths';
-import { history } from '@redux/configure-store';
-import { useState } from 'react';
 import Loader from '@components/loader/loader';
-import { getTrainingInfo } from '../../../api/calendar';
+import { Paths } from '@constants/paths';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
-import { actions } from '@redux/reducers/commonModal.slice';
+import { history } from '@redux/configure-store';
 import { actions as actionsCalendar } from '@redux/reducers/calendar.slice';
+import { actions } from '@redux/reducers/common-modal.slice';
+import { Button, Card, Divider, Layout } from 'antd';
+
+import { getTrainingInfo } from '../../../api/calendar';
+
+import styles from './main.module.scss';
 
 export const Main = () => {
     const dispatch = useAppDispatch();
@@ -30,7 +31,7 @@ export const Main = () => {
     };
 
     return (
-        <>
+        <React.Fragment>
             {loading && <Loader />}
             <Layout className={styles.wrapper}>
                 <Card className={styles.card}>
@@ -92,6 +93,6 @@ export const Main = () => {
                     </Card>
                 </div>
             </Layout>
-        </>
+        </React.Fragment>
     );
 };

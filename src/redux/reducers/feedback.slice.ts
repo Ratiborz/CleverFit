@@ -5,7 +5,7 @@ type DataReview = {
     message: string;
 };
 
-interface feedback {
+interface FeedBack {
     warning: boolean;
     isFeedbackData: boolean;
     isModalCreateFeedbackOpen: boolean;
@@ -14,7 +14,7 @@ interface feedback {
     dataReview: DataReview;
 }
 
-const initialState: feedback = {
+const initialState: FeedBack = {
     warning: false,
     isFeedbackData: false,
     isModalCreateFeedbackOpen: false,

@@ -1,6 +1,7 @@
+import React, { useEffect, useState } from 'react';
 import { GooglePlusOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Typography } from 'antd';
-import { useEffect, useState } from 'react';
+
 import styles from './registration.module.scss';
 
 export const Registration: React.FC = () => {
@@ -12,17 +13,18 @@ export const Registration: React.FC = () => {
 
     useEffect(() => {
         const isValid = isInvalidEmail && isInvalidPassword && isInvalidConfirm;
+
         setIsFormValid(isValid);
     }, [isInvalidEmail, isInvalidPassword, isInvalidConfirm]);
 
     return (
-        <>
+        <React.Fragment>
             <div className={styles.email_placeholder}>
                 <span className={styles.placeholder}>e-mail:</span>
                 <Form.Item
                     key='email'
                     className={styles.email_item}
-                    hasFeedback
+                    hasFeedback={true}
                     name='email'
                     rules={[
                         () => ({
@@ -32,11 +34,12 @@ export const Registration: React.FC = () => {
 
                                 if (emailRegex.test(value)) {
                                     setIsInvalidEmail(true);
+
                                     return Promise.resolve();
-                                } else {
-                                    setIsInvalidEmail(false);
-                                    return Promise.reject();
                                 }
+                                setIsInvalidEmail(false);
+
+                                return Promise.reject();
                             },
                         }),
                         {
@@ -57,15 +60,17 @@ export const Registration: React.FC = () => {
                 <Form.Item
                     style={{ marginBottom: 0 }}
                     name='password'
-                    hasFeedback
+                    hasFeedback={true}
                     rules={[
                         () => ({
                             validator(_, value) {
                                 if (value?.length >= 8 && /[A-Z]/.test(value) && /\d/.test(value)) {
                                     setIsInvalidPassword(true);
+
                                     return Promise.resolve();
                                 }
                                 setIsInvalidPassword(false);
+
                                 return Promise.reject();
                             },
                         }),
@@ -94,7 +99,7 @@ export const Registration: React.FC = () => {
                 className={styles.confirm_item}
                 name='confirm'
                 dependencies={['password']}
-                hasFeedback
+                hasFeedback={true}
                 rules={[
                     {
                         required: true,
@@ -104,9 +109,11 @@ export const Registration: React.FC = () => {
                         validator(_, value) {
                             if (!value || getFieldValue('password') === value) {
                                 setIsInvalidConfirm(true);
+
                                 return Promise.resolve();
                             }
                             setIsInvalidConfirm(false);
+
                             return Promise.reject(new Error('Пароли не совпадают'));
                         },
                     }),
@@ -130,6 +137,6 @@ export const Registration: React.FC = () => {
             <Button className={styles.google__btn} icon={<GooglePlusOutlined />}>
                 Регистрация через Google
             </Button>
-        </>
+        </React.Fragment>
     );
 };

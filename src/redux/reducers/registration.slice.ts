@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-interface requestState {
+interface RequestState {
     rememberMe: boolean;
     email: string;
     loading: boolean;
 }
 
-const initialState: requestState = {
+const initialState: RequestState = {
     rememberMe: false,
     email: '',
     loading: false,

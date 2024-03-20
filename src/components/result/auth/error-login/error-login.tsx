@@ -1,9 +1,9 @@
-import { Button, Card, Image, Typography } from 'antd';
 import { NavLink } from 'react-router-dom';
+import { Button, Card, Image, Typography } from 'antd';
+
 import styles from './error-login.module.scss';
 
-export const ErrorLogin = () => {
-    return (
+export const ErrorLogin = () => (
         <Card
             className={styles.card}
             bodyStyle={{
@@ -23,8 +23,7 @@ export const ErrorLogin = () => {
                 Что-то пошло не так. Попробуйте еще раз
             </Typography>
             <Button className={styles.card__btn} data-test-id='login-retry-button'>
-                <NavLink to={'/auth'}>Повторить</NavLink>
+                <NavLink to="/auth">Повторить</NavLink>
             </Button>
         </Card>
     );
-};

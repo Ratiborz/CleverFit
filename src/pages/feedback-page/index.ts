@@ -1,1 +1,1 @@
-export { FeedbackPage } from './feedbackPage';
+export { FeedbackPage } from './feedback-page';

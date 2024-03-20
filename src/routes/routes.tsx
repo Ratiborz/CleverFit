@@ -1,24 +1,25 @@
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { Auth } from '@components/auth/auth/auth';
-import { ChangePassword } from '@components/auth/change-password/changePassword';
-import { ConfirmEmail } from '@components/auth/confirm-email/confirmEmail';
+import { ChangePassword } from '@components/auth/change-password/change-password';
+import { ConfirmEmail } from '@components/auth/confirm-email/confirm-email';
 import { EmailNoExist } from '@components/result/auth/email-no-exist/email-no-exist';
+import { Error } from '@components/result/auth/error/error';
 import { ErrorСhangePassword } from '@components/result/auth/error-change-password/error-change-password';
 import { ErrorCheckEmail } from '@components/result/auth/error-check-email/error-check-email';
 import { ErrorLogin } from '@components/result/auth/error-login/error-login';
 import { ErrorUserExist } from '@components/result/auth/error-user-exist/error-user-exist';
-import { Error } from '@components/result/auth/error/error';
-import { SuccessChangePassword } from '@components/result/auth/success-change-password/success-change-password';
 import { Success } from '@components/result/auth/success/success';
+import { SuccessChangePassword } from '@components/result/auth/success-change-password/success-change-password';
+import { Paths } from '@constants/paths';
+import { CalendarPage } from '@pages/calendar-page/calendar-page';
 import { ErrorsPage } from '@pages/errors-page/errors';
+import { FeedbackPage } from '@pages/feedback-page/feedback-page';
 import { MainPage } from '@pages/main-page';
 import { PasswordRecoveryPage } from '@pages/password-recovery';
 import { RegistrationPage } from '@pages/registration-page';
 import { isUserAuthLocal } from '@utils/storage';
-import { Navigate, Route, Routes } from 'react-router-dom';
+
 import { Registration } from '../components/auth/registration/registration';
-import { Paths } from '@constants/paths';
-import { FeedbackPage } from '@pages/feedback-page/feedbackPage';
-import { CalendarPage } from '@pages/calendar-page/calendarPage';
 
 export const routes = (
     <Routes>
@@ -26,11 +27,11 @@ export const routes = (
             path={Paths.HOME}
             element={<Navigate to={isUserAuthLocal() ? `${Paths.MAIN}` : `${Paths.AUTH}`} />}
         />
-        <Route path={Paths.MAIN} element={<MainPage />}></Route>
+        <Route path={Paths.MAIN} element={<MainPage />} />
         <Route path={Paths.FEEDBACKS} element={<FeedbackPage />} />
         <Route path={Paths.CALENDAR} element={<CalendarPage />} />
         <Route path={`${Paths.AUTH}/*`} element={<RegistrationPage />}>
-            <Route index element={<Auth />} />
+            <Route index={true} element={<Auth />} />
             <Route path={Paths.REGISTRATION} element={<Registration />} />
         </Route>
         <Route path={`${Paths.AUTH}/*`} element={<PasswordRecoveryPage />}>

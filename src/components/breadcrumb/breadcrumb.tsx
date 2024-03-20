@@ -1,7 +1,8 @@
-import { Paths } from '@constants/paths';
-import { Breadcrumb } from 'antd';
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
+import { Paths } from '@constants/paths';
+import { Breadcrumb } from 'antd';
+
 import styles from './breadcrumb.module.scss';
 
 const Breadcrumbs: React.FC = () => {

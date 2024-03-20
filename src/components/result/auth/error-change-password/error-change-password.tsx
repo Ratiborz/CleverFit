@@ -1,5 +1,6 @@
 import { history } from '@redux/configure-store';
 import { Button, Card, Image, Typography } from 'antd';
+
 import styles from './change-password.module.scss';
 
 export const ErrorСhangePassword = () => {

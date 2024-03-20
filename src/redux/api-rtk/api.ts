@@ -6,10 +6,11 @@ export const api = createApi({
     tagTypes: ['Feedback'],
     baseQuery: fetchBaseQuery({
         baseUrl: 'https://marathon-api.clevertec.ru/',
-        prepareHeaders: (headers, { getState }) => {
+        prepareHeaders: (headers) => {
             const localAccessToken = storageToken.getItem('accessToken');
             const sessionAccessToken = sessionToken.getItem('accessToken');
             const token = localAccessToken ?? sessionAccessToken;
+
             headers.set('Authorization', `Bearer ${token}`);
 
             return headers;

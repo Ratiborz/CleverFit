@@ -1,9 +1,9 @@
-import { Button, Card, Image, Typography } from 'antd';
 import { NavLink } from 'react-router-dom';
+import { Button, Card, Image, Typography } from 'antd';
+
 import styles from './success.module.scss';
 
-export const Success = () => {
-    return (
+export const Success = () => (
         <Card
             className={styles.card}
             bodyStyle={{
@@ -23,8 +23,7 @@ export const Success = () => {
                 Регистрация прошла успешно. Зайдите в приложение, используя свои e-mail и пароль.
             </Typography>
             <Button className={styles.card__btn} data-test-id='registration-enter-button'>
-                <NavLink to={'/auth'}>Войти</NavLink>
+                <NavLink to="/auth">Войти</NavLink>
             </Button>
         </Card>
     );
-};

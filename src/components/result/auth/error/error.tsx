@@ -1,9 +1,9 @@
-import { Button, Card, Image, Typography } from 'antd';
 import { NavLink } from 'react-router-dom';
+import { Button, Card, Image, Typography } from 'antd';
+
 import styles from './error.module.scss';
 
-export const Error = () => {
-    return (
+export const Error = () => (
         <Card
             className={styles.card}
             bodyStyle={{
@@ -23,8 +23,7 @@ export const Error = () => {
                 Что-то пошло не так и ваша регистрация не завершилась. Попробуйте ещё раз.
             </Typography>
             <Button className={styles.card__btn} data-test-id='registration-retry-button'>
-                <NavLink to={'/auth/registration'}>Повторить</NavLink>
+                <NavLink to="/auth/registration">Повторить</NavLink>
             </Button>
         </Card>
     );
-};

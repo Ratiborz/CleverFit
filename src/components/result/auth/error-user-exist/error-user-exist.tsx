@@ -1,9 +1,9 @@
-import { Button, Card, Image, Typography } from 'antd';
 import { NavLink } from 'react-router-dom';
+import { Button, Card, Image, Typography } from 'antd';
+
 import styles from './error-user-exist.module.scss';
 
-export const ErrorUserExist = () => {
-    return (
+export const ErrorUserExist = () => (
         <Card
             className={styles.card}
             bodyStyle={{
@@ -23,8 +23,7 @@ export const ErrorUserExist = () => {
                 Такой e-mail уже записан в системе. Попробуйте зарегистрироваться по другому e-mail.
             </Typography>
             <Button className={styles.card__btn} data-test-id='registration-back-button'>
-                <NavLink to={'/auth/registration'}>Назад к регистрации</NavLink>
+                <NavLink to="/auth/registration">Назад к регистрации</NavLink>
             </Button>
         </Card>
     );
-};

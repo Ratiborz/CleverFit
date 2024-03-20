@@ -1,9 +1,9 @@
-import { Button, Card, Image, Typography } from 'antd';
 import { NavLink } from 'react-router-dom';
+import { Button, Card, Image, Typography } from 'antd';
+
 import styles from './success-change-password.module.scss';
 
-export const SuccessChangePassword = () => {
-    return (
+export const SuccessChangePassword = () => (
         <Card
             className={styles.card}
             bodyStyle={{
@@ -23,8 +23,7 @@ export const SuccessChangePassword = () => {
                 Теперь можно войти в аккаунт, используя свой логин и новый пароль
             </Typography>
             <Button className={styles.card__btn} data-test-id='change-entry-button'>
-                <NavLink to={'/auth'}>Вход</NavLink>
+                <NavLink to="/auth">Вход</NavLink>
             </Button>
         </Card>
     );
-};

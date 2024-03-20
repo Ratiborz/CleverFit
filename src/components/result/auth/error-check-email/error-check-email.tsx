@@ -1,12 +1,14 @@
+import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { Loader } from '@components/loader/loader';
+import { emaildataSelector } from '@constants/selectors';
 import { useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { history } from '@redux/configure-store';
 import { Button, Card, Image, Typography } from 'antd';
-import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+
 import { checkEmail } from '../../../../api/requests';
+
 import styles from './error-check-email.module.scss';
-import { emaildataSelector } from '@constants/selectors';
 
 export const ErrorCheckEmail = () => {
     const emaildata = useAppSelector(emaildataSelector);
@@ -34,7 +36,7 @@ export const ErrorCheckEmail = () => {
     };
 
     return (
-        <>
+        <React.Fragment>
             {loading && <Loader />}
             <Card
                 className={styles.card}
@@ -59,9 +61,9 @@ export const ErrorCheckEmail = () => {
                     onClick={() => checkData()}
                     data-test-id='check-back-button'
                 >
-                    <NavLink to={'/auth'}>Назад</NavLink>
+                    <NavLink to='/auth'>Назад</NavLink>
                 </Button>
             </Card>
-        </>
+        </React.Fragment>
     );
 };
