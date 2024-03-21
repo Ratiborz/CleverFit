@@ -30,6 +30,10 @@ export const Main = () => {
             .finally(() => setLoading(false));
     };
 
+    const switchToProfile = () => {
+        history.push(Paths.PROFILE);
+    };
+
     return (
         <React.Fragment>
             {loading && <Loader />}
@@ -87,6 +91,7 @@ export const Main = () => {
                             className={styles.card_training__btn}
                             type='link'
                             icon={<IdcardOutlined />}
+                            onClick={() => switchToProfile()}
                         >
                             Профиль
                         </Button>
