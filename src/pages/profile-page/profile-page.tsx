@@ -1,13 +1,14 @@
-import { Aside } from '@components/main-page/sider/sider';
-import { Button, Layout } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
+import { Aside } from '@components/main-page/sider/sider';
+import { Profile } from '@components/profile/profile/profile';
 import { positionImage } from '@constants/constants';
+import { Button, Layout } from 'antd';
 
 import styles from './profile-page.module.scss';
-import { Profile } from '@components/profile/profile/profile';
 
 export const ProfilePage = () => {
     console.log();
+
     return (
         <Layout className={styles.general_wrapper} style={positionImage}>
             <Aside />

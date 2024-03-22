@@ -17,3 +17,6 @@ export const maskStyle = {
     backgroundColor: 'rgba(121, 156, 213, 0.5)',
     backdropFilter: 'blur(5px)',
 };
+
+export const emailRegex =
+    /^(?=.{1,64}@)(?=.{1,255}$)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;

@@ -16,9 +16,9 @@ import { ErrorsPage } from '@pages/errors-page/errors';
 import { FeedbackPage } from '@pages/feedback-page/feedback-page';
 import { MainPage } from '@pages/main-page';
 import { PasswordRecoveryPage } from '@pages/password-recovery';
+import { ProfilePage } from '@pages/profile-page';
 import { RegistrationPage } from '@pages/registration-page';
 import { isUserAuthLocal } from '@utils/storage';
-import { ProfilePage } from '@pages/profile-page';
 
 import { Registration } from '../components/auth/registration/registration';
 

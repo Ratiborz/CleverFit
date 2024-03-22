@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
     CalendarTwoTone,
     HeartFilled,
@@ -41,10 +42,19 @@ function getItem(
 }
 
 export const Aside: React.FC = () => {
+    const location = useLocation();
     const dispatch = useAppDispatch();
     const [collapsed, setCollapsed] = useState(false);
     const [mobileWidth, setMobileWidth] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [selectedTab, setSelectedTab] = useState('');
+
+    useEffect(() => {
+        const currentRoute = location.pathname;
+
+        if (currentRoute === '/calendar') setSelectedTab('1');
+        if (currentRoute === '/profile') setSelectedTab('4');
+    }, [location]);
 
     const switchToCalendar = (key: string) => {
         if (key === '1') {
@@ -58,7 +68,13 @@ export const Aside: React.FC = () => {
                     console.log(error);
                     dispatch(actions.setWarning(true));
                 })
-                .finally(() => setLoading(false));
+                .finally(() => {
+                    setLoading(false);
+                });
+        }
+
+        if (key === '4') {
+            history.push(Paths.PROFILE);
         }
     };
 
@@ -79,9 +95,7 @@ export const Aside: React.FC = () => {
         history.push(Paths.AUTH);
     };
 
-    const goToMain = () => {
-        history.push(Paths.MAIN);
-    };
+    const goToMain = () => history.push(Paths.MAIN);
 
     return (
         <React.Fragment>
@@ -133,7 +147,7 @@ export const Aside: React.FC = () => {
                             style={{ overflow: 'hidden' }}
                             onClick={({ key }) => switchToCalendar(key)}
                             theme='light'
-                            defaultSelectedKeys={['1']}
+                            selectedKeys={[selectedTab]}
                             mode='inline'
                             items={items}
                         />

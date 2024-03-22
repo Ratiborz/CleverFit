@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { GooglePlusOutlined } from '@ant-design/icons';
+import { emailRegex } from '@constants/constants';
 import { Button, Form, Input, Typography } from 'antd';
 
 import styles from './registration.module.scss';
@@ -29,9 +30,6 @@ export const Registration: React.FC = () => {
                     rules={[
                         () => ({
                             validator(_, value) {
-                                const emailRegex =
-                                    /^(?=.{1,64}@)(?=.{1,255}$)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
                                 if (emailRegex.test(value)) {
                                     setIsInvalidEmail(true);
 

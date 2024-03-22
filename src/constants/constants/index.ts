@@ -5,4 +5,5 @@ export {
     authGoogle,
     positionImage,
     maskStyle,
+    emailRegex,
 } from './constants';
