@@ -9,10 +9,6 @@
     width: auto;
 }
 
-.avatar_uploader :global .ant-upload.ant-upload-select-picture-card {
-    margin-right: 24px;
-}
-
 .input_name,
 .input_second_name {
     height: 40px;
@@ -37,6 +33,10 @@
     max-width: 480px;
     width: 100%;
     margin-bottom: 24px;
+}
+
+.group__personal_info {
+    width: 100%;
 }
 
 .title__private_data {
@@ -87,4 +87,5 @@
 
 .save__btn {
     height: 40px;
+    background: #2f54eb;
 }

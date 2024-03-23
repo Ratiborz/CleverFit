@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CalendarTwoTone, HeartFilled, IdcardOutlined } from '@ant-design/icons';
 import Loader from '@components/loader/loader';
 import { Paths } from '@constants/paths';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
+import { useGetUserInfoQuery } from '@redux/api-rtk/profile-request';
 import { history } from '@redux/configure-store';
 import { actions as actionsCalendar } from '@redux/reducers/calendar.slice';
 import { actions } from '@redux/reducers/common-modal.slice';
@@ -15,6 +16,11 @@ import styles from './main.module.scss';
 export const Main = () => {
     const dispatch = useAppDispatch();
     const [loading, setLoading] = useState(false);
+    const { data } = useGetUserInfoQuery();
+
+    useEffect(() => {
+        console.log(data);
+    }, [data]);
 
     const switchToCalendar = () => {
         setLoading(true);
