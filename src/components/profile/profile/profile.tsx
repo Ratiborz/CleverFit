@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CalendarTwoTone } from '@ant-design/icons';
 import { emailRegex } from '@constants/constants';
-import { Button, DatePicker, Form, Input, Typography } from 'antd';
+import { useEditUserInfoMutation } from '@redux/api-rtk/profile-request';
+import { Alert, Button, DatePicker, Form, Input, Typography } from 'antd';
 
+import { FieldValues } from '../../../types/profile-types';
+import { ModalErrorSave } from '../modal-error/modal-error';
 import { UploadImage } from '../upload/upload-image';
 
 import styles from './profile.module.scss';
@@ -12,29 +15,66 @@ export const Profile = () => {
     const [isInvalidPassword, setIsInvalidPassword] = useState(true);
     const [validEmail, setValidEmail] = useState(false);
     const [activeSaveBtn, setActiveSaveBtn] = useState(false);
+    const [openModalError, setOpenModalError] = useState(false);
+    const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
-    const onChangeEmail = () => {
-        setValidEmail(true);
-    };
+    const [editUserInfo, { isError, isSuccess, data }] = useEditUserInfoMutation();
+
+    console.log(data);
+
+    useEffect(() => {
+        if (isSuccess) setShowSuccessAlert(true);
+        if (isError) setOpenModalError(true);
+    }, [isError, isSuccess]);
 
     const onChangeFields = () => {
+        const avatarValue = form.getFieldValue('avatar');
         const nameValue = form.getFieldValue('name');
         const secondNameValue = form.getFieldValue('second-name');
         const birthdayValue = form.getFieldValue('birthday');
+        const emailValue = form.getFieldValue('email');
+        const passwordValue = form.getFieldValue('password');
+        const confirmPassValue = form.getFieldValue('confirm');
 
-        if (nameValue || secondNameValue || birthdayValue) {
+        if (emailValue) setValidEmail(true);
+
+        if (!emailValue || !passwordValue || !confirmPassValue) setValidEmail(false);
+
+        if (
+            avatarValue ||
+            nameValue ||
+            secondNameValue ||
+            birthdayValue ||
+            emailValue ||
+            passwordValue ||
+            confirmPassValue
+        ) {
             setActiveSaveBtn(true);
         } else {
             setActiveSaveBtn(false);
         }
     };
 
-    const onFinish = (value) => {
+    const onFinish = (value: FieldValues) => {
         console.log(value);
+        const userInfo = {
+            email: value?.email,
+            password: value?.password,
+            firstName: value?.name,
+            lastName: value?.secondName,
+            birthday: value?.birthday?.toISOString(),
+            imgSrc: value?.avatar?.file?.thumbUrl,
+            readyForJointTraining: false,
+            sendNotification: false,
+        };
+
+        editUserInfo(userInfo);
     };
 
     return (
         <div className={styles.container__profile}>
+            <ModalErrorSave openModalError={openModalError} setOpenModalError={setOpenModalError} />
+
             <Form
                 name='private-data'
                 form={form}
@@ -56,7 +96,7 @@ export const Profile = () => {
                             />
                         </Form.Item>
 
-                        <Form.Item name='second-name'>
+                        <Form.Item name='secondName'>
                             <Input
                                 placeholder='Фамилия'
                                 className={styles.input_second_name}
@@ -103,7 +143,7 @@ export const Profile = () => {
                         >
                             <Input
                                 className={styles.email_input}
-                                onChange={() => onChangeEmail()}
+                                onChange={() => onChangeFields()}
                             />
                         </Form.Item>
                     </div>
@@ -163,6 +203,12 @@ export const Profile = () => {
                                     return Promise.reject(new Error('Пароли не совпадают'));
                                 },
                             }),
+                            validEmail
+                                ? {
+                                      required: true,
+                                      message: '',
+                                  }
+                                : {},
                         ]}
                     >
                         <Input.Password
@@ -175,11 +221,23 @@ export const Profile = () => {
                     className={styles.save__btn}
                     type='primary'
                     htmlType='submit'
-                    disabled={activeSaveBtn ? false : true}
+                    disabled={!activeSaveBtn}
                 >
                     Сохранить изменения
                 </Button>
             </Form>
+            {showSuccessAlert ? (
+                <Alert
+                    message='Данные профиля успешно обновлены'
+                    type='success'
+                    className={styles.alert__success}
+                    showIcon={true}
+                    closable={true}
+                    onClose={() => setShowSuccessAlert(false)}
+                />
+            ) : (
+                ''
+            )}
         </div>
     );
 };

@@ -7,6 +7,7 @@ import { useGetUserInfoQuery } from '@redux/api-rtk/profile-request';
 import { history } from '@redux/configure-store';
 import { actions as actionsCalendar } from '@redux/reducers/calendar.slice';
 import { actions } from '@redux/reducers/common-modal.slice';
+import { actions as actionsRepRequest } from '@redux/reducers/repeat-requests.slice';
 import { Button, Card, Divider, Layout } from 'antd';
 
 import { getTrainingInfo } from '../../../api/calendar';
@@ -19,8 +20,9 @@ export const Main = () => {
     const { data } = useGetUserInfoQuery();
 
     useEffect(() => {
+        dispatch(actionsRepRequest.setUserInfo(data));
         console.log(data);
-    }, [data]);
+    }, [data, dispatch]);
 
     const switchToCalendar = () => {
         setLoading(true);

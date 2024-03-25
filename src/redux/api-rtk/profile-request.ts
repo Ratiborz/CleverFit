@@ -1,3 +1,5 @@
+import { User } from '../../types/profile-types';
+
 import { api } from './api';
 
 export const profileApi = api.injectEndpoints({
@@ -5,7 +7,14 @@ export const profileApi = api.injectEndpoints({
         getUserInfo: builder.query<void, void>({
             query: () => 'user/me',
         }),
+        editUserInfo: builder.mutation<User, User>({
+            query: (user) => ({
+                url: 'user',
+                body: user,
+                method: 'PUT',
+            }),
+        }),
     }),
 });
 
-export const { useGetUserInfoQuery } = profileApi;
+export const { useGetUserInfoQuery, useEditUserInfoMutation } = profileApi;

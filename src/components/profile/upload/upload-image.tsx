@@ -22,12 +22,14 @@ export const UploadImage = () => {
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState('');
     const [previewTitle, setPreviewTitle] = useState('');
+    // const userInfoData = useAppSelector(userInfoDataSelector);
     const [fileList, setFileList] = useState<UploadFile[]>([]);
     const [isBigFile, setIsBigFile] = useState(false);
 
     const handleCancel = () => setPreviewOpen(false);
 
     const token = storageToken.getItem('accessToken') || sessionToken.getItem('accessToken');
+    // const googleAuth = localStorage.getItem('isGoogleAuth') === 'true';
 
     const handlePreview = async (file: UploadFile) => {
         const updatedFile = { ...file };

@@ -33,3 +33,5 @@ export {
     StateModalErrorSelector,
     dataReviewSelector,
 } from './feedbak';
+
+export { userInfoDataSelector } from './profile';

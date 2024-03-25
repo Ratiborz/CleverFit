@@ -3,6 +3,7 @@
     background: #fff;
     padding: 24px 24px 280px 24px;
     border-radius: 5px;
+    position: relative;
 }
 
 .container__profile :global .ant-upload-picture-card-wrapper {
@@ -88,4 +89,12 @@
 .save__btn {
     height: 40px;
     background: #2f54eb;
+}
+
+.alert__success {
+    max-width: 395px;
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
 }

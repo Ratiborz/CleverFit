@@ -36,6 +36,7 @@ export function isUserAuthLocal() {
     if (accessToken) {
         localStorage.setItem('accessToken', accessToken);
         localStorage.setItem('isAuthenticated', 'true');
+        localStorage.setItem('isGoogleAuth', 'true');
     }
 
     return localStorage.getItem('isAuthenticated') === 'true';
