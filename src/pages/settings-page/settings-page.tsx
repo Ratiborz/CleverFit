@@ -1,15 +1,18 @@
 import { Aside } from '@components/main-page/sider/sider';
 import { Settings } from '@components/settings/settings/settings';
 import { Paths } from '@constants/paths';
+import { useGetCatalogsTariffListQuery } from '@redux/api-rtk/profile-request';
 import { history } from '@redux/configure-store';
 import { Layout, PageHeader } from 'antd';
 
 import styles from './settings-page.module.scss';
 
 export const SettingsPage = () => {
-    const switchToProfile = () => {
-        history.push(Paths.PROFILE);
-    };
+    const { data } = useGetCatalogsTariffListQuery();
+
+    console.log(data);
+
+    const switchToProfile = () => history.push(Paths.PROFILE);
 
     return (
         <Layout className={styles.general_wrapper}>

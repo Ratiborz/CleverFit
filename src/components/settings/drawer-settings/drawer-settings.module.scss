@@ -64,6 +64,7 @@ div.drawer {
     display: flex;
     flex-direction: column;
     align-items: end;
+    margin-bottom: 36px;
 }
 
 .option {
@@ -76,6 +77,11 @@ div.drawer {
     display: flex;
     justify-content: space-between;
     width: 100%;
+    margin-bottom: 16px;
+}
+
+.option__li:last-of-type {
+    margin-bottom: 0;
 }
 
 .icons_option {
@@ -89,4 +95,53 @@ div.drawer {
 
 .option_text {
     font-size: 15px;
+}
+
+.tariff__cost {
+    margin-bottom: 24px;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.container__radio {
+    display: flex;
+    justify-content: space-between;
+}
+
+.radio__option {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0;
+    margin-bottom: 0;
+    width: 100%;
+    margin-right: 55px;
+}
+
+.radio__option__li {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.radio__option__li:last-of-type {
+    margin-bottom: 0;
+}
+
+.radio_group {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.radio_group :glonal .ant-radio-wrapper {
+    margin-right: 14px;
+}
+
+.btn__pay {
+    width: 100%;
+    height: 40px;
+    background-color: #2f54eb;
+    color: #fff;
 }

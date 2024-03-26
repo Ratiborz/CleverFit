@@ -7,6 +7,9 @@ export const profileApi = api.injectEndpoints({
         getUserInfo: builder.query<void, void>({
             query: () => 'user/me',
         }),
+        getCatalogsTariffList: builder.query<void, void>({
+            query: () => 'catalogs/tariff-list',
+        }),
         editUserInfo: builder.mutation<User, User>({
             query: (user) => ({
                 url: 'user',
@@ -17,4 +20,5 @@ export const profileApi = api.injectEndpoints({
     }),
 });
 
-export const { useGetUserInfoQuery, useEditUserInfoMutation } = profileApi;
+export const { useGetUserInfoQuery, useEditUserInfoMutation, useGetCatalogsTariffListQuery } =
+    profileApi;

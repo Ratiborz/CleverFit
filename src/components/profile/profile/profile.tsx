@@ -56,7 +56,6 @@ export const Profile = () => {
     };
 
     const onFinish = (value: FieldValues) => {
-        console.log(value);
         const userInfo = {
             email: value?.email,
             password: value?.password,
