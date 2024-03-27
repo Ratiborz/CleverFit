@@ -1,4 +1,6 @@
 import { CheckCircleFilled, CloseCircleOutlined, CloseOutlined } from '@ant-design/icons';
+import { tariffDataSelector } from '@constants/selectors';
+import { useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { Button, Drawer, Radio } from 'antd';
 
 import styles from './drawer-settings.module.scss';
@@ -9,7 +11,9 @@ type Props = {
 };
 
 export const DrawerSettings = ({ openDrawer, setOpenDrawer }: Props) => {
-    console.log();
+    const tariffData = useAppSelector(tariffDataSelector);
+
+    console.log(tariffData);
 
     return (
         <Drawer
@@ -91,18 +95,24 @@ export const DrawerSettings = ({ openDrawer, setOpenDrawer }: Props) => {
             <h2 className={styles.tariff__cost}>Стоимость тарифа</h2>
             <div className={styles.container__radio}>
                 <ul className={styles.radio__option}>
-                    <li className={styles.radio__option__li}>
-                        <p className={styles.option_text}>6 месяцев</p>
-                        5,5$
-                    </li>
-                    <li className={styles.radio__option__li}>
-                        <p className={styles.option_text}>9 месяцев</p>
-                        8,5$
-                    </li>
-                    <li className={styles.radio__option__li}>
-                        <p className={styles.option_text}>12 месяцев</p>
-                        10$
-                    </li>
+                    {
+                        tariffData?.periods && console.log(tariffData?.periods)
+                        // tariffData?.periods?.map((period) => (
+                        //     <li className={styles.radio__option__li} key={period.text}>
+                        //         <p className={styles.option_text}>{period.text}</p>
+                        //         {period.cost}$
+                        //     </li>
+                        // ))
+                    }
+
+                    {/* // <li className={styles.radio__option__li}>
+                    //     <p className={styles.option_text}>9 месяцев</p>
+                    //     8,5$
+                    // </li>
+                    // <li className={styles.radio__option__li}>
+                    //     <p className={styles.option_text}>12 месяцев</p>
+                    //     10$
+                    // </li> */}
                 </ul>
                 <Radio.Group name='radiogroup' className={styles.radio_group}>
                     <Radio value={5.5} />

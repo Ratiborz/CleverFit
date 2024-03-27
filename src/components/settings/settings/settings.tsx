@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { CheckOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { WriteFeedbackModal } from '@components/feedback/write-feedback/write-feedback';
 import { Paths } from '@constants/paths';
-import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
+import { userInfoDataSelector } from '@constants/selectors';
+import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { useEditUserInfoMutation } from '@redux/api-rtk/profile-request';
 import { history } from '@redux/configure-store';
 import { actions } from '@redux/reducers/feedback.slice';
 import { Button, Card, Image, Switch, Tooltip } from 'antd';
@@ -14,6 +16,25 @@ import styles from './settings.module.scss';
 export const Settings = () => {
     const dispatch = useAppDispatch();
     const [openDrawer, setOpenDrawer] = useState(false);
+    const userData = useAppSelector(userInfoDataSelector);
+    const [commonTraining, setCommonTraining] = useState(false);
+    const [notifications, setNotifications] = useState(false);
+    const [editUserInfo, { isError, isSuccess, data }] = useEditUserInfoMutation();
+
+    const editUserOptions = (e: boolean, option: string) => {
+        const userInfo = {
+            email: userData?.email,
+            password: userData?.password,
+            firstName: userData?.firstName,
+            lastName: userData?.lastName,
+            birthday: userData?.birthday,
+            imgSrc: userData?.imgSrc,
+            readyForJointTraining: option === 'common training' ? e : commonTraining,
+            sendNotification: option === 'notifications' ? e : notifications,
+        };
+
+        if (option === 'common training' || option === 'notifications') editUserInfo(userInfo);
+    };
 
     const openSideDrawer = () => {
         setOpenDrawer(!openDrawer);
@@ -66,7 +87,12 @@ export const Settings = () => {
                                 <ExclamationCircleOutlined style={{ marginLeft: 4 }} />
                             </Tooltip>
                         </div>
-                        <Switch />
+                        <Switch
+                            onChange={(e) => {
+                                setCommonTraining(e);
+                                editUserOptions(e, 'common training');
+                            }}
+                        />
                     </div>
                     <div className={styles.switch}>
                         <div>
@@ -79,7 +105,12 @@ export const Settings = () => {
                                 <ExclamationCircleOutlined style={{ marginLeft: 4 }} />
                             </Tooltip>
                         </div>
-                        <Switch />
+                        <Switch
+                            onChange={(e) => {
+                                setNotifications(e);
+                                editUserOptions(e, 'notifications');
+                            }}
+                        />
                     </div>
                     <div className={styles.switch}>
                         <div>

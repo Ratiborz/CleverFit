@@ -34,4 +34,4 @@ export {
     dataReviewSelector,
 } from './feedbak';
 
-export { userInfoDataSelector } from './profile';
+export { userInfoDataSelector, tariffDataSelector } from './profile';

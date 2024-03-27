@@ -6,6 +6,7 @@ import { api } from './api-rtk/api';
 import { reducer as calendarSlice } from './reducers/calendar.slice';
 import { reducer as commonModalSlice } from './reducers/common-modal.slice';
 import { reducer as feedback } from './reducers/feedback.slice';
+import { reducer as profileSlice } from './reducers/profile.slice';
 import { reducer as registrationReducer } from './reducers/registration.slice';
 import { reducer as repeatRequestsSlice } from './reducers/repeat-requests.slice';
 
@@ -21,6 +22,7 @@ const reducers = combineReducers({
     feedback,
     commonModal: commonModalSlice,
     calendar: calendarSlice,
+    profile: profileSlice,
 });
 
 export const store = configureStore({

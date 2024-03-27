@@ -1,1 +1,1 @@
-export { userInfoDataSelector } from './profile-selectors';
+export { userInfoDataSelector, tariffDataSelector } from './profile-selectors';
