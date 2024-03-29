@@ -17,6 +17,7 @@ export const Profile = () => {
     const [activeSaveBtn, setActiveSaveBtn] = useState(false);
     const [openModalError, setOpenModalError] = useState(false);
     const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+    const [imageSrc, setImageSrc] = useState('');
 
     const [editUserInfo, { isError, isSuccess, data }] = useEditUserInfoMutation();
 
@@ -62,10 +63,12 @@ export const Profile = () => {
             firstName: value?.name,
             lastName: value?.secondName,
             birthday: value?.birthday?.toISOString(),
-            imgSrc: value?.avatar?.file?.thumbUrl,
+            imgSrc: imageSrc,
             readyForJointTraining: false,
             sendNotification: false,
         };
+
+        console.log(userInfo);
 
         editUserInfo(userInfo);
     };
@@ -84,7 +87,7 @@ export const Profile = () => {
                 <h2 className={styles.title__personal_info}>Личная информация</h2>
                 <div className={styles.container__personal_info}>
                     <div>
-                        <UploadImage />
+                        <UploadImage saveImage={setImageSrc} />
                     </div>
                     <div className={styles.group__personal_info}>
                         <Form.Item name='name'>

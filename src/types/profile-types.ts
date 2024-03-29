@@ -8,14 +8,18 @@ type ImgSrc = {
 };
 
 export type User = {
-    email: string | undefined;
-    password: string | undefined;
-    firstName: string | undefined;
-    lastName: string | undefined;
-    birthday: string | undefined;
-    imgSrc: string | undefined;
-    readyForJointTraining: boolean;
-    sendNotification: boolean;
+    email?: string;
+    password?: string;
+    firstName?: string;
+    lastName?: string;
+    birthday?: string;
+    imgSrc?: string;
+    readyForJointTraining?: boolean;
+    sendNotification?: boolean;
+    tariff?: {
+        expired: string;
+        tariffId: string;
+    };
 };
 
 export type FieldValues = {
@@ -38,4 +42,9 @@ export type TariffData = {
     name: string;
     periods: Periods[];
     _id: string;
+};
+
+export type Tariff = {
+    tariffId: string;
+    days: number;
 };

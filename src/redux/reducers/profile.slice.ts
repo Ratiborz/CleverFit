@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { TariffData } from '../../types/profile-types';
 
 interface ProfileState {
-    tariffData?: TariffData;
+    tariffData?: TariffData[];
 }
 
 const initialState: ProfileState = {};
@@ -13,7 +13,6 @@ export const profileSlice = createSlice({
     initialState,
     reducers: {
         setDataTariff: (state, { payload }) => {
-            console.log(payload);
             state.tariffData = payload;
         },
     },

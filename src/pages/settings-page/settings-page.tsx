@@ -12,11 +12,11 @@ import styles from './settings-page.module.scss';
 
 export const SettingsPage = () => {
     const dispatch = useAppDispatch();
-    const { data } = useGetCatalogsTariffListQuery();
+    const { data, isSuccess } = useGetCatalogsTariffListQuery();
 
     useEffect(() => {
-        dispatch(actions.setDataTariff(data));
-    }, [data, dispatch]);
+        if (isSuccess) dispatch(actions.setDataTariff(data));
+    }, [data, dispatch, isSuccess]);
 
     const switchToProfile = () => history.push(Paths.PROFILE);
 

@@ -19,7 +19,15 @@ export const Settings = () => {
     const userData = useAppSelector(userInfoDataSelector);
     const [commonTraining, setCommonTraining] = useState(false);
     const [notifications, setNotifications] = useState(false);
-    const [editUserInfo, { isError, isSuccess, data }] = useEditUserInfoMutation();
+    const [editUserInfo] = useEditUserInfoMutation();
+
+    const proTariff = Boolean(userData?.tariff);
+
+    console.log(userData?.tariff);
+
+    const expiredDate = new Date(userData?.tariff?.expired);
+    const day = expiredDate.getDate().toString().padStart(2, '0');
+    const month = (expiredDate.getMonth() + 1).toString().padStart(2, '0');
 
     const editUserOptions = (e: boolean, option: string) => {
         const userInfo = {
@@ -47,7 +55,13 @@ export const Settings = () => {
     return (
         <React.Fragment>
             <WriteFeedbackModal />
-            <DrawerSettings openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
+            <DrawerSettings
+                openDrawer={openDrawer}
+                setOpenDrawer={setOpenDrawer}
+                proTariff={proTariff}
+                day={day}
+                month={month}
+            />
             <div className={styles.container__profile}>
                 <h2 className={styles.title__my_tariff}>Мой тарифф</h2>
                 <div className={styles.container__cards}>
@@ -71,8 +85,20 @@ export const Settings = () => {
                                 Подробнее
                             </Button>
                         </div>
-                        <Image src='/pro_plan.png' preview={false} className={styles.card__img} />
-                        <Button className={styles.card__btn_activate}>Активировать</Button>
+                        <Image
+                            src={proTariff ? '/pro-plan-active.png' : '/pro_plan.png'}
+                            preview={false}
+                            className={styles.card__img}
+                        />
+                        {proTariff ? (
+                            <div className={styles.position__text}>
+                                <p className={styles.card__btn_text}>
+                                    активен до {day}.{month}
+                                </p>
+                            </div>
+                        ) : (
+                            <Button className={styles.card__btn_activate}>Активировать</Button>
+                        )}
                     </Card>
                 </div>
                 <div className={styles.switchers__container}>
@@ -113,7 +139,7 @@ export const Settings = () => {
                         />
                     </div>
                     <div className={styles.switch}>
-                        <div>
+                        <div className={proTariff ? '' : styles.disabled_color}>
                             Тёмная тема
                             <Tooltip
                                 placement='bottomLeft'
@@ -123,7 +149,7 @@ export const Settings = () => {
                                 <ExclamationCircleOutlined style={{ marginLeft: 4 }} />
                             </Tooltip>
                         </div>
-                        <Switch disabled={true} />
+                        <Switch disabled={!proTariff} />
                     </div>
                 </div>
                 <div className={styles.wrapper__buttons}>

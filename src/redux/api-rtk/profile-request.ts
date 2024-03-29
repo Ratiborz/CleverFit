@@ -1,4 +1,4 @@
-import { User } from '../../types/profile-types';
+import { Tariff, User } from '../../types/profile-types';
 
 import { api } from './api';
 
@@ -17,8 +17,19 @@ export const profileApi = api.injectEndpoints({
                 method: 'PUT',
             }),
         }),
+        buyNewTariff: builder.mutation<Tariff, Tariff>({
+            query: (tariff: Tariff) => ({
+                url: 'tariff',
+                body: tariff,
+                method: 'POST',
+            }),
+        }),
     }),
 });
 
-export const { useGetUserInfoQuery, useEditUserInfoMutation, useGetCatalogsTariffListQuery } =
-    profileApi;
+export const {
+    useGetUserInfoQuery,
+    useEditUserInfoMutation,
+    useGetCatalogsTariffListQuery,
+    useBuyNewTariffMutation,
+} = profileApi;

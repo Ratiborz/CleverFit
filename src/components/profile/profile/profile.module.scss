@@ -98,3 +98,29 @@
     left: 50%;
     transform: translateX(-50%);
 }
+
+@media (max-width: 360px) {
+    .container__profile {
+        margin-left: 0;
+        margin-right: 0;
+        padding-bottom: 37px;
+    }
+
+    .container__personal_info {
+        flex-direction: column-reverse;
+    }
+
+    .password_requirements {
+        font-size: 12px;
+        max-width: 304px;
+    }
+
+    .save__btn {
+        width: 100%;
+    }
+
+    .alert__success {
+        max-width: 312px;
+        width: 100%;
+    }
+}
