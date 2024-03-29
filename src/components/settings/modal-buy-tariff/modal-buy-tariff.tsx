@@ -22,16 +22,13 @@ export const ModalBuyTariff = ({ openModal }: Props) => {
 
     return (
         <Modal
+            data-test-id='tariff-modal-success'
+            centered={true}
             className={styles.card}
             open={openModal}
+            maskStyle={{ backgroundColor: 'rgba(121, 156, 212, 0.2)', backdropFilter: 'blur(5px)' }}
             onCancel={() => cancelProcess()}
             footer={false}
-            bodyStyle={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                paddingTop: 64,
-            }}
         >
             <CheckCircleFilled style={{ color: '#2F54EB', fontSize: '70px' }} />
             <h3 className={styles.card__h3}>Чек для оплаты у вас на почте</h3>

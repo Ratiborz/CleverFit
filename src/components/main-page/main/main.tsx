@@ -96,6 +96,7 @@ export const Main = () => {
                         <p className={styles.card_training__p}>Заполнить профиль</p>
                         <Divider style={{ margin: 0 }} />
                         <Button
+                            data-test-id='menu-button-profile'
                             className={styles.card_training__btn}
                             type='link'
                             icon={<IdcardOutlined />}

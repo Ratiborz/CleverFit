@@ -19,9 +19,7 @@ export const Profile = () => {
     const [showSuccessAlert, setShowSuccessAlert] = useState(false);
     const [imageSrc, setImageSrc] = useState('');
 
-    const [editUserInfo, { isError, isSuccess, data }] = useEditUserInfoMutation();
-
-    console.log(data);
+    const [editUserInfo, { isError, isSuccess }] = useEditUserInfoMutation();
 
     useEffect(() => {
         if (isSuccess) setShowSuccessAlert(true);
@@ -68,8 +66,6 @@ export const Profile = () => {
             sendNotification: false,
         };
 
-        console.log(userInfo);
-
         editUserInfo(userInfo);
     };
 
@@ -92,6 +88,7 @@ export const Profile = () => {
                     <div className={styles.group__personal_info}>
                         <Form.Item name='name'>
                             <Input
+                                data-test-id='profile-name'
                                 placeholder='Имя'
                                 className={styles.input_name}
                                 onChange={() => onChangeFields()}
@@ -100,6 +97,7 @@ export const Profile = () => {
 
                         <Form.Item name='secondName'>
                             <Input
+                                data-test-id='profile-surname'
                                 placeholder='Фамилия'
                                 className={styles.input_second_name}
                                 onChange={() => onChangeFields()}
@@ -108,6 +106,7 @@ export const Profile = () => {
 
                         <Form.Item name='birthday'>
                             <DatePicker
+                                data-test-id='profile-birthday'
                                 className={styles.date_picker}
                                 format='DD.MM.YYYY'
                                 onChange={() => onChangeFields()}
@@ -125,6 +124,7 @@ export const Profile = () => {
                     <div className={styles.email_placeholder}>
                         <span className={styles.placeholder}>e-mail:</span>
                         <Form.Item
+                            data-test-id='profile-email'
                             name='email'
                             className={styles.email_item}
                             hasFeedback={true}
@@ -153,6 +153,7 @@ export const Profile = () => {
                     <Form.Item className={styles.password_item}>
                         <Form.Item
                             style={{ marginBottom: 0 }}
+                            data-test-id='profile-password'
                             name='password'
                             hasFeedback={true}
                             rules={[
@@ -192,6 +193,7 @@ export const Profile = () => {
 
                     <Form.Item
                         className={styles.confirm_item}
+                        data-test-id='profile-repeat-password'
                         name='confirm'
                         dependencies={['password']}
                         hasFeedback={true}
@@ -220,6 +222,7 @@ export const Profile = () => {
                     </Form.Item>
                 </React.Fragment>
                 <Button
+                    data-test-id='profile-submit'
                     className={styles.save__btn}
                     type='primary'
                     htmlType='submit'
@@ -230,6 +233,7 @@ export const Profile = () => {
             </Form>
             {showSuccessAlert ? (
                 <Alert
+                    data-test-id='alert'
                     message='Данные профиля успешно обновлены'
                     type='success'
                     className={styles.alert__success}

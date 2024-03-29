@@ -127,6 +127,7 @@ export const UploadImage = ({ saveImage }: Props) => {
                     </Upload>
                 ) : (
                     <Upload
+                        data-test-id='profile-avatar'
                         className={styles.avatar_uploader}
                         action='https://marathon-api.clevertec.ru/upload-image'
                         headers={{ authorization: `Bearer ${token}` }}

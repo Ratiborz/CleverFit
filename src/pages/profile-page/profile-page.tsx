@@ -22,6 +22,7 @@ export const ProfilePage = () => {
 
                     <div className={styles.wrapper_btn}>
                         <Button
+                            data-test-id='header-settings'
                             onClick={() => switchToSettings()}
                             className={styles.settings_btn}
                             type='link'

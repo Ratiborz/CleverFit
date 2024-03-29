@@ -14,6 +14,7 @@ import classNames from 'classnames';
 import { ModalBuyTariff } from '../modal-buy-tariff/modal-buy-tariff';
 
 import styles from './drawer-settings.module.scss';
+import useWindowResize from '@hooks/use-window-resize';
 
 type Props = {
     openDrawer: boolean;
@@ -24,10 +25,13 @@ type Props = {
 };
 
 export const DrawerSettings = ({ openDrawer, setOpenDrawer, proTariff, day, month }: Props) => {
+    const { width } = useWindowResize();
     const tariffData = useAppSelector(tariffDataSelector);
     const [radioValue, setRadioValue] = useState(null);
     const [openModalEmail, setModalEmail] = useState(false);
     const [buyNewTariff] = useBuyNewTariffMutation();
+
+    const isMobile = width <= 360;
 
     const buyTariff = () => {
         const days =
@@ -51,10 +55,11 @@ export const DrawerSettings = ({ openDrawer, setOpenDrawer, proTariff, day, mont
             <ModalBuyTariff openModal={openModalEmail} />
 
             <Drawer
+                data-test-id='tariff-sider'
                 title='Сравнить тарифы'
                 className={classNames(styles.drawer, proTariff ? styles.marginNull : '')}
                 open={openDrawer}
-                width={408}
+                width={isMobile ? 360 : 408}
                 closeIcon={false}
                 maskClosable={false}
                 mask={false}
@@ -157,10 +162,14 @@ export const DrawerSettings = ({ openDrawer, setOpenDrawer, proTariff, day, mont
                 </div>
                 <h2 className={styles.tariff__cost}>Стоимость тарифа</h2>
                 <div className={styles.container__radio}>
-                    <ul className={styles.radio__option}>
+                    <ul data-test-id='tariff-cost' className={styles.radio__option}>
                         {tariffData &&
                             tariffData[0].periods.map((period) => (
-                                <li className={styles.radio__option__li} key={period.text}>
+                                <li
+                                    data-test-id={period.cost === 10 ? 'tariff-10' : ''}
+                                    className={styles.radio__option__li}
+                                    key={period.text}
+                                >
                                     <p className={styles.option_text}>{period.text}</p>
                                     {period.cost}$
                                 </li>

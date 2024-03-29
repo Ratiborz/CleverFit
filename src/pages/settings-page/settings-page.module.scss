@@ -17,3 +17,10 @@
 .header :global .ant-page-header {
     padding: 0;
 }
+
+@media (max-width: 360px) {
+    .header :global .ant-page-header-heading-title {
+        font-weight: 400;
+        font-size: 14px;
+    }
+}

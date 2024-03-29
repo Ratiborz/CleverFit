@@ -153,6 +153,27 @@
         margin-bottom: 12px;
     }
 
+    .btn__create_feedback {
+        max-width: none;
+        margin-bottom: 16px;
+    }
+
+    .wrapper__buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .mobile__text_pos {
+        max-width: 176px;
+    }
+
+    .mobile__position {
+        display: flex;
+        align-items: baseline;
+    }
+
     .container__cards :global {
         .ant-image {
             width: 100%;

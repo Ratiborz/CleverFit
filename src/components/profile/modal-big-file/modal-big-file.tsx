@@ -23,7 +23,11 @@ export const ModalBigFile = ({ isBigFile, setIsBigFile }: Props) => (
             <h2 className={styles.modal_title}>Файл слишком большой</h2>
             <p className={styles.modal_message}>Выберить файл размером [....] МБ</p>
             <div className={styles.wrapper__btn}>
-                <Button className={styles.btn__close} onClick={() => setIsBigFile(false)}>
+                <Button
+                    data-test-id='big-file-error-close'
+                    className={styles.btn__close}
+                    onClick={() => setIsBigFile(false)}
+                >
                     Закрыть
                 </Button>
             </div>

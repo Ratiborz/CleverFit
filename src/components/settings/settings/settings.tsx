@@ -12,6 +12,7 @@ import { Button, Card, Image, Switch, Tooltip } from 'antd';
 import { DrawerSettings } from '../drawer-settings/drawer-settings';
 
 import styles from './settings.module.scss';
+import useWindowResize from '@hooks/use-window-resize';
 
 export const Settings = () => {
     const dispatch = useAppDispatch();
@@ -21,9 +22,11 @@ export const Settings = () => {
     const [notifications, setNotifications] = useState(false);
     const [editUserInfo] = useEditUserInfoMutation();
 
-    const proTariff = Boolean(userData?.tariff);
+    const { width } = useWindowResize();
+    const isMobile = width <= 360;
+    const tooltipPlace = isMobile ? 'top' : 'bottom';
 
-    console.log(userData?.tariff);
+    const proTariff = Boolean(userData?.tariff);
 
     const expiredDate = new Date(userData?.tariff?.expired);
     const day = expiredDate.getDate().toString().padStart(2, '0');
@@ -63,7 +66,7 @@ export const Settings = () => {
                 month={month}
             />
             <div className={styles.container__profile}>
-                <h2 className={styles.title__my_tariff}>Мой тарифф</h2>
+                <h2 className={styles.title__my_tariff}>Мой тариф</h2>
                 <div className={styles.container__cards}>
                     <Card className={styles.card__plan}>
                         <div className={styles.card__header}>
@@ -78,7 +81,7 @@ export const Settings = () => {
                         </div>
                     </Card>
 
-                    <Card className={styles.card__plan}>
+                    <Card className={styles.card__plan} data-test-id='pro-tariff-card'>
                         <div className={styles.card__header}>
                             <p className={styles.card__name_tariff}>PRO tarif</p>
                             <Button type='link' onClick={() => openSideDrawer()}>
@@ -97,23 +100,34 @@ export const Settings = () => {
                                 </p>
                             </div>
                         ) : (
-                            <Button className={styles.card__btn_activate}>Активировать</Button>
+                            <Button
+                                data-test-id='activate-tariff-btn'
+                                className={styles.card__btn_activate}
+                            >
+                                Активировать
+                            </Button>
                         )}
                     </Card>
                 </div>
                 <div className={styles.switchers__container}>
                     <div className={styles.switch}>
-                        <div>
-                            Открыт для совместных тренировок
+                        <div className={styles.mobile__position}>
+                            <span className={styles.mobile__text_pos}>
+                                Открыт для совместных тренировок
+                            </span>
                             <Tooltip
-                                placement='bottomLeft'
+                                placement={tooltipPlace}
                                 title='включеная функция позволит участвовать в совместных тренировках'
                                 overlayStyle={{ maxWidth: '215px' }}
                             >
-                                <ExclamationCircleOutlined style={{ marginLeft: 4 }} />
+                                <ExclamationCircleOutlined
+                                    data-test-id='tariff-trainings-icon'
+                                    style={{ marginLeft: 4, color: '#8c8c8c' }}
+                                />
                             </Tooltip>
                         </div>
                         <Switch
+                            data-test-id='tariff-trainings'
                             onChange={(e) => {
                                 setCommonTraining(e);
                                 editUserOptions(e, 'common training');
@@ -124,14 +138,18 @@ export const Settings = () => {
                         <div>
                             Уведомления
                             <Tooltip
-                                placement='bottomLeft'
+                                placement={tooltipPlace}
                                 title='включеная функция позволит получать уведомления об активностях'
                                 overlayStyle={{ maxWidth: '215px' }}
                             >
-                                <ExclamationCircleOutlined style={{ marginLeft: 4 }} />
+                                <ExclamationCircleOutlined
+                                    data-test-id='tariff-notifications-icon'
+                                    style={{ marginLeft: 4, color: '#8c8c8c' }}
+                                />
                             </Tooltip>
                         </div>
                         <Switch
+                            data-test-id='tariff-notifications'
                             onChange={(e) => {
                                 setNotifications(e);
                                 editUserOptions(e, 'notifications');
@@ -142,14 +160,17 @@ export const Settings = () => {
                         <div className={proTariff ? '' : styles.disabled_color}>
                             Тёмная тема
                             <Tooltip
-                                placement='bottomLeft'
+                                placement={tooltipPlace}
                                 title='тёмная тема доступна для PRO tariff'
                                 overlayStyle={{ maxWidth: '215px' }}
                             >
-                                <ExclamationCircleOutlined style={{ marginLeft: 4 }} />
+                                <ExclamationCircleOutlined
+                                    data-test-id='tariff-theme-icon'
+                                    style={{ marginLeft: 4, color: '#8c8c8c' }}
+                                />
                             </Tooltip>
                         </div>
-                        <Switch disabled={!proTariff} />
+                        <Switch data-test-id='tariff-theme' disabled={!proTariff} />
                     </div>
                 </div>
                 <div className={styles.wrapper__buttons}>

@@ -26,7 +26,7 @@ export const SettingsPage = () => {
             <Layout className={styles.main_container}>
                 <header className={styles.header}>
                     <PageHeader
-                        className='site-page-header'
+                        data-test-id='settings-back'
                         onBack={() => switchToProfile()}
                         title='Настройки'
                     />
