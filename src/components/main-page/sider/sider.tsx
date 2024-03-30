@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
     CalendarTwoTone,
     HeartFilled,
@@ -6,19 +8,21 @@ import {
     MenuUnfoldOutlined,
     TrophyFilled,
 } from '@ant-design/icons';
+import Loader from '@components/loader/loader';
+import { BadRequstModalError } from '@components/result/common-modal-result/bad-request-modal/bad-request-modal';
+import { Paths } from '@constants/paths';
+import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 import { history } from '@redux/configure-store';
+import { actions as actionsCalendar } from '@redux/reducers/calendar.slice';
+import { actions } from '@redux/reducers/common-modal.slice';
 import type { MenuProps } from 'antd';
 import { Button, Image, Layout, Menu } from 'antd';
-import 'antd/dist/antd.css';
-import React, { useState } from 'react';
-import styles from './sider.module.scss';
-import { Paths } from '@constants/paths';
-import Loader from '@components/loader/loader';
-import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
+
 import { getTrainingInfo } from '../../../api/calendar';
-import { BadRequstModalError } from '@components/result/common-modal-result/badRequestModal/badRequstModal';
-import { actions as actionsCalendar } from '@redux/reducers/calendar.slice';
-import { actions } from '@redux/reducers/commonModal.slice';
+
+import 'antd/dist/antd.css';
+import styles from './sider.module.scss';
+
 const { Sider } = Layout;
 
 type MenuItem = Required<MenuProps>['items'][number];
@@ -38,10 +42,19 @@ function getItem(
 }
 
 export const Aside: React.FC = () => {
+    const location = useLocation();
     const dispatch = useAppDispatch();
     const [collapsed, setCollapsed] = useState(false);
     const [mobileWidth, setMobileWidth] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [selectedTab, setSelectedTab] = useState('');
+
+    useEffect(() => {
+        const currentRoute = location.pathname;
+
+        if (currentRoute === '/calendar') setSelectedTab('1');
+        if (currentRoute === '/profile') setSelectedTab('4');
+    }, [location]);
 
     const switchToCalendar = (key: string) => {
         if (key === '1') {
@@ -55,7 +68,13 @@ export const Aside: React.FC = () => {
                     console.log(error);
                     dispatch(actions.setWarning(true));
                 })
-                .finally(() => setLoading(false));
+                .finally(() => {
+                    setLoading(false);
+                });
+        }
+
+        if (key === '4') {
+            history.push(Paths.PROFILE);
         }
     };
 
@@ -76,12 +95,10 @@ export const Aside: React.FC = () => {
         history.push(Paths.AUTH);
     };
 
-    const goToMain = () => {
-        history.push(Paths.MAIN);
-    };
+    const goToMain = () => history.push(Paths.MAIN);
 
     return (
-        <>
+        <React.Fragment>
             {loading && <Loader />}
             <BadRequstModalError />
             <Sider
@@ -99,7 +116,7 @@ export const Aside: React.FC = () => {
                 trigger={null}
                 width={mobileWidth ? 106 : 208}
                 theme='light'
-                collapsible
+                collapsible={true}
                 collapsed={collapsed}
                 onCollapse={(value) => setCollapsed(value)}
             >
@@ -130,7 +147,7 @@ export const Aside: React.FC = () => {
                             style={{ overflow: 'hidden' }}
                             onClick={({ key }) => switchToCalendar(key)}
                             theme='light'
-                            defaultSelectedKeys={['1']}
+                            selectedKeys={[selectedTab]}
                             mode='inline'
                             items={items}
                         />
@@ -155,6 +172,6 @@ export const Aside: React.FC = () => {
                     onClick: () => setCollapsed(!collapsed),
                 })}
             </Sider>
-        </>
+        </React.Fragment>
     );
 };

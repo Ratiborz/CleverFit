@@ -8,6 +8,8 @@ export const storageToken = {
         if (item) {
             return item;
         }
+
+        return null;
     },
 };
 
@@ -21,6 +23,8 @@ export const sessionToken = {
         if (item) {
             return item;
         }
+
+        return null;
     },
 };
 
@@ -32,6 +36,7 @@ export function isUserAuthLocal() {
     if (accessToken) {
         localStorage.setItem('accessToken', accessToken);
         localStorage.setItem('isAuthenticated', 'true');
+        localStorage.setItem('isGoogleAuth', 'true');
     }
 
     return localStorage.getItem('isAuthenticated') === 'true';

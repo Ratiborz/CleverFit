@@ -1,0 +1,182 @@
+.container__profile {
+    margin: 24px 24px 42px 24px;
+    background: #fff;
+    padding: 24px 24px 234px 24px;
+    border-radius: 5px;
+    position: relative;
+}
+
+.container__cards {
+    display: flex;
+    justify-content: space-between;
+    max-width: 505px;
+}
+
+.title__my_tariff {
+    margin-bottom: 16px;
+}
+
+.card__plan {
+    max-width: 240px;
+    border: none;
+    border-radius: 2px;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+}
+
+.card__plan :global .ant-card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+}
+
+.card__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.card__header :global .ant-btn {
+    padding: 0;
+}
+
+.card__name_tariff {
+    margin-right: 40px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.card__img {
+    max-width: 240px;
+    width: 100%;
+}
+
+.bottom__btn {
+    display: flex;
+    padding-top: 37px;
+    padding-bottom: 37px;
+}
+
+.card__btn_text {
+    margin-right: 8px;
+    font-weight: 500;
+    font-size: 16px;
+    color: #030852;
+}
+
+.card__btn_activate {
+    max-width: 129px;
+    width: 100%;
+    height: 40px;
+    background-color: #2f54eb;
+    color: #fff;
+    margin-top: 27px;
+    margin-bottom: 27px;
+}
+
+.switchers__container {
+    margin-top: 40px;
+    margin-bottom: 96px;
+}
+
+.switch {
+    display: flex;
+    justify-content: space-between;
+    max-width: 505px;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.switch:last-of-type {
+    margin-bottom: 0;
+}
+
+.disabled_color {
+    color: #8c8c8c;
+}
+
+.position__text {
+    padding-top: 24px;
+    padding-bottom: 26px;
+    max-width: 78px;
+    text-align: center;
+}
+
+.btn__create_feedback {
+    max-width: 142px;
+    width: 100%;
+    height: 40px;
+    background-color: #2f54eb;
+    color: #fff;
+}
+
+@media (max-width: 360px) {
+    .container__profile {
+        margin-left: 0;
+        margin-right: 0;
+        padding-bottom: 27px;
+    }
+
+    .container__cards {
+        flex-direction: column;
+    }
+
+    .card__plan {
+        max-width: none;
+        margin-bottom: 12px;
+    }
+
+    .card__plan:last-of-type {
+        margin-bottom: 0;
+    }
+
+    .card__header {
+        width: 100%;
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    .card__img {
+        max-width: none;
+    }
+
+    .bottom__btn {
+        padding-top: 21px;
+        padding-bottom: 21px;
+    }
+
+    .card__btn_activate {
+        margin-top: 12px;
+        margin-bottom: 12px;
+    }
+
+    .btn__create_feedback {
+        max-width: none;
+        margin-bottom: 16px;
+    }
+
+    .wrapper__buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .mobile__text_pos {
+        max-width: 176px;
+    }
+
+    .mobile__position {
+        display: flex;
+        align-items: baseline;
+    }
+
+    .container__cards :global {
+        .ant-image {
+            width: 100%;
+        }
+    }
+}

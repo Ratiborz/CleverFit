@@ -1,17 +1,21 @@
+import React from 'react';
 import { EditOutlined, PlusOutlined } from '@ant-design/icons';
-import { Badge, Drawer } from 'antd';
-import styles from './drawer.module.scss';
-import type { Moment } from 'moment';
-import { getCurrentColor } from '../choose-color-badge/chooseColorBadge';
-import { useAppSelector } from '@hooks/typed-react-redux-hooks';
 import {
     editFlowSelector,
     isMobileSelector,
     pastFlowSelector,
     readOnlyFlowSelector,
 } from '@constants/selectors';
-import { DrawerForm } from './drawer-form/drawerForm';
+import { useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { Badge, Drawer } from 'antd';
 import classNames from 'classnames';
+import type { Moment } from 'moment';
+
+import { getCurrentColor } from '../choose-color-badge/choose-color-badge';
+
+import { DrawerForm } from './drawer-form/drawer-form';
+
+import styles from './drawer.module.scss';
 
 type Props = {
     showDrawer: boolean;
@@ -29,29 +33,37 @@ export const Drawerz = ({ showDrawer, setOpen, dateMoment, selectedTraining }: P
     const handleDrawerClose = () => {
         setOpen(false);
     };
+
+    const titleStatus = {
+        true: readOnlyFlow ? (
+            ''
+        ) : (
+            <p className={styles.warning__text}>
+                После сохранения внесенных изменений отредактировать проведенную тренировку будет
+                невозможно
+            </p>
+        ),
+    };
+
     return (
         <Drawer
             data-test-id='modal-drawer-right'
             width={isMobile ? 360 : 408}
             className={classNames(styles.drawer, isMobile && styles.drawer_mobile)}
             title={
-                <>
+                <div>
                     {editFlow ? (
-                        <>
+                        <React.Fragment>
                             <EditOutlined style={{ marginRight: '8px' }} />
                             <span>Редактирование</span>
-                        </>
-                    ) : readOnlyFlow ? (
-                        <>
-                            <span>Просмотр упражнений</span>
-                        </>
+                        </React.Fragment>
                     ) : (
-                        <>
+                        <React.Fragment>
                             <PlusOutlined style={{ marginRight: '8px' }} />
                             <span>Добавление упражнений</span>
-                        </>
+                        </React.Fragment>
                     )}
-                </>
+                </div>
             }
             closeIcon={false}
             placement='right'
@@ -75,18 +87,7 @@ export const Drawerz = ({ showDrawer, setOpen, dateMoment, selectedTraining }: P
                     </div>
                     <DrawerForm setOpen={setOpen} dateMoment={dateMoment} />
                 </div>
-                {pastFlow ? (
-                    readOnlyFlow ? (
-                        ''
-                    ) : (
-                        <p className={styles.warning__text}>
-                            После сохранения внесенных изменений отредактировать проведенную
-                            тренировку будет невозможно
-                        </p>
-                    )
-                ) : (
-                    ''
-                )}
+                {pastFlow ? titleStatus.true : ''}
             </div>
         </Drawer>
     );

@@ -1,0 +1,26 @@
+@import '/src/variables.scss';
+
+.main_container {
+    width: 100%;
+    background: none;
+    overflow: hidden;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f0f5ff;
+    padding: 22px 24px 22px 24px;
+}
+
+.header :global .ant-page-header {
+    padding: 0;
+}
+
+@media (max-width: 360px) {
+    .header :global .ant-page-header-heading-title {
+        font-weight: 400;
+        font-size: 14px;
+    }
+}

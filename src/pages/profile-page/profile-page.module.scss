@@ -1,0 +1,44 @@
+@import '/src/variables.scss';
+
+.main_container {
+    width: 100%;
+    background: none;
+    overflow: hidden;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f0f5ff;
+    padding: 22px 24px 24px 24px;
+}
+
+.title {
+    margin: 0;
+}
+
+.settings_text {
+    color: black;
+}
+
+@media (max-width: 834px) {
+    .header {
+        align-items: normal;
+        padding: 16px 24px 24px 24px;
+    }
+
+    .settings_btn {
+        margin-top: 10px;
+    }
+
+    .title {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 360px) {
+    .settings_text {
+        display: none !important;
+    }
+}

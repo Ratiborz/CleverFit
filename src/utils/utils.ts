@@ -12,6 +12,7 @@ export function timeConverter(UNIX_timestamp: number) {
     const month = months[a.getUTCMonth()];
     const date = a.getUTCDate();
     const time = `${date}.${month}.${year}`;
+
     return time;
 }
 

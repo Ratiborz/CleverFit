@@ -1,19 +1,29 @@
+import React, { useEffect, useState } from 'react';
 import { CalendarTwoTone, HeartFilled, IdcardOutlined } from '@ant-design/icons';
-import styles from './main.module.scss';
-
-import { Button, Card, Divider, Layout } from 'antd';
-import { Paths } from '@constants/paths';
-import { history } from '@redux/configure-store';
-import { useState } from 'react';
 import Loader from '@components/loader/loader';
-import { getTrainingInfo } from '../../../api/calendar';
+import { Paths } from '@constants/paths';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
-import { actions } from '@redux/reducers/commonModal.slice';
+import { useGetUserInfoQuery } from '@redux/api-rtk/profile-request';
+import { history } from '@redux/configure-store';
 import { actions as actionsCalendar } from '@redux/reducers/calendar.slice';
+import { actions } from '@redux/reducers/common-modal.slice';
+import { actions as actionsRepRequest } from '@redux/reducers/repeat-requests.slice';
+import { Button, Card, Divider, Layout } from 'antd';
+
+import { getTrainingInfo } from '../../../api/calendar';
+
+import styles from './main.module.scss';
 
 export const Main = () => {
     const dispatch = useAppDispatch();
     const [loading, setLoading] = useState(false);
+    const { data, refetch } = useGetUserInfoQuery();
+
+    useEffect(() => {
+        refetch();
+        dispatch(actionsRepRequest.setUserInfo(data));
+        console.log(data);
+    }, [data, dispatch, refetch]);
 
     const switchToCalendar = () => {
         setLoading(true);
@@ -29,8 +39,12 @@ export const Main = () => {
             .finally(() => setLoading(false));
     };
 
+    const switchToProfile = () => {
+        history.push(Paths.PROFILE);
+    };
+
     return (
-        <>
+        <React.Fragment>
             {loading && <Loader />}
             <Layout className={styles.wrapper}>
                 <Card className={styles.card}>
@@ -83,15 +97,17 @@ export const Main = () => {
                         <p className={styles.card_training__p}>Заполнить профиль</p>
                         <Divider style={{ margin: 0 }} />
                         <Button
+                            data-test-id='menu-button-profile'
                             className={styles.card_training__btn}
                             type='link'
                             icon={<IdcardOutlined />}
+                            onClick={() => switchToProfile()}
                         >
                             Профиль
                         </Button>
                     </Card>
                 </div>
             </Layout>
-        </>
+        </React.Fragment>
     );
 };

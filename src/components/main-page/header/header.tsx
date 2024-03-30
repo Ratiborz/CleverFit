@@ -1,9 +1,16 @@
 import { SettingOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
-import styles from './header.module.scss';
 import Breadcrumbs from '@components/breadcrumb/breadcrumb';
+import { Paths } from '@constants/paths';
+import { history } from '@redux/configure-store';
+import { Button } from 'antd';
+
+import styles from './header.module.scss';
 
 export const Header = () => {
+    const switchToSettings = () => {
+        history.push(Paths.SETTINGS);
+    };
+
     return (
         <header className={styles.header}>
             <Breadcrumbs />
@@ -13,6 +20,8 @@ export const Header = () => {
                     своей мечты!
                 </h1>
                 <Button
+                    data-test-id='header-settings'
+                    onClick={() => switchToSettings()}
                     className={styles.settings_btn}
                     type='link'
                     icon={<SettingOutlined style={{ color: '#000000D9' }} />}
