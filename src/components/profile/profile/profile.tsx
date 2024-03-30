@@ -3,7 +3,7 @@ import { CalendarTwoTone } from '@ant-design/icons';
 import { emailRegex } from '@constants/constants';
 import { userInfoDataSelector } from '@constants/selectors';
 import { useAppSelector } from '@hooks/typed-react-redux-hooks';
-import { useEditUserInfoMutation } from '@redux/api-rtk/profile-request';
+import { useEditUserInfoMutation, useGetUserInfoQuery } from '@redux/api-rtk/profile-request';
 import { Alert, Button, DatePicker, Form, Input, Typography } from 'antd';
 
 import { FieldValues } from '../../../types/profile-types';
@@ -22,6 +22,7 @@ export const Profile = () => {
     const userData = useAppSelector(userInfoDataSelector);
     const [isPasswordEntered, setIsPasswordEntered] = useState(false);
 
+    const { data } = useGetUserInfoQuery();
     const [editUserInfo, { isError, isSuccess }] = useEditUserInfoMutation();
 
     const onChangePassword = (password: string) => {
@@ -75,9 +76,10 @@ export const Profile = () => {
         editUserInfo(userInfo);
         setActiveSaveBtn(false);
     };
+    console.log(data);
 
     const initialEmailValue = {
-        email: userData?.email ? userData?.email : '',
+        email: data.email && data.email,
     };
 
     return (
@@ -260,3 +262,5 @@ export const Profile = () => {
         </div>
     );
 };
+
+export default Profile;

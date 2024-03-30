@@ -11,6 +11,7 @@ import { UploadFileStatus } from 'antd/lib/upload/interface';
 import { ModalBigFile } from '../modal-big-file/modal-big-file';
 
 import styles from './upload-image.module.scss';
+import { useGetUserInfoQuery } from '@redux/api-rtk/profile-request';
 
 type Props = {
     saveImage: (url: string) => void;
@@ -33,6 +34,7 @@ export const UploadImage = ({ saveImage, onChangeFields }: Props) => {
     const userInfoData = useAppSelector(userInfoDataSelector);
     const [fileList, setFileList] = useState<UploadFile[]>([]);
     const [isBigFile, setIsBigFile] = useState(false);
+    const { data } = useGetUserInfoQuery();
 
     const { width } = useWindowResize();
     const isMobile = width <= 360;
@@ -87,8 +89,8 @@ export const UploadImage = ({ saveImage, onChangeFields }: Props) => {
     };
 
     const uploadButton =
-        googleAuth || Boolean(userInfoData?.imgSrc) ? (
-            <img src={userInfoData?.imgSrc} style={{ width: '100%' }} alt='googleImg' />
+        googleAuth || Boolean(data.imgSrc) ? (
+            <img src={data.imgSrc} style={{ width: '100%' }} alt='googleImg' />
         ) : (
             <div>
                 <PlusOutlined />
@@ -124,7 +126,7 @@ export const UploadImage = ({ saveImage, onChangeFields }: Props) => {
                         maxCount={1}
                         progress={{ strokeWidth: 4, showInfo: false, size: 'default' }}
                     >
-                        {fileList.length >= 1 ? null : uploadButtonMobile}
+                        {fileList.length >= 1 && uploadButtonMobile}
                     </Upload>
                 ) : (
                     <Upload

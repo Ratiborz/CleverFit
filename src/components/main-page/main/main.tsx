@@ -22,6 +22,7 @@ export const Main = () => {
     useEffect(() => {
         refetch();
         dispatch(actionsRepRequest.setUserInfo(data));
+        console.log(data);
     }, [data, dispatch, refetch]);
 
     const switchToCalendar = () => {
