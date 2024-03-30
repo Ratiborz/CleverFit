@@ -17,8 +17,8 @@ export type User = {
     readyForJointTraining?: boolean;
     sendNotification?: boolean;
     tariff?: {
-        expired: string;
-        tariffId: string;
+        expired?: string;
+        tariffId?: string;
     };
 };
 

@@ -5,7 +5,7 @@ import { Paths } from '@constants/paths';
 import { userInfoDataSelector } from '@constants/selectors';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import useWindowResize from '@hooks/use-window-resize';
-import { useEditUserInfoMutation } from '@redux/api-rtk/profile-request';
+import { useEditUserInfoMutation, useGetUserInfoQuery } from '@redux/api-rtk/profile-request';
 import { history } from '@redux/configure-store';
 import { actions } from '@redux/reducers/feedback.slice';
 import { Button, Card, Image, Switch, Tooltip } from 'antd';
@@ -19,6 +19,7 @@ export const Settings = () => {
     const [openDrawer, setOpenDrawer] = useState(false);
     const userData = useAppSelector(userInfoDataSelector);
     const [editUserInfo] = useEditUserInfoMutation();
+    const { data } = useGetUserInfoQuery();
 
     const { width } = useWindowResize();
     const isMobile = width <= 360;
@@ -26,7 +27,7 @@ export const Settings = () => {
 
     const proTariff = Boolean(userData?.tariff);
 
-    const expiredDate = new Date(userData?.tariff?.expired);
+    const expiredDate = new Date(data?.tariff?.expired);
     const day = expiredDate.getDate().toString().padStart(2, '0');
     const month = (expiredDate.getMonth() + 1).toString().padStart(2, '0');
 
