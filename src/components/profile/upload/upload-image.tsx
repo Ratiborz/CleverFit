@@ -86,8 +86,10 @@ export const UploadImage = ({ saveImage, onChangeFields }: Props) => {
         }
     };
 
+    console.log(Boolean(userInfoData?.imgSrc));
+
     const uploadButton =
-        googleAuth || userInfoData?.imgSrc ? (
+        googleAuth || Boolean(userInfoData?.imgSrc) ? (
             <img src={userInfoData?.imgSrc} style={{ width: '100%' }} alt='googleImg' />
         ) : (
             <div>
