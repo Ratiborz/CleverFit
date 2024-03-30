@@ -20,8 +20,8 @@ export const Main = () => {
     const { data, refetch } = useGetUserInfoQuery();
 
     useEffect(() => {
-        dispatch(actionsRepRequest.setUserInfo(data));
         refetch();
+        dispatch(actionsRepRequest.setUserInfo(data));
         console.log(data);
     }, [data, dispatch, refetch]);
 

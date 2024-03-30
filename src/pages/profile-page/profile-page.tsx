@@ -36,10 +36,9 @@ export const ProfilePage = () => {
                         </Button>
                     </div>
                 </header>
-                <Profile />
-                {/* <Suspense>
+                <Suspense>
                     <ProfileLazy />
-                </Suspense> */}
+                </Suspense>
             </Layout>
         </Layout>
     );
