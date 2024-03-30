@@ -14,6 +14,7 @@ import styles from './upload-image.module.scss';
 
 type Props = {
     saveImage: (url: string) => void;
+    onChangeFields: () => void;
 };
 
 const getBase64 = (file: RcFile): Promise<string> =>
@@ -25,7 +26,7 @@ const getBase64 = (file: RcFile): Promise<string> =>
         reader.onerror = (error) => reject(error);
     });
 
-export const UploadImage = ({ saveImage }: Props) => {
+export const UploadImage = ({ saveImage, onChangeFields }: Props) => {
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState('');
     const [previewTitle, setPreviewTitle] = useState('');
@@ -57,6 +58,7 @@ export const UploadImage = ({ saveImage }: Props) => {
 
     const handleChange: UploadProps['onChange'] = ({ fileList: newFileList, file }) => {
         setFileList(newFileList);
+        onChangeFields();
 
         if (file.status === 'done') {
             const url = `https://training-api.clevertec.ru${file.response.url}`;
@@ -84,19 +86,18 @@ export const UploadImage = ({ saveImage }: Props) => {
         }
     };
 
-    console.log(userInfoData?.imgSrc);
-
-    const uploadButton = googleAuth ? (
-        <img src={userInfoData?.imgSrc} style={{ width: '100%' }} alt='googleImg' />
-    ) : (
-        <div>
-            <PlusOutlined />
-            <div style={{ marginTop: 8, maxWidth: 72 }}>Загрузить фото профиля</div>
-        </div>
-    );
+    const uploadButton =
+        googleAuth || userInfoData?.imgSrc ? (
+            <img src={userInfoData?.imgSrc} style={{ width: '100%' }} alt='googleImg' />
+        ) : (
+            <div>
+                <PlusOutlined />
+                <div style={{ marginTop: 8, maxWidth: 72 }}>Загрузить фото профиля</div>
+            </div>
+        );
 
     const uploadButtonMobile = (
-        <>
+        <React.Fragment>
             <span className={styles.upload_text}>Загрузить фото профиля:</span>
             <Button
                 className={styles.mobile__btn}
@@ -104,12 +105,12 @@ export const UploadImage = ({ saveImage }: Props) => {
             >
                 Загрузить
             </Button>
-        </>
+        </React.Fragment>
     );
 
     return (
         <React.Fragment>
-            <Form.Item name='avatar'>
+            <Form.Item name='avatar' data-test-id='profile-avatar'>
                 {isMobile ? (
                     <Upload
                         action='https://marathon-api.clevertec.ru/upload-image'
@@ -127,7 +128,6 @@ export const UploadImage = ({ saveImage }: Props) => {
                     </Upload>
                 ) : (
                     <Upload
-                        data-test-id='profile-avatar'
                         className={styles.avatar_uploader}
                         action='https://marathon-api.clevertec.ru/upload-image'
                         headers={{ authorization: `Bearer ${token}` }}

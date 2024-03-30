@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
+import { ArrowLeftOutlined } from '@ant-design/icons';
 import { Aside } from '@components/main-page/sider/sider';
 import { Settings } from '@components/settings/settings/settings';
-import { Paths } from '@constants/paths';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 import { useGetCatalogsTariffListQuery } from '@redux/api-rtk/profile-request';
 import { history } from '@redux/configure-store';
@@ -18,7 +18,7 @@ export const SettingsPage = () => {
         if (isSuccess) dispatch(actions.setDataTariff(data));
     }, [data, dispatch, isSuccess]);
 
-    const switchToProfile = () => history.push(Paths.PROFILE);
+    const switchToProfile = () => history.back();
 
     return (
         <Layout className={styles.general_wrapper}>
@@ -26,7 +26,7 @@ export const SettingsPage = () => {
             <Layout className={styles.main_container}>
                 <header className={styles.header}>
                     <PageHeader
-                        data-test-id='settings-back'
+                        backIcon={<ArrowLeftOutlined data-test-id='settings-back' />}
                         onBack={() => switchToProfile()}
                         title='Настройки'
                     />

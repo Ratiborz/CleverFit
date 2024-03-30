@@ -4,6 +4,7 @@ import { WriteFeedbackModal } from '@components/feedback/write-feedback/write-fe
 import { Paths } from '@constants/paths';
 import { userInfoDataSelector } from '@constants/selectors';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
+import useWindowResize from '@hooks/use-window-resize';
 import { useEditUserInfoMutation } from '@redux/api-rtk/profile-request';
 import { history } from '@redux/configure-store';
 import { actions } from '@redux/reducers/feedback.slice';
@@ -12,14 +13,11 @@ import { Button, Card, Image, Switch, Tooltip } from 'antd';
 import { DrawerSettings } from '../drawer-settings/drawer-settings';
 
 import styles from './settings.module.scss';
-import useWindowResize from '@hooks/use-window-resize';
 
 export const Settings = () => {
     const dispatch = useAppDispatch();
     const [openDrawer, setOpenDrawer] = useState(false);
     const userData = useAppSelector(userInfoDataSelector);
-    const [commonTraining, setCommonTraining] = useState(false);
-    const [notifications, setNotifications] = useState(false);
     const [editUserInfo] = useEditUserInfoMutation();
 
     const { width } = useWindowResize();
@@ -40,8 +38,9 @@ export const Settings = () => {
             lastName: userData?.lastName,
             birthday: userData?.birthday,
             imgSrc: userData?.imgSrc,
-            readyForJointTraining: option === 'common training' ? e : commonTraining,
-            sendNotification: option === 'notifications' ? e : notifications,
+            readyForJointTraining:
+                option === 'common training' ? e : userData?.readyForJointTraining,
+            sendNotification: option === 'notifications' ? e : userData?.sendNotification,
         };
 
         if (option === 'common training' || option === 'notifications') editUserInfo(userInfo);
@@ -128,8 +127,8 @@ export const Settings = () => {
                         </div>
                         <Switch
                             data-test-id='tariff-trainings'
+                            defaultChecked={userData?.readyForJointTraining}
                             onChange={(e) => {
-                                setCommonTraining(e);
                                 editUserOptions(e, 'common training');
                             }}
                         />
@@ -150,8 +149,8 @@ export const Settings = () => {
                         </div>
                         <Switch
                             data-test-id='tariff-notifications'
+                            defaultChecked={userData?.sendNotification}
                             onChange={(e) => {
-                                setNotifications(e);
                                 editUserOptions(e, 'notifications');
                             }}
                         />
@@ -161,7 +160,7 @@ export const Settings = () => {
                             Тёмная тема
                             <Tooltip
                                 placement={tooltipPlace}
-                                title='тёмная тема доступна для PRO tariff'
+                                title='темная тема доступна для PRO tarif'
                                 overlayStyle={{ maxWidth: '215px' }}
                             >
                                 <ExclamationCircleOutlined

@@ -17,12 +17,12 @@ import styles from './main.module.scss';
 export const Main = () => {
     const dispatch = useAppDispatch();
     const [loading, setLoading] = useState(false);
-    const { data } = useGetUserInfoQuery();
+    const { data, refetch } = useGetUserInfoQuery();
 
     useEffect(() => {
+        refetch();
         dispatch(actionsRepRequest.setUserInfo(data));
-        console.log(data);
-    }, [data, dispatch]);
+    }, [data, dispatch, refetch]);
 
     const switchToCalendar = () => {
         setLoading(true);

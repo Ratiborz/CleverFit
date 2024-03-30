@@ -10,7 +10,6 @@ httpClient.interceptors.request.use(
     (config): InternalAxiosRequestConfig<any> | Promise<InternalAxiosRequestConfig<any>> => {
         const updatedConfig = { ...config };
 
-        console.log(updatedConfig);
         updatedConfig.headers.Authorization = `Bearer ${
             storageToken.getItem('accessToken') || sessionToken.getItem('accessToken')
         }`;

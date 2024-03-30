@@ -7,6 +7,7 @@ import {
 } from '@ant-design/icons';
 import { tariffDataSelector } from '@constants/selectors';
 import { useAppSelector } from '@hooks/typed-react-redux-hooks';
+import useWindowResize from '@hooks/use-window-resize';
 import { useBuyNewTariffMutation } from '@redux/api-rtk/profile-request';
 import { Button, Drawer, Radio, RadioChangeEvent } from 'antd';
 import classNames from 'classnames';
@@ -14,7 +15,6 @@ import classNames from 'classnames';
 import { ModalBuyTariff } from '../modal-buy-tariff/modal-buy-tariff';
 
 import styles from './drawer-settings.module.scss';
-import useWindowResize from '@hooks/use-window-resize';
 
 type Props = {
     openDrawer: boolean;
@@ -34,6 +34,8 @@ export const DrawerSettings = ({ openDrawer, setOpenDrawer, proTariff, day, mont
     const isMobile = width <= 360;
 
     const buyTariff = () => {
+        setOpenDrawer(false);
+
         const days =
             tariffData && tariffData[0].periods.filter((period) => period.cost === radioValue);
 
@@ -65,10 +67,9 @@ export const DrawerSettings = ({ openDrawer, setOpenDrawer, proTariff, day, mont
                 mask={false}
                 destroyOnClose={true}
                 footer={
-                    proTariff ? (
-                        false
-                    ) : (
+                    !proTariff && (
                         <Button
+                            data-test-id='tariff-submit'
                             className={styles.btn__pay}
                             disabled={!radioValue}
                             onClick={() => buyTariff()}
@@ -160,27 +161,31 @@ export const DrawerSettings = ({ openDrawer, setOpenDrawer, proTariff, day, mont
                         </li>
                     </ul>
                 </div>
-                <h2 className={styles.tariff__cost}>Стоимость тарифа</h2>
-                <div className={styles.container__radio}>
-                    <ul data-test-id='tariff-cost' className={styles.radio__option}>
-                        {tariffData &&
-                            tariffData[0].periods.map((period) => (
-                                <li
-                                    data-test-id={period.cost === 10 ? 'tariff-10' : ''}
-                                    className={styles.radio__option__li}
-                                    key={period.text}
-                                >
-                                    <p className={styles.option_text}>{period.text}</p>
-                                    {period.cost}$
-                                </li>
-                            ))}
-                    </ul>
-                    <Radio.Group name='radiogroup' className={styles.radio_group}>
-                        <Radio value={5.5} onChange={(e) => choiceValueRadio(e)} />
-                        <Radio value={8.5} onChange={(e) => choiceValueRadio(e)} />
-                        <Radio value={10} onChange={(e) => choiceValueRadio(e)} />
-                    </Radio.Group>
-                </div>
+                {!proTariff && (
+                    <React.Fragment>
+                        <h2 className={styles.tariff__cost}>Стоимость тарифа</h2>
+                        <div className={styles.container__radio}>
+                            <ul data-test-id='tariff-cost' className={styles.radio__option}>
+                                {tariffData &&
+                                    tariffData[0].periods.map((period) => (
+                                        <li className={styles.radio__option__li} key={period.text}>
+                                            <p className={styles.option_text}>{period.text}</p>
+                                            {`${String(period.cost).replace('.', ',')}$`}
+                                        </li>
+                                    ))}
+                            </ul>
+                            <Radio.Group name='radiogroup' className={styles.radio_group}>
+                                <Radio value={5.5} onChange={(e) => choiceValueRadio(e)} />
+                                <Radio value={8.5} onChange={(e) => choiceValueRadio(e)} />
+                                <Radio
+                                    value={10}
+                                    data-test-id='tariff-10'
+                                    onChange={(e) => choiceValueRadio(e)}
+                                />
+                            </Radio.Group>
+                        </div>
+                    </React.Fragment>
+                )}
             </Drawer>
         </React.Fragment>
     );
