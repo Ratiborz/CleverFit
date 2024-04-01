@@ -12,6 +12,7 @@ import Loader from '@components/loader/loader';
 import { BadRequstModalError } from '@components/result/common-modal-result/bad-request-modal/bad-request-modal';
 import { Paths } from '@constants/paths';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
+import { useLazyGetAllTrainingsQuery } from '@redux/api-rtk/training-requests';
 import { history } from '@redux/configure-store';
 import { actions as actionsCalendar } from '@redux/reducers/calendar.slice';
 import { actions } from '@redux/reducers/common-modal.slice';
@@ -48,15 +49,14 @@ export const Aside: React.FC = () => {
     const [mobileWidth, setMobileWidth] = useState(false);
     const [loading, setLoading] = useState(false);
     const [selectedTab, setSelectedTab] = useState('');
+    const [getAllTrainings, { isSuccess, isError, data }] = useLazyGetAllTrainingsQuery();
 
     useEffect(() => {
-        const currentRoute = location.pathname;
+        if (isSuccess) history.push(Paths.TRAINING);
+        if (isError) dispatch(actions.setWarning(true));
+    }, [data, isSuccess, isError, dispatch]);
 
-        if (currentRoute === '/calendar') setSelectedTab('1');
-        if (currentRoute === '/profile') setSelectedTab('4');
-    }, [location]);
-
-    const switchToCalendar = (key: string) => {
+    const switchToChapter = (key: string) => {
         if (key === '1') {
             setLoading(true);
             getTrainingInfo()
@@ -73,10 +73,22 @@ export const Aside: React.FC = () => {
                 });
         }
 
+        if (key === '2') {
+            getAllTrainings();
+        }
+
         if (key === '4') {
             history.push(Paths.PROFILE);
         }
     };
+
+    useEffect(() => {
+        const currentRoute = location.pathname;
+
+        if (currentRoute === '/calendar') setSelectedTab('1');
+        if (currentRoute === '/training') setSelectedTab('2');
+        if (currentRoute === '/profile') setSelectedTab('4');
+    }, [location]);
 
     const items: MenuItem[] = [
         getItem('Календарь', '1', mobileWidth ? '' : <CalendarTwoTone twoToneColor='#10239E' />),
@@ -145,7 +157,7 @@ export const Aside: React.FC = () => {
                         <Menu
                             className={styles.menu}
                             style={{ overflow: 'hidden' }}
-                            onClick={({ key }) => switchToCalendar(key)}
+                            onClick={({ key }) => switchToChapter(key)}
                             theme='light'
                             selectedKeys={[selectedTab]}
                             mode='inline'

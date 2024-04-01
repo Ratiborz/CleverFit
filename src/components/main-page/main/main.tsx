@@ -4,6 +4,7 @@ import Loader from '@components/loader/loader';
 import { Paths } from '@constants/paths';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 import { useGetUserInfoQuery } from '@redux/api-rtk/profile-request';
+import { useLazyGetAllTrainingsQuery } from '@redux/api-rtk/training-requests';
 import { history } from '@redux/configure-store';
 import { actions as actionsCalendar } from '@redux/reducers/calendar.slice';
 import { actions } from '@redux/reducers/common-modal.slice';
@@ -18,12 +19,19 @@ export const Main = () => {
     const dispatch = useAppDispatch();
     const [loading, setLoading] = useState(false);
     const { data, refetch } = useGetUserInfoQuery();
+    const [getAllTrainings, { isSuccess, isError, data: dataTraining }] =
+        useLazyGetAllTrainingsQuery();
 
     useEffect(() => {
         refetch();
         dispatch(actionsRepRequest.setUserInfo(data));
         console.log(data);
     }, [data, dispatch, refetch]);
+
+    useEffect(() => {
+        if (isSuccess) history.push(Paths.TRAINING);
+        if (isError) dispatch(actions.setWarning(true));
+    }, [dataTraining, isSuccess, isError, dispatch]);
 
     const switchToCalendar = () => {
         setLoading(true);
@@ -38,6 +46,8 @@ export const Main = () => {
             })
             .finally(() => setLoading(false));
     };
+
+    const switchToTraining = () => getAllTrainings();
 
     const switchToProfile = () => {
         history.push(Paths.PROFILE);
@@ -74,6 +84,7 @@ export const Main = () => {
                             className={styles.card_training__btn}
                             type='link'
                             icon={<HeartFilled />}
+                            onClick={() => switchToTraining()}
                         >
                             Тренировки
                         </Button>

@@ -20,6 +20,7 @@ import { PasswordRecoveryPage } from '@pages/password-recovery';
 import { ProfilePage } from '@pages/profile-page';
 import { RegistrationPage } from '@pages/registration-page';
 import { SettingsPage } from '@pages/settings-page';
+import { TrainingPage } from '@pages/training-page';
 import { isUserAuthLocal } from '@utils/storage';
 
 import { Registration } from '../components/auth/registration/registration';
@@ -35,6 +36,7 @@ export const routes = (
         <Route path={Paths.CALENDAR} element={<CalendarPage />} />
         <Route path={Paths.PROFILE} element={<ProfilePage />} />
         <Route path={Paths.SETTINGS} element={<SettingsPage />} />
+        <Route path={Paths.TRAINING} element={<TrainingPage />} />
         <Route path={`${Paths.AUTH}/*`} element={<RegistrationPage />}>
             <Route index={true} element={<Auth />} />
             <Route path={Paths.REGISTRATION} element={<Registration />} />
