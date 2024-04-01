@@ -138,6 +138,7 @@ export const ChooseTypeWorkout = ({
                     <div className={styles.header}>
                         <Button
                             style={{ height: 16 }}
+                            className={styles.button__back}
                             onClick={swapModal}
                             data-test-id='modal-exercise-training-button-close'
                         >

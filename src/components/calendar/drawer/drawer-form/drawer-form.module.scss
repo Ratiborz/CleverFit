@@ -19,10 +19,15 @@
 .count {
     font-size: 12px;
     background: #f0f0f0;
-    max-width: 120px;
+    max-width: 90px;
     width: 100%;
     padding: 3px 8px;
     height: 24px;
+}
+
+.repeat {
+    max-width: 120px;
+    width: 100%;
 }
 
 .inputs__wrapper {
@@ -65,13 +70,31 @@
     border-radius: 0 0 5px 5px;
 }
 
-.close__icon {
+.wrapper__btns :global .ant-btn {
+    display: flex;
+    padding: 7px 12px;
+    height: 40px;
+}
+
+.wrapper__position_btn :global .ant-btn {
     position: absolute;
     height: max-content;
     padding: 0;
     text-align: start;
+}
+
+.close__icon {
     top: 23px;
     right: 32px;
+}
+
+.form :global .ant-form-item-control-input {
+    min-height: auto;
+    margin-bottom: 8px;
+}
+
+.input__container :global .ant-input-number-input {
+    height: auto;
 }
 
 @media (max-width: 360px) {

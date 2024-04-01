@@ -99,10 +99,11 @@ export const DrawerForm = ({ setOpen, dateMoment }: Props) => {
 
     return (
         <Form
-            onFinish={() => onFinish}
+            onFinish={onFinish}
             name='form'
             form={form}
             initialValues={{ inputsBlock: initialFormValues }}
+            className={styles.form}
         >
             <Form.List name='inputsBlock'>
                 {(fields, { add, remove }) => (
@@ -206,14 +207,16 @@ export const DrawerForm = ({ setOpen, dateMoment }: Props) => {
                     </React.Fragment>
                 )}
             </Form.List>
-            <Button
-                htmlType='submit'
-                type='text'
-                className={styles.close__icon}
-                data-test-id='modal-drawer-right-button-close'
-            >
-                <CloseOutlined />
-            </Button>
+            <div className={styles.wrapper__position_btn}>
+                <Button
+                    htmlType='submit'
+                    type='text'
+                    className={styles.close__icon}
+                    data-test-id='modal-drawer-right-button-close'
+                >
+                    <CloseOutlined />
+                </Button>
+            </div>
         </Form>
     );
 };

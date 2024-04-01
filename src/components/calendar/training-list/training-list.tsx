@@ -72,7 +72,7 @@ export const TrainingList = ({
             );
         });
 
-        const idTraining = exercisesData[0]?.id;
+        const idTraining = exercisesData[0]?._id;
 
         const updatedExercisesData = exercisesData[0]?.exercises?.map((training) => ({
             name: training?.name || '',
@@ -93,7 +93,7 @@ export const TrainingList = ({
                 date === mirrorDate(training.date.toString().slice(0, 10)),
         );
 
-        const idTraining = exercisesData[0]?.id;
+        const idTraining = exercisesData[0]?._id;
 
         const updatedExercisesData = exercisesData[0]?.exercises?.map((training) => ({
             name: training?.name,
@@ -189,13 +189,15 @@ export const TrainingList = ({
 
                 <Divider />
 
-                <Button
-                    className={styles.modal__btn}
-                    onClick={swapModal}
-                    disabled={isDateBeforeOrEqualToday || trainingNames?.length === 5}
-                >
-                    Создать тренировку
-                </Button>
+                <div className={styles.wrapper__btn_create}>
+                    <Button
+                        className={styles.modal__btn}
+                        onClick={swapModal}
+                        disabled={isDateBeforeOrEqualToday || trainingNames?.length === 5}
+                    >
+                        Создать тренировку
+                    </Button>
+                </div>
             </div>
             <Drawerz
                 showDrawer={open}

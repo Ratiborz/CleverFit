@@ -1,4 +1,3 @@
-import React, { Suspense } from 'react';
 import { SettingOutlined } from '@ant-design/icons';
 import { Aside } from '@components/main-page/sider/sider';
 import { Profile } from '@components/profile/profile/profile';
@@ -8,8 +7,6 @@ import { history } from '@redux/configure-store';
 import { Button, Layout } from 'antd';
 
 import styles from './profile-page.module.scss';
-
-const ProfileLazy = React.lazy(() => import('../../components/profile/profile/profile'));
 
 export const ProfilePage = () => {
     const switchToSettings = () => {
@@ -36,9 +33,7 @@ export const ProfilePage = () => {
                         </Button>
                     </div>
                 </header>
-                <Suspense>
-                    <ProfileLazy />
-                </Suspense>
+                <Profile />
             </Layout>
         </Layout>
     );

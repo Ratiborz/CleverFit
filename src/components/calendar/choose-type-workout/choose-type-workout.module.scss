@@ -8,7 +8,7 @@
     width: 264px;
     z-index: 10;
     background: #fff;
-    padding: 18px 0 19px;
+    padding: 12px 0 12px;
     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
     border-radius: 2px;
     top: 0;
@@ -53,13 +53,13 @@
 }
 
 .divider_top {
-    margin-top: 5px;
-    margin-bottom: 0;
+    margin-top: 5px !important;
+    margin-bottom: 0 !important;
 }
 
 .divider_bottom {
-    margin-bottom: 12px;
-    margin-top: 0;
+    margin-bottom: 12px !important;
+    margin-top: 0 !important;
 }
 
 .container__exercises {
@@ -92,4 +92,19 @@
 
 .add__training_btn {
     margin-top: 10px;
+}
+
+.header :global .ant-btn {
+    border: none;
+    padding: 0;
+}
+
+.button__back {
+    background: transparent;
+    width: auto;
+}
+
+.exercise :global .ant-btn {
+    border: none;
+    border-color: none;
 }

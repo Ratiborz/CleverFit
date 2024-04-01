@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import { userInfoDataSelector } from '@constants/selectors';
 import { useAppSelector } from '@hooks/typed-react-redux-hooks';
@@ -11,7 +11,6 @@ import { UploadFileStatus } from 'antd/lib/upload/interface';
 import { ModalBigFile } from '../modal-big-file/modal-big-file';
 
 import styles from './upload-image.module.scss';
-import { useGetUserInfoQuery } from '@redux/api-rtk/profile-request';
 
 type Props = {
     saveImage: (url: string) => void;
@@ -34,7 +33,7 @@ export const UploadImage = ({ saveImage, onChangeFields }: Props) => {
     const userInfoData = useAppSelector(userInfoDataSelector);
     const [fileList, setFileList] = useState<UploadFile[]>([]);
     const [isBigFile, setIsBigFile] = useState(false);
-    const { data } = useGetUserInfoQuery();
+    console.log(fileList);
 
     const { width } = useWindowResize();
     const isMobile = width <= 360;
@@ -64,7 +63,7 @@ export const UploadImage = ({ saveImage, onChangeFields }: Props) => {
 
         if (file.status === 'done') {
             const url = `https://training-api.clevertec.ru${file.response.url}`;
-
+            console.log(file);
             saveImage(url);
         }
 
@@ -88,9 +87,13 @@ export const UploadImage = ({ saveImage, onChangeFields }: Props) => {
         }
     };
 
+    useEffect(() => {
+        console.log(userInfoData?.imgSrc);
+    }, [userInfoData]);
+
     const uploadButton =
-        googleAuth || Boolean(data.imgSrc) ? (
-            <img src={data.imgSrc} style={{ width: '100%' }} alt='googleImg' />
+        googleAuth || Boolean(userInfoData?.imgSrc) ? (
+            <img src={userInfoData?.imgSrc} style={{ width: '100%' }} alt='preview-example' />
         ) : (
             <div>
                 <PlusOutlined />
@@ -147,7 +150,7 @@ export const UploadImage = ({ saveImage, onChangeFields }: Props) => {
             </Form.Item>
             <ModalBigFile isBigFile={isBigFile} setIsBigFile={setIsBigFile} />
             <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
-                <img alt='example' style={{ width: '100%' }} src={previewImage} />
+                <img src={previewImage} alt='example' style={{ width: '100%' }} />
             </Modal>
         </React.Fragment>
     );

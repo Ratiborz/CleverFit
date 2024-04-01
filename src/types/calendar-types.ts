@@ -19,9 +19,9 @@ type Parameters = {
 export type Training = {
     name: string;
     date: string;
-    isImplementation?: boolean;
     exercises: Exercise[];
-    id?: string;
+    isImplementation?: boolean;
+    _id?: string;
     userId?: string;
     parameters?: Parameters;
 };

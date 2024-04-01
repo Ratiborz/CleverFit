@@ -61,8 +61,19 @@
 .wrapper_header {
     display: flex;
     justify-content: space-between;
+    align-items: baseline;
     max-width: 240px;
     width: 100%;
+}
+
+.wrapper_header :global .ant-btn {
+    height: auto;
+    padding: 0;
+}
+
+.container_trainings :global .ant-btn {
+    height: auto;
+    padding: 0;
 }
 
 .empty_img {
@@ -84,11 +95,20 @@
 }
 
 .modal__btn {
-    display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
+}
+
+.wrapper__btn_create {
+    display: flex;
+    align-items: center;
     max-width: 240px;
     width: 100%;
+}
+
+.wrapper__btn_create :global .ant-btn {
+    display: flex;
     height: 40px;
     font-size: 14px;
     color: #fff;
@@ -118,6 +138,11 @@
     margin-bottom: 0;
 }
 
+.list_trainings :global .ant-btn {
+    border: none;
+    border-color: none;
+}
+
 .trainings_li {
     display: flex;
     justify-content: space-between;
@@ -137,4 +162,15 @@
 
 .close__icon {
     overflow: visible;
+    border: none !important;
+}
+
+@media (max-width: 360px) {
+    .wrapper_header {
+        max-width: 288px;
+    }
+
+    .wrapper__btn_create {
+        max-width: 288px;
+    }
 }

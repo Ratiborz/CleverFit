@@ -15,6 +15,7 @@ import { CalendarPage } from '@pages/calendar-page/calendar-page';
 import { ErrorsPage } from '@pages/errors-page/errors';
 import { FeedbackPage } from '@pages/feedback-page/feedback-page';
 import { MainPage } from '@pages/main-page';
+import { NotFoundPage } from '@pages/not-found-page';
 import { PasswordRecoveryPage } from '@pages/password-recovery';
 import { ProfilePage } from '@pages/profile-page';
 import { RegistrationPage } from '@pages/registration-page';
@@ -52,5 +53,6 @@ export const routes = (
             <Route path={Paths.ERROR_CHANGE_PASSWORD} element={<ErrorСhangePassword />} />
             <Route path={Paths.SUCESS_CHANGE_PASSWORD} element={<SuccessChangePassword />} />
         </Route>
+        <Route path='/*' element={<NotFoundPage />} />
     </Routes>
 );
