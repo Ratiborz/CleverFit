@@ -22,6 +22,7 @@ export {
     pastFlowSelector,
     readOnlyFlowSelector,
     isMobileSelector,
+    requestTrainingListSelector,
 } from './selectors';
 
 export {

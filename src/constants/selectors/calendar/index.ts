@@ -1,5 +1,4 @@
 export {
-    withOpenModalErrorSelector,
     trainingListRepeatSelector,
     trainingDataSelector,
     trainingsListSelector,

@@ -7,7 +7,10 @@ export const trainingApi = api.injectEndpoints({
         getAllTrainings: builder.query<GetFeedbacksResponse, void>({
             query: () => 'training',
         }),
+        getCatalogTariffListTraining: builder.query<void, void>({
+            query: () => 'catalogs/tariff-list',
+        }),
     }),
 });
 
-export const { useLazyGetAllTrainingsQuery } = trainingApi;
+export const { useLazyGetAllTrainingsQuery, useGetCatalogTariffListTrainingQuery } = trainingApi;

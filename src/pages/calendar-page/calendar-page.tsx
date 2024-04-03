@@ -4,13 +4,14 @@ import Breadcrumbs from '@components/breadcrumb/breadcrumb';
 import { CalendarCell } from '@components/calendar/calendar-cell/calendar-cell';
 import Loader from '@components/loader/loader';
 import { Aside } from '@components/main-page/sider/sider';
-import { WithOpenError } from '@components/result/calendar-modal-result/with-open-error/with-open-error';
+import { WithOpenError } from '@components/result/common-modal-result/with-open-error/with-open-error';
 import { positionImage } from '@constants/constants/constants';
 import { trainingDataSelector, trainingListRepeatSelector } from '@constants/selectors';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import useWindowResize from '@hooks/use-window-resize';
 import { useGetTrainingListInfoQuery } from '@redux/api-rtk/calendar-requests';
 import { actions } from '@redux/reducers/calendar.slice';
+import { actions as commonModal } from '@redux/reducers/common-modal.slice';
 import { Button, Calendar, Layout } from 'antd';
 import Ru from 'antd/es/calendar/locale/ru_RU';
 import classNames from 'classnames';
@@ -60,7 +61,7 @@ export const CalendarPage: React.FC = () => {
             dispatch(actions.setTrainingsList(data));
         }
         if (isError) {
-            dispatch(actions.setErrorWithOpen(isError));
+            dispatch(commonModal.setErrorWithOpen(isError));
         }
         if (repeatRequest) {
             refetch();

@@ -1,4 +1,4 @@
-export { isModalOpenSelector } from './selectors';
+export { isModalOpenSelector, withOpenModalErrorSelector } from './selectors';
 
 export {
     repeatRequestsSelector,
@@ -11,7 +11,6 @@ export {
 } from './authentication';
 
 export {
-    withOpenModalErrorSelector,
     trainingListRepeatSelector,
     trainingDataSelector,
     trainingsListSelector,
@@ -35,3 +34,5 @@ export {
 } from './feedbak';
 
 export { userInfoDataSelector, tariffDataSelector } from './profile';
+
+export { requestTrainingListSelector } from './training';

@@ -49,7 +49,8 @@ export const Aside: React.FC = () => {
     const [mobileWidth, setMobileWidth] = useState(false);
     const [loading, setLoading] = useState(false);
     const [selectedTab, setSelectedTab] = useState('');
-    const [getAllTrainings, { isSuccess, isError, data }] = useLazyGetAllTrainingsQuery();
+    const [getAllTrainings, { isSuccess, isError, data, isLoading }] =
+        useLazyGetAllTrainingsQuery();
 
     useEffect(() => {
         if (isSuccess) history.push(Paths.TRAINING);
@@ -111,7 +112,7 @@ export const Aside: React.FC = () => {
 
     return (
         <React.Fragment>
-            {loading && <Loader />}
+            {(loading || isLoading) && <Loader />}
             <BadRequstModalError />
             <Sider
                 breakpoint='xs'

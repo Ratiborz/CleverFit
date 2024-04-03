@@ -9,6 +9,7 @@ import { reducer as feedback } from './reducers/feedback.slice';
 import { reducer as profileSlice } from './reducers/profile.slice';
 import { reducer as registrationReducer } from './reducers/registration.slice';
 import { reducer as repeatRequestsSlice } from './reducers/repeat-requests.slice';
+import { reducer as trainingSlice } from './reducers/training.slice';
 
 const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({
     history: createBrowserHistory(),
@@ -23,6 +24,7 @@ const reducers = combineReducers({
     commonModal: commonModalSlice,
     calendar: calendarSlice,
     profile: profileSlice,
+    training: trainingSlice,
 });
 
 export const store = configureStore({

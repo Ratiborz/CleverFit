@@ -1,19 +1,26 @@
+import { useLocation } from 'react-router-dom';
 import { CloseCircleTwoTone, CloseOutlined } from '@ant-design/icons';
 import { maskStyle } from '@constants/constants';
+import { Paths } from '@constants/paths';
 import { withOpenModalErrorSelector } from '@constants/selectors';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { actions } from '@redux/reducers/calendar.slice';
+import { actions as commonModal } from '@redux/reducers/common-modal.slice';
+import { actions as trainingActions } from '@redux/reducers/training.slice';
 import { Button, Modal, Typography } from 'antd';
 
 import styles from './with-open-error.module.scss';
 
 export const WithOpenError = () => {
     const dispatch = useAppDispatch();
+    const location = useLocation();
     const isModalOpen = useAppSelector(withOpenModalErrorSelector);
 
     const repeatRequest = () => {
-        dispatch(actions.setErrorWithOpen(false));
-        dispatch(actions.setRepeatRequest(true));
+        dispatch(commonModal.setErrorWithOpen(false));
+
+        if (location.pathname === Paths.CALENDAR) dispatch(actions.setRepeatRequest(true));
+        if (location.pathname === Paths.TRAINING) dispatch(trainingActions.setRepeatRequest(true));
     };
 
     return (
@@ -28,7 +35,7 @@ export const WithOpenError = () => {
             footer={null}
             closable={true}
             open={isModalOpen}
-            onCancel={() => dispatch(actions.setErrorWithOpen(false))}
+            onCancel={() => dispatch(commonModal.setErrorWithOpen(false))}
             className={styles.modal}
         >
             <CloseCircleTwoTone className={styles.cancel_icon} />

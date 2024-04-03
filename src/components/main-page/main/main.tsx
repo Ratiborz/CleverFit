@@ -19,7 +19,7 @@ export const Main = () => {
     const dispatch = useAppDispatch();
     const [loading, setLoading] = useState(false);
     const { data, refetch } = useGetUserInfoQuery();
-    const [getAllTrainings, { isSuccess, isError, data: dataTraining }] =
+    const [getAllTrainings, { isSuccess, isError, data: dataTraining, isLoading }] =
         useLazyGetAllTrainingsQuery();
 
     useEffect(() => {
@@ -55,7 +55,7 @@ export const Main = () => {
 
     return (
         <React.Fragment>
-            {loading && <Loader />}
+            {(loading || isLoading) && <Loader />}
             <Layout className={styles.wrapper}>
                 <Card className={styles.card}>
                     <p className={styles.card__text}>

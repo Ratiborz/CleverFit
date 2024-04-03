@@ -23,6 +23,11 @@ const Breadcrumbs: React.FC = () => {
                     <NavLink to={Paths.CALENDAR}>Календарь</NavLink>
                 </Breadcrumb.Item>
             )}
+            {location.pathname === Paths.TRAINING && (
+                <Breadcrumb.Item>
+                    <NavLink to={Paths.TRAINING}>Тренировки</NavLink>
+                </Breadcrumb.Item>
+            )}
         </Breadcrumb>
     );
 };

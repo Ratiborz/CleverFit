@@ -3,7 +3,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import { InputsData, Training, TrainingsListItem } from '../../types/calendar-types';
 
 interface Modal {
-    warning: boolean;
     repeatRequest: boolean;
     trainingData: Training[];
     trainingsList: TrainingsListItem[];
@@ -18,7 +17,6 @@ interface Modal {
 }
 
 const initialState: Modal = {
-    warning: false,
     repeatRequest: false,
     trainingData: [],
     trainingsList: [],
@@ -36,9 +34,6 @@ export const calendarSlice = createSlice({
     name: 'calendar',
     initialState,
     reducers: {
-        setErrorWithOpen: (state, { payload }) => {
-            state.warning = payload;
-        },
         setRepeatRequest: (state, { payload }) => {
             state.repeatRequest = payload;
         },

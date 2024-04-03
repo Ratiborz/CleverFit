@@ -33,6 +33,7 @@ export const UploadImage = ({ saveImage, onChangeFields }: Props) => {
     const userInfoData = useAppSelector(userInfoDataSelector);
     const [fileList, setFileList] = useState<UploadFile[]>([]);
     const [isBigFile, setIsBigFile] = useState(false);
+
     console.log(fileList);
 
     const { width } = useWindowResize();
@@ -63,6 +64,7 @@ export const UploadImage = ({ saveImage, onChangeFields }: Props) => {
 
         if (file.status === 'done') {
             const url = `https://training-api.clevertec.ru${file.response.url}`;
+
             console.log(file);
             saveImage(url);
         }
