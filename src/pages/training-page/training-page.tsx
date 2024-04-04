@@ -11,6 +11,7 @@ import { actions } from '@redux/reducers/common-modal.slice';
 import { Button, Layout } from 'antd';
 
 import styles from './training-page.module.scss';
+import { ContainerTrainings } from '@components/trainings/container-trainings/container-trainings';
 
 export const TrainingPage = () => {
     const dispatch = useAppDispatch();
@@ -28,7 +29,7 @@ export const TrainingPage = () => {
             <Layout className={styles.general_wrapper} style={positionImage}>
                 <Aside />
                 <Layout className={styles.main_container}>
-                    <div className={styles.header}>
+                    <header className={styles.header}>
                         <Breadcrumbs />
                         <div className={styles.wrapper_btn}>
                             <Button
@@ -40,7 +41,8 @@ export const TrainingPage = () => {
                                 <p className={styles.button_text}>Настройки</p>
                             </Button>
                         </div>
-                    </div>
+                    </header>
+                    <ContainerTrainings />
                 </Layout>
             </Layout>
         </React.Fragment>
