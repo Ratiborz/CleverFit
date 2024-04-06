@@ -6,4 +6,5 @@ export {
     positionImage,
     maskStyle,
     emailRegex,
+    periodValue,
 } from './constants';

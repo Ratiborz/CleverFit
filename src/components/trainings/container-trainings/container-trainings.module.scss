@@ -3,6 +3,11 @@
     background: #fff;
     padding: 24px;
     border-radius: 5px;
+    height: 100%;
+}
+
+.tabs {
+    height: 100%;
 }
 
 div.tabs {
@@ -16,6 +21,13 @@ div.tabs {
             padding: 0;
             font-weight: 500;
             font-size: 24px;
+            height: 100%;
+        }
+
+        .ant-tabs-content-holder,
+        .ant-tabs-content,
+        .ant-tabs-tabpane {
+            height: 100%;
         }
 
         .ant-tabs-tab + .ant-tabs-tab {

@@ -1,0 +1,131 @@
+.container :global .ant-form-item {
+    margin: 0;
+}
+
+.exercises {
+    height: 24px;
+    margin-bottom: 8px;
+}
+
+.descrip__text {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 8px;
+}
+
+.repeat,
+.weight,
+.count {
+    font-size: 12px;
+    background: #f0f0f0;
+    max-width: 90px;
+    width: 100%;
+    padding: 3px 8px;
+    height: 24px;
+}
+
+.repeat {
+    max-width: 120px;
+    width: 100%;
+}
+
+.inputs__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #bfbfbf;
+    margin-bottom: 24px;
+}
+
+.inputs__wrapper :global input {
+    height: 24px;
+}
+
+.wrapper__weight_count {
+    display: flex;
+}
+
+.separator {
+    margin-left: 7px;
+    margin-right: 7px;
+}
+
+.wrapper__position_btn :global .ant-btn {
+    position: absolute;
+    height: max-content;
+    padding: 0;
+    text-align: start;
+}
+
+.close__icon {
+    top: 23px;
+    right: 32px;
+}
+
+.wrapper__btns {
+    display: flex;
+    align-items: center;
+    background-color: #f0f0f0;
+    border-radius: 0 0 5px 5px;
+}
+
+.addMore_btn {
+    display: flex;
+    align-items: center;
+    padding: 7px 12px;
+    width: 100%;
+    height: 40px;
+}
+
+.select {
+    width: 100%;
+    margin-bottom: 24px;
+}
+
+.select :global .ant-select-selection-placeholder {
+    display: flex;
+    align-items: center;
+}
+
+.container__date {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.wrapper__date_picker {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.date_picker {
+    height: 28px;
+}
+
+.checkbox__period {
+    margin-right: 8px;
+}
+
+.select__period {
+    max-width: 156px;
+    height: 28px;
+    margin-top: 8px;
+}
+
+.select__period :global .ant-select-selector {
+    display: flex;
+    align-items: center;
+    height: 28px !important;
+}
+
+.select__period :global .ant-select-selection-placeholder {
+    display: flex;
+    align-items: center;
+}
+
+.today__training {
+    background: #f0f5ff;
+}

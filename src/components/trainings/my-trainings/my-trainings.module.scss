@@ -1,0 +1,21 @@
+@import '/src/variables.scss';
+
+.container__no_training {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.create_training__btn {
+    max-width: 174px;
+    width: 100%;
+    height: 40px;
+    font-size: 14px;
+    color: #fff;
+    border: $border;
+    border-radius: $border-radius;
+    box-shadow: $button-shadow;
+    background: $primary-light-6;
+}

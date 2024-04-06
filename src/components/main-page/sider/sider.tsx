@@ -16,6 +16,7 @@ import { useLazyGetAllTrainingsQuery } from '@redux/api-rtk/training-requests';
 import { history } from '@redux/configure-store';
 import { actions as actionsCalendar } from '@redux/reducers/calendar.slice';
 import { actions } from '@redux/reducers/common-modal.slice';
+import { actions as actionsTraining } from '@redux/reducers/training.slice';
 import type { MenuProps } from 'antd';
 import { Button, Image, Layout, Menu } from 'antd';
 
@@ -53,7 +54,10 @@ export const Aside: React.FC = () => {
         useLazyGetAllTrainingsQuery();
 
     useEffect(() => {
-        if (isSuccess) history.push(Paths.TRAINING);
+        if (isSuccess) {
+            dispatch(actionsTraining.setDataTraining(data));
+            history.push(Paths.TRAINING);
+        }
         if (isError) dispatch(actions.setWarning(true));
     }, [data, isSuccess, isError, dispatch]);
 

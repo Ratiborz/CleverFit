@@ -9,6 +9,7 @@ import { history } from '@redux/configure-store';
 import { actions as actionsCalendar } from '@redux/reducers/calendar.slice';
 import { actions } from '@redux/reducers/common-modal.slice';
 import { actions as actionsRepRequest } from '@redux/reducers/repeat-requests.slice';
+import { actions as actionsTraining } from '@redux/reducers/training.slice';
 import { Button, Card, Divider, Layout } from 'antd';
 
 import { getTrainingInfo } from '../../../api/calendar';
@@ -29,7 +30,10 @@ export const Main = () => {
     }, [data, dispatch, refetch]);
 
     useEffect(() => {
-        if (isSuccess) history.push(Paths.TRAINING);
+        if (isSuccess) {
+            dispatch(actionsTraining.setDataTraining(dataTraining));
+            history.push(Paths.TRAINING);
+        }
         if (isError) dispatch(actions.setWarning(true));
     }, [dataTraining, isSuccess, isError, dispatch]);
 

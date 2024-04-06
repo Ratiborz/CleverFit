@@ -3,25 +3,27 @@ import { SettingOutlined } from '@ant-design/icons';
 import Breadcrumbs from '@components/breadcrumb/breadcrumb';
 import { Aside } from '@components/main-page/sider/sider';
 import { WithOpenError } from '@components/result/common-modal-result/with-open-error/with-open-error';
+import { ContainerTrainings } from '@components/trainings/container-trainings/container-trainings';
 import { positionImage } from '@constants/constants';
 import { requestTrainingListSelector } from '@constants/selectors';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { useGetCatalogTariffListTrainingQuery } from '@redux/api-rtk/training-requests';
 import { actions } from '@redux/reducers/common-modal.slice';
+import { actions as actionsTraining } from '@redux/reducers/training.slice';
 import { Button, Layout } from 'antd';
 
 import styles from './training-page.module.scss';
-import { ContainerTrainings } from '@components/trainings/container-trainings/container-trainings';
 
 export const TrainingPage = () => {
     const dispatch = useAppDispatch();
     const repeatRequest = useAppSelector(requestTrainingListSelector);
-    const { isError, refetch } = useGetCatalogTariffListTrainingQuery();
+    const { isError, refetch, data, isSuccess } = useGetCatalogTariffListTrainingQuery();
 
     useEffect(() => {
+        if (isSuccess) dispatch(actionsTraining.setCatalogTariffNames(data));
         if (repeatRequest) refetch();
         if (isError) dispatch(actions.setErrorWithOpen(isError));
-    }, [dispatch, isError, repeatRequest, refetch]);
+    }, [dispatch, isError, repeatRequest, refetch, data, isSuccess]);
 
     return (
         <React.Fragment>

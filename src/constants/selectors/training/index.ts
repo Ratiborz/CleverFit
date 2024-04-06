@@ -1,1 +1,5 @@
-export { requestTrainingListSelector } from './training-selectors';
+export {
+    requestTrainingListSelector,
+    trainingsDataSelector,
+    trainingTariffNamesSelector,
+} from './training-selectors';

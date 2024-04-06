@@ -35,4 +35,8 @@ export {
 
 export { userInfoDataSelector, tariffDataSelector } from './profile';
 
-export { requestTrainingListSelector } from './training';
+export {
+    requestTrainingListSelector,
+    trainingsDataSelector,
+    trainingTariffNamesSelector,
+} from './training';

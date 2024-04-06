@@ -11,7 +11,7 @@ type Participant = string;
 
 type Parameters = {
     repeat: boolean;
-    period: 7;
+    period: 0; // было 7
     jointTraining: boolean;
     participants: Participant[];
 };

@@ -23,6 +23,8 @@ export {
     readOnlyFlowSelector,
     isMobileSelector,
     requestTrainingListSelector,
+    trainingsDataSelector,
+    trainingTariffNamesSelector,
 } from './selectors';
 
 export {
@@ -33,4 +35,5 @@ export {
     positionImage,
     maskStyle,
     emailRegex,
+    periodValue,
 } from './constants';
