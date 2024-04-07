@@ -1,23 +1,25 @@
+import { useLocation } from 'react-router-dom';
 import { CloseCircleOutlined } from '@ant-design/icons';
 import { maskStyle } from '@constants/constants';
 import { modalErrorWithSaveSelector } from '@constants/selectors';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
-import { actions } from '@redux/reducers/calendar.slice';
+import { actions } from '@redux/reducers/common-modal.slice';
 import { Button, Modal } from 'antd';
 
 import styles from './modal-save-error.module.scss';
 
 type Props = {
-    handleClose: () => void;
+    handleClose?: () => void;
 };
 
 export const ModalSaveError = ({ handleClose }: Props) => {
+    const location = useLocation();
     const dispatch = useAppDispatch();
     const modalErrorWithSave = useAppSelector(modalErrorWithSaveSelector);
 
     const closeModals = () => {
         dispatch(actions.setModalError(false));
-        handleClose();
+        if (location.pathname === '/calendar' && handleClose) handleClose();
     };
 
     return (

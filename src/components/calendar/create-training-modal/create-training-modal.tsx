@@ -3,8 +3,8 @@ import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 import { actions } from '@redux/reducers/calendar.slice';
 import type { Moment } from 'moment';
 
+import { ModalSaveError } from '../../result/common-modal-result/modal-save-error/modal-save-error';
 import { ChooseTypeWorkout } from '../choose-type-workout/choose-type-workout';
-import { ModalSaveError } from '../modal-save-error/modal-save-error';
 import { TrainingList } from '../training-list/training-list';
 
 type Props = {

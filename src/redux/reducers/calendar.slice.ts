@@ -9,7 +9,6 @@ interface Modal {
     inputsData: InputsData[];
     selectedTraining: string;
     idKey: string;
-    modalError: boolean;
     editFlow: boolean;
     pastFlow: boolean;
     readOnlyFlow: boolean;
@@ -23,7 +22,6 @@ const initialState: Modal = {
     inputsData: [],
     selectedTraining: '',
     idKey: '',
-    modalError: false,
     editFlow: false,
     pastFlow: false,
     readOnlyFlow: false,
@@ -51,9 +49,6 @@ export const calendarSlice = createSlice({
         },
         setIdKey: (state, { payload }) => {
             state.idKey = payload;
-        },
-        setModalError: (state, { payload }) => {
-            state.modalError = payload;
         },
         setEditFlow: (state, { payload }) => {
             state.editFlow = payload;

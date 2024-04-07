@@ -1,7 +1,7 @@
 import React from 'react';
-import { PlusOutlined } from '@ant-design/icons';
-import { Drawer } from 'antd';
-import { useSaveTrainingMutation } from '@redux/api-rtk/training-requests';
+import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, Drawer } from 'antd';
+
 import { DrawerFormTraining } from './drawer-form-training/drawer-form-training';
 
 import styles from './drawer.module.scss';
@@ -9,11 +9,10 @@ import styles from './drawer.module.scss';
 type Props = {
     setOpen: (arg: boolean) => void;
     open: boolean;
+    setShowSuccessAlert: (arg: boolean) => void;
 };
 
-export const DrawerTraining = ({ setOpen, open }: Props) => {
-    const [saveTraining, { isSuccess }] = useSaveTrainingMutation();
-
+export const DrawerTraining = ({ setOpen, open, setShowSuccessAlert }: Props) => {
     const handleDrawerClose = () => {
         setOpen(false);
     };
@@ -33,11 +32,21 @@ export const DrawerTraining = ({ setOpen, open }: Props) => {
             placement='right'
             onClose={handleDrawerClose}
             open={open}
+            destroyOnClose={true}
             maskClosable={false}
             mask={false}
         >
-            <div className={styles.drawer__container}>
-                <DrawerFormTraining setOpen={setOpen} />
+            <DrawerFormTraining setOpen={setOpen} setShowSuccessAlert={setShowSuccessAlert} />
+
+            <div className={styles.wrapper__position_btn}>
+                <Button
+                    type='text'
+                    onClick={() => setOpen(false)}
+                    className={styles.close__icon}
+                    data-test-id='modal-drawer-right-button-close'
+                >
+                    <CloseOutlined />
+                </Button>
             </div>
         </Drawer>
     );

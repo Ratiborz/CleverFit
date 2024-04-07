@@ -1,4 +1,5 @@
 import { Tabs } from 'antd';
+
 import { MyTrainings } from '../my-trainings/my-trainings';
 
 import styles from './container-trainings.module.scss';
@@ -16,19 +17,19 @@ export const ContainerTrainings = () => {
                 className={styles.tabs}
                 items={[
                     {
-                        label: `Мои тренировки`,
+                        label: 'Мои тренировки',
                         key: '1',
                         children: <MyTrainings />,
                     },
                     {
-                        label: `Совместные тренировки`,
+                        label: 'Совместные тренировки',
                         key: '2',
-                        children: `Content of Tab Pane 2`,
+                        children: 'Content of Tab Pane 2',
                     },
                     {
-                        label: `Марафоны`,
+                        label: 'Марафоны',
                         key: '3',
-                        children: `Content of Tab Pane 3`,
+                        children: 'Content of Tab Pane 3',
                     },
                 ]}
             />

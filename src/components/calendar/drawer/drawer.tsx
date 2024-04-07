@@ -11,7 +11,7 @@ import { Badge, Drawer } from 'antd';
 import classNames from 'classnames';
 import type { Moment } from 'moment';
 
-import { getCurrentColor } from '../choose-color-badge/choose-color-badge';
+import { getCurrentColor } from '../../choose-color-badge/choose-color-badge';
 
 import { DrawerForm } from './drawer-form/drawer-form';
 

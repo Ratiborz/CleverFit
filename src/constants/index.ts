@@ -16,7 +16,6 @@ export {
     trainingsListSelector,
     inputsDataSelector,
     selectedTrainingSelector,
-    modalErrorWithSaveSelector,
     editFlowSelector,
     idKeySelector,
     pastFlowSelector,
@@ -25,6 +24,7 @@ export {
     requestTrainingListSelector,
     trainingsDataSelector,
     trainingTariffNamesSelector,
+    modalErrorWithSaveSelector,
 } from './selectors';
 
 export {
@@ -36,4 +36,5 @@ export {
     maskStyle,
     emailRegex,
     periodValue,
+    sortByValues,
 } from './constants';

@@ -14,7 +14,7 @@ import type { Moment } from 'moment';
 import moment from 'moment';
 
 import { CloseIcon } from '../../../assets/close-icon/close-icon';
-import { getCurrentColor } from '../choose-color-badge/choose-color-badge';
+import { getCurrentColor } from '../../choose-color-badge/choose-color-badge';
 import { Drawerz } from '../drawer/drawer';
 
 import styles from './training-list.module.scss';

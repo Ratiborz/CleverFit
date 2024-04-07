@@ -18,3 +18,20 @@ export function timeConverter(UNIX_timestamp: number) {
 
 export const mirrorDate = (dateString: string) =>
     dateString.split('-').reverse().join('.').replace(/-/g, '.');
+
+export const getNumberFromPeriod = (period: string) => {
+    const regex = /\d+/;
+    const match = period.match(regex);
+
+    if (match && match[0]) {
+        const number = parseInt(match[0], 10);
+
+        if (period.includes('неделю')) {
+            return number * 7;
+        }
+
+        return number;
+    }
+
+    return null;
+};

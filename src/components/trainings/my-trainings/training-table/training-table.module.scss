@@ -1,0 +1,70 @@
+.header__table {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 511px;
+    margin-top: 24px;
+}
+
+.header__title {
+    padding: 8px;
+    max-width: 259px;
+    width: 100%;
+    background: #f0f0f0;
+}
+
+.select {
+    max-width: 240px;
+    width: 100%;
+    border: none;
+    background: #f0f0f0;
+}
+
+.select :global .ant-select-selector {
+    background-color: #f0f0f0 !important;
+    height: auto !important;
+    padding: 3px 11px !important;
+}
+
+.select :global .ant-select-arrow {
+    color: black;
+}
+
+.select :global .ant-select-selection-placeholder {
+    color: black;
+}
+
+.container__body_table {
+    margin-top: 24px;
+}
+
+.training__list_ul {
+    list-style: none;
+    padding: 0;
+}
+
+.default_li {
+    display: flex;
+    justify-content: space-between;
+    max-width: 555px;
+}
+
+.type_training__badge {
+    display: flex;
+    justify-content: space-between;
+    max-width: 259px;
+    width: 100%;
+}
+
+.wrapper__type {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.date_training {
+    display: flex;
+    justify-content: space-between;
+    max-width: 284px;
+    width: 100%;
+}

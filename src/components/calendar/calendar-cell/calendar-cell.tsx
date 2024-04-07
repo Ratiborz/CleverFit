@@ -4,7 +4,7 @@ import { Badge } from 'antd';
 import type { Moment } from 'moment';
 
 import { Training } from '../../../types/calendar-types';
-import { getCurrentColor } from '../choose-color-badge/choose-color-badge';
+import { getCurrentColor } from '../../choose-color-badge/choose-color-badge';
 import { CreateTrainingModal } from '../create-training-modal/create-training-modal';
 
 import styles from './calendar-cell.module.scss';

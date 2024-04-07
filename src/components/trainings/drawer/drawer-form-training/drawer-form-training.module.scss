@@ -2,6 +2,17 @@
     margin: 0;
 }
 
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.form :global .ant-form-item {
+    margin-bottom: 0;
+}
+
 .exercises {
     height: 24px;
     margin-bottom: 8px;
@@ -49,18 +60,6 @@
 .separator {
     margin-left: 7px;
     margin-right: 7px;
-}
-
-.wrapper__position_btn :global .ant-btn {
-    position: absolute;
-    height: max-content;
-    padding: 0;
-    text-align: start;
-}
-
-.close__icon {
-    top: 23px;
-    right: 32px;
 }
 
 .wrapper__btns {
@@ -128,4 +127,21 @@
 
 .today__training {
     background: #f0f5ff;
+}
+
+.wrapper__submit_btn {
+    margin-bottom: 12px;
+}
+
+.divider__submit {
+    position: absolute;
+    left: 0;
+}
+
+.btn__pay {
+    width: 100%;
+    height: 40px;
+    background-color: #2f54eb;
+    color: #fff;
+    margin-top: 40px;
 }

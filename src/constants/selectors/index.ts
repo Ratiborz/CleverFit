@@ -1,4 +1,8 @@
-export { isModalOpenSelector, withOpenModalErrorSelector } from './selectors';
+export {
+    isModalOpenSelector,
+    withOpenModalErrorSelector,
+    modalErrorWithSaveSelector,
+} from './selectors';
 
 export {
     repeatRequestsSelector,
@@ -16,7 +20,6 @@ export {
     trainingsListSelector,
     inputsDataSelector,
     selectedTrainingSelector,
-    modalErrorWithSaveSelector,
     editFlowSelector,
     idKeySelector,
     pastFlowSelector,

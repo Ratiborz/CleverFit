@@ -7,4 +7,5 @@ export {
     maskStyle,
     emailRegex,
     periodValue,
+    sortByValues,
 } from './constants';

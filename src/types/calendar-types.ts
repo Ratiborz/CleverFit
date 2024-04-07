@@ -11,7 +11,7 @@ type Participant = string;
 
 type Parameters = {
     repeat: boolean;
-    period: 0; // было 7
+    period: number;
     jointTraining: boolean;
     participants: Participant[];
 };
@@ -34,7 +34,7 @@ export type CreateTraining = {
         replays: number;
         weight: number;
         approaches: number;
-        isImplementation: boolean;
+        isImplementation?: boolean;
     }>;
 };
 

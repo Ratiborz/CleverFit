@@ -4,7 +4,6 @@ export {
     trainingsListSelector,
     inputsDataSelector,
     selectedTrainingSelector,
-    modalErrorWithSaveSelector,
     editFlowSelector,
     idKeySelector,
     pastFlowSelector,
