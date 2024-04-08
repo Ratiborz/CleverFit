@@ -26,7 +26,7 @@ export const MyTrainings = () => {
                     </Button>
                 </div>
             ) : (
-                <TrainingTable />
+                <TrainingTable setOpen={setOpen} />
             )}
             <DrawerTraining
                 setOpen={setOpen}

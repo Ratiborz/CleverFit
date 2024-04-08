@@ -14,3 +14,14 @@ export type FinishValues = {
     inputsBlock: InputsData[];
     period?: string;
 };
+
+export type DataForInputs = {
+    name: string;
+    exercisesName: string;
+    replays: number;
+    weight: number;
+    count: number;
+    id: string;
+    date: string;
+    period?: number;
+};

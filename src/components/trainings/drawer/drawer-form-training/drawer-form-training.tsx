@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { CalendarTwoTone, PlusOutlined } from '@ant-design/icons';
 import { ModalSaveError } from '@components/result/common-modal-result/modal-save-error/modal-save-error';
 import { periodValue } from '@constants/constants';
-import { trainingsDataSelector,trainingTariffNamesSelector } from '@constants/selectors';
+import {
+    dataForInputsSelector,
+    trainingsDataSelector,
+    trainingTariffNamesSelector,
+} from '@constants/selectors';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { useSaveTrainingMutation } from '@redux/api-rtk/training-requests';
 import { actions } from '@redux/reducers/common-modal.slice';
@@ -35,6 +39,8 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
     const [datePick, setDatePick] = useState<string | undefined>();
     const [trainingName, setTrainingName] = useState('');
     const [saveTraining, { isSuccess, isError }] = useSaveTrainingMutation();
+
+    const dataForInputs = useAppSelector(dataForInputsSelector);
 
     useEffect(() => {
         if (isError) {
@@ -92,15 +98,31 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
         console.log(training);
     };
 
-    const initialFormValues = [
-        {
-            exercise: '',
-            replays: null,
-            weight: null,
-            count: null,
-            id: '',
-        },
-    ];
+    const initialFormValues =
+        dataForInputs.length > 0
+            ? dataForInputs.map((training) => ({
+                  key: training.name,
+                  nameTraining: training.name,
+                  exercise: training.exercisesName,
+                  replays: training.replays,
+                  weight: training.weight,
+                  count: training.count,
+                  id: training.id,
+                  period: training.period,
+                  date: training.date,
+              }))
+            : [
+                  {
+                      nameTraining: '',
+                      exercise: '',
+                      replays: null,
+                      weight: null,
+                      count: null,
+                      id: '',
+                      period: 0,
+                      date: '',
+                  },
+              ];
 
     return (
         <React.Fragment>
@@ -110,10 +132,16 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
                 name='form'
                 form={form}
                 className={styles.form}
-                initialValues={{ inputsBlock: initialFormValues }}
+                initialValues={{
+                    inputsBlock: initialFormValues,
+                    date: moment(initialFormValues[0].date, 'DD.MM.YYYY'),
+                }}
             >
                 <div>
-                    <Form.Item name='type_training'>
+                    <Form.Item
+                        name='name_training'
+                        initialValue={initialFormValues[0].nameTraining}
+                    >
                         <Select
                             placeholder='Выбор типа тренировки'
                             className={styles.select}
@@ -151,7 +179,7 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
                             </div>
                         </div>
                         {period && (
-                            <Form.Item name='period'>
+                            <Form.Item name='period' initialValue={initialFormValues[0].period}>
                                 <Select
                                     placeholder='Периодичность'
                                     className={styles.select__period}

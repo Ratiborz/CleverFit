@@ -7,6 +7,7 @@ export const trainingApi = api.injectEndpoints({
     endpoints: (builder) => ({
         getAllTrainings: builder.query<GetFeedbacksResponse, void>({
             query: () => 'training',
+            providesTags: ['Training'],
         }),
         getCatalogTariffListTraining: builder.query<void, void>({
             query: () => 'catalogs/training-list',
@@ -17,6 +18,7 @@ export const trainingApi = api.injectEndpoints({
                 body: training,
                 method: 'POST',
             }),
+            invalidatesTags: ['Training'],
         }),
     }),
 });

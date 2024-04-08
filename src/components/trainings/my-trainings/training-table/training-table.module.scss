@@ -47,6 +47,11 @@
     display: flex;
     justify-content: space-between;
     max-width: 555px;
+    margin-bottom: 5px;
+}
+
+.default_li:last-of-type {
+    margin-bottom: 0;
 }
 
 .type_training__badge {
@@ -60,6 +65,7 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
+    border-bottom: 1px solid #f0f0f0;
 }
 
 .date_training {
@@ -67,4 +73,25 @@
     justify-content: space-between;
     max-width: 284px;
     width: 100%;
+}
+
+.training__date {
+    width: 100%;
+    max-width: 240px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.badge {
+    margin-right: 8px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.new_training__btn {
+    max-width: 182px;
+    width: 100%;
+    height: 40px;
+    background-color: #2f54eb;
+    color: #fff;
+    margin-top: 40px;
+    margin-bottom: 32px;
 }

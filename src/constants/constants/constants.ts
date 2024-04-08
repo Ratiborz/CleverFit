@@ -6,6 +6,8 @@ export const forbiddenStatus = 403;
 
 export const backgroundImage = '/Main_page_light.png';
 
+export const defaultItemPerPage = 14;
+
 export const positionImage = {
     backgroundImage: `url(${backgroundImage})`,
     backgroundSize: 'cover',

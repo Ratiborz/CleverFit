@@ -25,6 +25,7 @@ export {
     trainingsDataSelector,
     trainingTariffNamesSelector,
     modalErrorWithSaveSelector,
+    dataForInputsSelector,
 } from './selectors';
 
 export {
@@ -37,4 +38,5 @@ export {
     emailRegex,
     periodValue,
     sortByValues,
+    defaultItemPerPage,
 } from './constants';

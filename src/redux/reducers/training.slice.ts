@@ -1,17 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { Training } from '../../types/calendar-types';
+import { DataForInputs } from '../../types/trainings-types';
 
 interface ITraining {
     repeatRequest: boolean;
     trainingData: Training[];
     catalogTariffNames: [];
+    dataForInputs: DataForInputs[];
 }
 
 const initialState: ITraining = {
     repeatRequest: false,
     trainingData: [],
     catalogTariffNames: [],
+    dataForInputs: [],
 };
 
 export const trainingSlice = createSlice({
@@ -27,6 +30,9 @@ export const trainingSlice = createSlice({
         },
         setCatalogTariffNames: (state, { payload }) => {
             state.catalogTariffNames = payload;
+        },
+        setDataForInputs: (state, { payload }) => {
+            state.dataForInputs = payload;
         },
     },
 });

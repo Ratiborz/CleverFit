@@ -8,4 +8,5 @@ export {
     emailRegex,
     periodValue,
     sortByValues,
+    defaultItemPerPage,
 } from './constants';

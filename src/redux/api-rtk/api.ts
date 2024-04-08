@@ -3,7 +3,7 @@ import { sessionToken, storageToken } from '@utils/storage';
 
 export const api = createApi({
     reducerPath: 'api',
-    tagTypes: ['Feedback'],
+    tagTypes: ['Feedback', 'Training'],
     baseQuery: fetchBaseQuery({
         baseUrl: 'https://marathon-api.clevertec.ru/',
         prepareHeaders: (headers) => {
