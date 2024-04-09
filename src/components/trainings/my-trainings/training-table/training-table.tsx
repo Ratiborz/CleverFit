@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { DownOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { getCurrentColor } from '@components/choose-color-badge/choose-color-badge';
 import { defaultItemPerPage, sortByValues } from '@constants/constants';
-import { trainingsDataSelector } from '@constants/selectors';
+import { editFlowTrainingSelector, trainingsDataSelector } from '@constants/selectors';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { actions } from '@redux/reducers/training.slice';
 import { mirrorDate } from '@utils/utils';
@@ -21,17 +21,14 @@ export const TrainingTable = ({ setOpen }: Props) => {
     const trainingData = useAppSelector(trainingsDataSelector);
 
     const handleEditTraining = (name: string, date: string) => {
+        dispatch(actions.setEditFlowTraining(true));
         const currentDateSelect = mirrorDate(date.slice(0, 10));
 
-        const exercisesData = trainingData.filter((training) => {
-            const trainingDate = mirrorDate(training.date.slice(0, 10));
-            console.log(trainingDate);
-
-            return (
+        const exercisesData = trainingData.filter(
+            (training) =>
                 training?.name === name &&
-                mirrorDate(training.date.slice(0, 10)) === currentDateSelect
-            );
-        });
+                mirrorDate(training.date.slice(0, 10)) === currentDateSelect,
+        );
 
         const idTraining = exercisesData[0]?._id;
 

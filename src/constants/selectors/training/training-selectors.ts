@@ -4,3 +4,4 @@ export const requestTrainingListSelector = (state: RootState) => state.training.
 export const trainingsDataSelector = (state: RootState) => state.training.trainingData;
 export const trainingTariffNamesSelector = (state: RootState) => state.training.catalogTariffNames;
 export const dataForInputsSelector = (state: RootState) => state.training.dataForInputs;
+export const editFlowTrainingSelector = (state: RootState) => state.training.editFlow;

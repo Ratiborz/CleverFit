@@ -20,6 +20,14 @@ export const trainingApi = api.injectEndpoints({
             }),
             invalidatesTags: ['Training'],
         }),
+        editTrainingDrawer: builder.mutation<Training, { id: string; training: Training }>({
+            query: ({ training, id }) => ({
+                url: `training/${id}`,
+                body: training,
+                method: 'PUT',
+            }),
+            invalidatesTags: ['Training'],
+        }),
     }),
 });
 
@@ -27,4 +35,5 @@ export const {
     useLazyGetAllTrainingsQuery,
     useGetCatalogTariffListTrainingQuery,
     useSaveTrainingMutation,
+    useEditTrainingDrawerMutation,
 } = trainingApi;

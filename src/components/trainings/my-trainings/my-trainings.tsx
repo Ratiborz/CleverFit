@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { trainingsDataSelector } from '@constants/selectors/training/training-selectors';
+import {
+    editFlowTrainingSelector,
+    trainingsDataSelector,
+} from '@constants/selectors/training/training-selectors';
 import { useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { Alert, Button } from 'antd';
 
@@ -13,6 +16,7 @@ export const MyTrainings = () => {
     const trainingData = useAppSelector(trainingsDataSelector);
     const [open, setOpen] = useState(false);
     const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+    const editFlow = useAppSelector(editFlowTrainingSelector);
 
     const openDrawer = () => setOpen(true);
 
@@ -36,7 +40,11 @@ export const MyTrainings = () => {
             {showSuccessAlert ? (
                 <Alert
                     data-test-id='alert'
-                    message='Новая тренировка успешно добавлена'
+                    message={
+                        editFlow
+                            ? 'Тренировка успешно обновлена'
+                            : 'Новая тренировка успешно добавлена'
+                    }
                     type='success'
                     className={styles.alert__success}
                     showIcon={true}

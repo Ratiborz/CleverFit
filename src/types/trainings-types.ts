@@ -9,7 +9,7 @@ export type InputsData = {
 };
 
 export type FinishValues = {
-    type_training: string;
+    name_training: string;
     date: Moment;
     inputsBlock: InputsData[];
     period?: string;

@@ -10,10 +10,10 @@ export type Exercise = {
 type Participant = string;
 
 type Parameters = {
-    repeat: boolean;
-    period: number;
-    jointTraining: boolean;
-    participants: Participant[];
+    repeat?: boolean;
+    period?: number;
+    jointTraining?: boolean;
+    participants?: Participant[];
 };
 
 export type Training = {
@@ -29,6 +29,8 @@ export type Training = {
 export type CreateTraining = {
     name: string;
     date: string;
+    isImplementation?: boolean;
+    parameters?: Parameters;
     exercises: Array<{
         name: string;
         replays: number;

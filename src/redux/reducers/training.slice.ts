@@ -8,6 +8,7 @@ interface ITraining {
     trainingData: Training[];
     catalogTariffNames: [];
     dataForInputs: DataForInputs[];
+    editFlow: boolean;
 }
 
 const initialState: ITraining = {
@@ -15,6 +16,7 @@ const initialState: ITraining = {
     trainingData: [],
     catalogTariffNames: [],
     dataForInputs: [],
+    editFlow: false,
 };
 
 export const trainingSlice = createSlice({
@@ -33,6 +35,9 @@ export const trainingSlice = createSlice({
         },
         setDataForInputs: (state, { payload }) => {
             state.dataForInputs = payload;
+        },
+        setEditFlowTraining: (state, { payload }) => {
+            state.editFlow = payload;
         },
     },
 });

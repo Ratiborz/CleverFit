@@ -1,6 +1,9 @@
 import React from 'react';
-import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
+import { CloseOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
+import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { editFlowTrainingSelector } from '@constants/selectors';
 import { Button, Drawer } from 'antd';
+import { actions } from '@redux/reducers/training.slice';
 
 import { DrawerFormTraining } from './drawer-form-training/drawer-form-training';
 
@@ -13,8 +16,13 @@ type Props = {
 };
 
 export const DrawerTraining = ({ setOpen, open, setShowSuccessAlert }: Props) => {
+    const dispatch = useAppDispatch();
+    const editFlow = useAppSelector(editFlowTrainingSelector);
+
     const handleDrawerClose = () => {
         setOpen(false);
+        dispatch(actions.setDataTraining([]));
+        dispatch(actions.setEditFlowTraining(false));
     };
 
     return (
@@ -23,10 +31,17 @@ export const DrawerTraining = ({ setOpen, open, setShowSuccessAlert }: Props) =>
             width={408}
             className={styles.drawer}
             title={
-                <React.Fragment>
-                    <PlusOutlined style={{ marginRight: '8px' }} />
-                    <span>Новая тренировка</span>
-                </React.Fragment>
+                editFlow ? (
+                    <React.Fragment>
+                        <EditOutlined style={{ marginRight: '8px' }} />
+                        <span>Редактировать тренировку</span>
+                    </React.Fragment>
+                ) : (
+                    <React.Fragment>
+                        <PlusOutlined style={{ marginRight: '8px' }} />
+                        <span>Новая тренировка</span>
+                    </React.Fragment>
+                )
             }
             closeIcon={false}
             placement='right'

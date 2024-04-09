@@ -4,11 +4,15 @@ import { ModalSaveError } from '@components/result/common-modal-result/modal-sav
 import { periodValue } from '@constants/constants';
 import {
     dataForInputsSelector,
+    editFlowTrainingSelector,
     trainingsDataSelector,
     trainingTariffNamesSelector,
 } from '@constants/selectors';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
-import { useSaveTrainingMutation } from '@redux/api-rtk/training-requests';
+import {
+    useEditTrainingDrawerMutation,
+    useSaveTrainingMutation,
+} from '@redux/api-rtk/training-requests';
 import { actions } from '@redux/reducers/common-modal.slice';
 import { getNumberFromPeriod } from '@utils/utils';
 import { Button, Checkbox, DatePicker, Divider, Form, Input, InputNumber, Select } from 'antd';
@@ -33,35 +37,51 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
     const [form] = Form.useForm();
     const [saveActive, setSaveActive] = useState(false);
     const trainingNames = useAppSelector(trainingTariffNamesSelector);
+    const editFlow = useAppSelector(editFlowTrainingSelector);
     const [period, setPeriod] = useState(false);
     const trainingData = useAppSelector(trainingsDataSelector);
     const [typeTraining, setTypeTraining] = useState('');
     const [datePick, setDatePick] = useState<string | undefined>();
     const [trainingName, setTrainingName] = useState('');
     const [saveTraining, { isSuccess, isError }] = useSaveTrainingMutation();
+    const [editTrainingDrawer, { isSuccess: successEdit, isError: errorEdit, error }] =
+        useEditTrainingDrawerMutation();
+
+    console.log(error);
 
     const dataForInputs = useAppSelector(dataForInputsSelector);
 
     useEffect(() => {
-        if (isError) {
+        if (isError || errorEdit) {
             dispatch(actions.setModalError(true));
             setOpen(false);
         }
-        if (isSuccess) {
+        if (isSuccess || successEdit) {
             setShowSuccessAlert(true);
             setOpen(false);
         }
-    }, [dispatch, setOpen, setShowSuccessAlert, isError, isSuccess]);
+    }, [dispatch, setOpen, setShowSuccessAlert, isError, errorEdit, successEdit, isSuccess]);
 
     useEffect(() => {
         const isDataComplete = !!typeTraining && !!datePick && !!trainingName;
 
         setSaveActive(isDataComplete);
-    }, [typeTraining, datePick, trainingName, setSaveActive]);
+    }, [typeTraining, datePick, trainingName]);
+
+    useEffect(() => {
+        if (dataForInputs.length > 0) {
+            const periodBoolean = typeof dataForInputs[0].period === 'number';
+            console.log(periodBoolean);
+
+            setTypeTraining(dataForInputs[0].name);
+            setDatePick(dataForInputs[0].date);
+            setTrainingName(dataForInputs[0].exercisesName);
+            setPeriod(periodBoolean);
+        }
+    }, [setSaveActive, dataForInputs]);
 
     const setPeriodCheckbox = (e: CheckboxChangeEvent) => {
         const { checked } = e.target;
-
         setPeriod(checked);
     };
 
@@ -79,11 +99,11 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
 
     const onFinish = (values: FinishValues) => {
         const training = {
-            name: values.type_training,
+            name: values.name_training,
             date: values.date.toISOString(),
             isImplementation: false,
-            parametrs: {
-                period: values.period && getNumberFromPeriod(values.period),
+            parameters: {
+                period: values.period ? (getNumberFromPeriod(values.period) as number) : 0,
             },
             exercises: values.inputsBlock.map((input) => ({
                 name: input.exercise,
@@ -91,11 +111,16 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
                 weight: input.weight,
                 approaches: input.count,
                 id: input.id,
+                isImplementation: false,
             })),
         };
 
-        saveTraining(training);
-        console.log(training);
+        if (editFlow) {
+            editTrainingDrawer({ id: dataForInputs[0].id, training });
+        } else {
+            saveTraining(training);
+        }
+        console.log(training.date);
     };
 
     const initialFormValues =
@@ -120,7 +145,7 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
                       count: null,
                       id: '',
                       period: 0,
-                      date: '',
+                      date: null,
                   },
               ];
 
@@ -134,7 +159,9 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
                 className={styles.form}
                 initialValues={{
                     inputsBlock: initialFormValues,
-                    date: moment(initialFormValues[0].date, 'DD.MM.YYYY'),
+                    date:
+                        initialFormValues[0].date &&
+                        moment(initialFormValues[0].date, 'DD.MM.YYYY'),
                 }}
             >
                 <div>
@@ -159,7 +186,7 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
                                     className={styles.date_picker}
                                     dateRender={dateCellRender}
                                     disabledDate={(e) => disabledPastDate(e)}
-                                    onChange={(e) => setDatePick(e?.format('YYYY-MM-DD'))}
+                                    onChange={(e) => setDatePick(e?.format('DD.MM.YYYY'))}
                                     locale={locale}
                                     format='DD.MM.YYYY'
                                     suffixIcon={
@@ -174,6 +201,7 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
                                 <Checkbox
                                     className={styles.checkbox__period}
                                     onChange={(e) => setPeriodCheckbox(e)}
+                                    checked={period}
                                 />
                                 С периодичностью
                             </div>

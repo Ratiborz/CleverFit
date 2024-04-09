@@ -26,6 +26,7 @@ export {
     trainingTariffNamesSelector,
     modalErrorWithSaveSelector,
     dataForInputsSelector,
+    editFlowTrainingSelector,
 } from './selectors';
 
 export {
