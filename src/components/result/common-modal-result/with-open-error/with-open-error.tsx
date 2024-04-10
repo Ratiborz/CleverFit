@@ -26,15 +26,12 @@ export const WithOpenError = () => {
     return (
         <Modal
             maskStyle={maskStyle}
-            closeIcon={
-                <div data-test-id='modal-error-user-training-button-close'>
-                    <CloseOutlined />
-                </div>
-            }
+            closeIcon={<CloseOutlined data-test-id='modal-error-user-training-button-close' />}
             centered={true}
             footer={null}
             closable={true}
             open={isModalOpen}
+            destroyOnClose={true}
             onCancel={() => dispatch(commonModal.setErrorWithOpen(false))}
             className={styles.modal}
         >

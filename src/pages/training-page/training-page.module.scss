@@ -28,3 +28,13 @@
     color: black;
     margin-top: 10px;
 }
+
+@media (max-width: 360px) {
+    .button_text {
+        display: none;
+    }
+
+    .settings_btn {
+        width: auto;
+    }
+}

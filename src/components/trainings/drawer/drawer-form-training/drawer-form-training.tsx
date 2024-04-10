@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { CalendarTwoTone, PlusOutlined } from '@ant-design/icons';
-import { ModalSaveError } from '@components/result/common-modal-result/modal-save-error/modal-save-error';
 import { periodValue } from '@constants/constants';
 import {
     dataForInputsSelector,
@@ -14,7 +13,8 @@ import {
     useSaveTrainingMutation,
 } from '@redux/api-rtk/training-requests';
 import { actions } from '@redux/reducers/common-modal.slice';
-import { getNumberFromPeriod } from '@utils/utils';
+import { actions as actionsTraining } from '@redux/reducers/training.slice';
+import { getConvertStringFromNumb, getNumberFromPeriod } from '@utils/utils';
 import { Button, Checkbox, DatePicker, Divider, Form, Input, InputNumber, Select } from 'antd';
 import locale from 'antd/es/date-picker/locale/ru_RU';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
@@ -44,21 +44,22 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
     const [datePick, setDatePick] = useState<string | undefined>();
     const [trainingName, setTrainingName] = useState('');
     const [saveTraining, { isSuccess, isError }] = useSaveTrainingMutation();
-    const [editTrainingDrawer, { isSuccess: successEdit, isError: errorEdit, error }] =
+    const [editTrainingDrawer, { isSuccess: successEdit, isError: errorEdit }] =
         useEditTrainingDrawerMutation();
-
-    console.log(error);
 
     const dataForInputs = useAppSelector(dataForInputsSelector);
 
     useEffect(() => {
         if (isError || errorEdit) {
-            dispatch(actions.setModalError(true));
             setOpen(false);
+            dispatch(actions.setModalError(true));
+            dispatch(actionsTraining.setDataForInputs([]));
+            dispatch(actionsTraining.setEditFlowTraining(false));
         }
         if (isSuccess || successEdit) {
             setShowSuccessAlert(true);
             setOpen(false);
+            // dispatch(actionsTraining.setDataForInputs([]));
         }
     }, [dispatch, setOpen, setShowSuccessAlert, isError, errorEdit, successEdit, isSuccess]);
 
@@ -71,6 +72,7 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
     useEffect(() => {
         if (dataForInputs.length > 0) {
             const periodBoolean = typeof dataForInputs[0].period === 'number';
+
             console.log(periodBoolean);
 
             setTypeTraining(dataForInputs[0].name);
@@ -82,6 +84,7 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
 
     const setPeriodCheckbox = (e: CheckboxChangeEvent) => {
         const { checked } = e.target;
+
         setPeriod(checked);
     };
 
@@ -95,13 +98,20 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
         return <div className={isTrainingDay ? styles.today__training : ''}>{day}</div>;
     };
 
-    const disabledPastDate = (value: Moment) => value.isBefore(moment(), 'day');
+    const disabledPastDate = (value: Moment) => value.isSameOrBefore(moment(), 'day');
 
     const onFinish = (values: FinishValues) => {
+        const today = moment().format('DD.MM.YYYY');
+
+        const isDateBeforeOrEqualToday = moment(values.date, 'DD.MM.YYYY').isSameOrBefore(
+            moment(today, 'DD.MM.YYYY'),
+            'day',
+        );
+
         const training = {
             name: values.name_training,
             date: values.date.toISOString(),
-            isImplementation: false,
+            isImplementation: isDateBeforeOrEqualToday,
             parameters: {
                 period: values.period ? (getNumberFromPeriod(values.period) as number) : 0,
             },
@@ -111,16 +121,17 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
                 weight: input.weight,
                 approaches: input.count,
                 id: input.id,
-                isImplementation: false,
+                isImplementation: isDateBeforeOrEqualToday,
             })),
         };
+
+        console.log(training);
 
         if (editFlow) {
             editTrainingDrawer({ id: dataForInputs[0].id, training });
         } else {
             saveTraining(training);
         }
-        console.log(training.date);
     };
 
     const initialFormValues =
@@ -133,171 +144,164 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
                   weight: training.weight,
                   count: training.count,
                   id: training.id,
-                  period: training.period,
+                  period: training.period && getConvertStringFromNumb(training.period),
                   date: training.date,
               }))
             : [
                   {
-                      nameTraining: '',
+                      nameTraining: null,
                       exercise: '',
                       replays: null,
                       weight: null,
                       count: null,
                       id: '',
-                      period: 0,
+                      period: null,
                       date: null,
                   },
               ];
 
     return (
-        <React.Fragment>
-            <ModalSaveError />
-            <Form
-                onFinish={onFinish}
-                name='form'
-                form={form}
-                className={styles.form}
-                initialValues={{
-                    inputsBlock: initialFormValues,
-                    date:
-                        initialFormValues[0].date &&
-                        moment(initialFormValues[0].date, 'DD.MM.YYYY'),
-                }}
-            >
-                <div>
-                    <Form.Item
-                        name='name_training'
-                        initialValue={initialFormValues[0].nameTraining}
-                    >
-                        <Select
-                            placeholder='Выбор типа тренировки'
-                            className={styles.select}
-                            onChange={(e) => setTypeTraining(e)}
-                            options={trainingNames.map(({ name }) => ({
-                                value: name,
-                                label: name,
-                            }))}
-                        />
-                    </Form.Item>
-                    <div className={styles.container__date}>
-                        <div className={styles.wrapper__date_picker}>
-                            <Form.Item name='date'>
-                                <DatePicker
-                                    className={styles.date_picker}
-                                    dateRender={dateCellRender}
-                                    disabledDate={(e) => disabledPastDate(e)}
-                                    onChange={(e) => setDatePick(e?.format('DD.MM.YYYY'))}
-                                    locale={locale}
-                                    format='DD.MM.YYYY'
-                                    suffixIcon={
-                                        <CalendarTwoTone
-                                            twoToneColor={['#00000040', '#00000040']}
-                                        />
-                                    }
-                                    placeholder='Выбрать дату'
-                                />
-                            </Form.Item>
-                            <div>
-                                <Checkbox
-                                    className={styles.checkbox__period}
-                                    onChange={(e) => setPeriodCheckbox(e)}
-                                    checked={period}
-                                />
-                                С периодичностью
-                            </div>
+        <Form
+            onFinish={onFinish}
+            name='form'
+            form={form}
+            className={styles.form}
+            initialValues={{
+                inputsBlock: initialFormValues,
+                date: initialFormValues[0].date && moment(initialFormValues[0].date, 'DD.MM.YYYY'),
+            }}
+        >
+            <div>
+                <Form.Item name='name_training' initialValue={initialFormValues[0].nameTraining}>
+                    <Select
+                        placeholder='Выбор типа тренировки'
+                        className={styles.select}
+                        onChange={(e) => setTypeTraining(e)}
+                        options={trainingNames.map(({ name }) => ({
+                            value: name,
+                            label: name,
+                        }))}
+                    />
+                </Form.Item>
+                <div className={styles.container__date}>
+                    <div className={styles.wrapper__date_picker}>
+                        <Form.Item name='date'>
+                            <DatePicker
+                                data-test-id='modal-drawer-right-date-picker'
+                                className={styles.date_picker}
+                                dateRender={dateCellRender}
+                                disabledDate={(e) => disabledPastDate(e)}
+                                onChange={(e) => setDatePick(e?.format('DD.MM.YYYY'))}
+                                locale={locale}
+                                format='DD.MM.YYYY'
+                                suffixIcon={
+                                    <CalendarTwoTone twoToneColor={['#00000040', '#00000040']} />
+                                }
+                                placeholder='Выбрать дату'
+                            />
+                        </Form.Item>
+                        <div>
+                            <Checkbox
+                                data-test-id='modal-drawer-right-checkbox-period'
+                                className={styles.checkbox__period}
+                                onChange={(e) => setPeriodCheckbox(e)}
+                                checked={period}
+                            />
+                            С периодичностью
                         </div>
-                        {period && (
-                            <Form.Item name='period' initialValue={initialFormValues[0].period}>
-                                <Select
-                                    placeholder='Периодичность'
-                                    className={styles.select__period}
-                                    options={periodValue.map((name) => ({
-                                        value: name,
-                                        label: name,
-                                    }))}
-                                />
-                            </Form.Item>
-                        )}
                     </div>
-                    <Form.List name='inputsBlock'>
-                        {(fields, { add }) => (
-                            <React.Fragment>
-                                {fields.map(({ name }) => (
-                                    <div key={name} className={styles.container}>
-                                        <Form.Item name={[name, 'exercise']}>
-                                            <Input
-                                                data-test-id={`modal-drawer-right-input-exercise${name}`}
-                                                placeholder='Упражнение'
-                                                autoFocus={true}
-                                                className={styles.exercises}
-                                                onChange={(e) => setTrainingName(e.target.value)}
-                                            />
-                                        </Form.Item>
-                                        <div className={styles.descrip__text}>
-                                            <div className={styles.repeat}>Подходы</div>
-                                            <div className={styles.weight}>Вес, кг</div>
-                                            <div className={styles.count}>Количество</div>
+                    {period && (
+                        <Form.Item name='period' initialValue={initialFormValues[0].period}>
+                            <Select
+                                data-test-id='modal-drawer-right-select-period'
+                                placeholder='Периодичность'
+                                className={styles.select__period}
+                                options={periodValue.map((name) => ({
+                                    value: name,
+                                    label: name,
+                                }))}
+                            />
+                        </Form.Item>
+                    )}
+                </div>
+                <Form.List name='inputsBlock'>
+                    {(fields, { add }) => (
+                        <React.Fragment>
+                            {fields.map(({ name }) => (
+                                <div key={name} className={styles.container}>
+                                    <Form.Item name={[name, 'exercise']}>
+                                        <Input
+                                            data-test-id={`modal-drawer-right-input-exercise${name}`}
+                                            placeholder='Упражнение'
+                                            autoFocus={true}
+                                            className={styles.exercises}
+                                            onChange={(e) => setTrainingName(e.target.value)}
+                                        />
+                                    </Form.Item>
+                                    <div className={styles.descrip__text}>
+                                        <div className={styles.repeat}>Подходы</div>
+                                        <div className={styles.weight}>Вес, кг</div>
+                                        <div className={styles.count}>Количество</div>
+                                    </div>
+                                    <div className={styles.inputs__wrapper}>
+                                        <div className={styles.input__container}>
+                                            <Form.Item name={[name, 'replays']}>
+                                                <InputNumber
+                                                    data-test-id={`modal-drawer-right-input-approach${name}`}
+                                                    className={styles.repeat_input}
+                                                    placeholder='1'
+                                                    addonBefore='+'
+                                                    min={1}
+                                                />
+                                            </Form.Item>
                                         </div>
-                                        <div className={styles.inputs__wrapper}>
+                                        <div className={styles.wrapper__weight_count}>
                                             <div className={styles.input__container}>
-                                                <Form.Item name={[name, 'replays']}>
+                                                <Form.Item name={[name, 'weight']}>
                                                     <InputNumber
-                                                        data-test-id={`modal-drawer-right-input-approach${name}`}
-                                                        className={styles.repeat_input}
-                                                        placeholder='1'
-                                                        addonBefore='+'
+                                                        data-test-id={`modal-drawer-right-input-weight${name}`}
+                                                        className={styles.weight_input}
+                                                        placeholder='0'
+                                                        min={0}
+                                                    />
+                                                </Form.Item>
+                                            </div>
+                                            <span className={styles.separator}>x</span>
+                                            <div className={styles.input__container}>
+                                                <Form.Item name={[name, 'count']}>
+                                                    <InputNumber
+                                                        data-test-id={`modal-drawer-right-input-quantity${name}`}
+                                                        className={styles.count_input}
+                                                        placeholder='3'
                                                         min={1}
                                                     />
                                                 </Form.Item>
                                             </div>
-                                            <div className={styles.wrapper__weight_count}>
-                                                <div className={styles.input__container}>
-                                                    <Form.Item name={[name, 'weight']}>
-                                                        <InputNumber
-                                                            data-test-id={`modal-drawer-right-input-weight${name}`}
-                                                            className={styles.weight_input}
-                                                            placeholder='0'
-                                                            min={0}
-                                                        />
-                                                    </Form.Item>
-                                                </div>
-                                                <span className={styles.separator}>x</span>
-                                                <div className={styles.input__container}>
-                                                    <Form.Item name={[name, 'count']}>
-                                                        <InputNumber
-                                                            data-test-id={`modal-drawer-right-input-quantity${name}`}
-                                                            className={styles.count_input}
-                                                            placeholder='3'
-                                                            min={1}
-                                                        />
-                                                    </Form.Item>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
-                                ))}
-                                <div className={styles.wrapper__btns}>
-                                    <Button
-                                        type='link'
-                                        className={styles.addMore_btn}
-                                        onClick={() => add()}
-                                    >
-                                        <PlusOutlined style={{ marginRight: '8px' }} />
-                                        Добавить ещё упражнение
-                                    </Button>
                                 </div>
-                            </React.Fragment>
-                        )}
-                    </Form.List>
-                </div>
+                            ))}
+                            <div className={styles.wrapper__btns}>
+                                <Button
+                                    type='link'
+                                    className={styles.addMore_btn}
+                                    onClick={() => add()}
+                                >
+                                    <PlusOutlined style={{ marginRight: '8px' }} />
+                                    Добавить ещё упражнение
+                                </Button>
+                            </div>
+                        </React.Fragment>
+                    )}
+                </Form.List>
+            </div>
 
-                <div className={styles.wrapper__submit_btn}>
-                    <Divider className={styles.divider__submit} />
-                    <Button className={styles.btn__pay} disabled={!saveActive} htmlType='submit'>
-                        Сохранить
-                    </Button>
-                </div>
-            </Form>
-        </React.Fragment>
+            <div className={styles.wrapper__submit_btn}>
+                <Divider className={styles.divider__submit} />
+                <Button className={styles.btn__pay} disabled={!saveActive} htmlType='submit'>
+                    Сохранить
+                </Button>
+            </div>
+        </Form>
     );
 };

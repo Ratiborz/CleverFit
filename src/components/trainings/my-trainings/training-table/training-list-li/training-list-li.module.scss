@@ -1,0 +1,83 @@
+.default_li {
+    display: flex;
+    justify-content: space-between;
+    max-width: 555px;
+    margin-bottom: 5px;
+}
+
+.default_li:last-of-type {
+    margin-bottom: 0;
+}
+
+.type_training__badge {
+    display: flex;
+    justify-content: space-between;
+    max-width: 259px;
+    width: 100%;
+}
+
+.wrapper__type {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    border-bottom: 1px solid #f0f0f0;
+    position: relative;
+}
+
+.date_training {
+    display: flex;
+    justify-content: space-between;
+    max-width: 284px;
+    width: 100%;
+}
+
+.training__date {
+    width: 100%;
+    max-width: 240px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.badge {
+    margin-right: 12px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.btn__edit_training,
+.dropDown_btn {
+    border: none;
+    background: transparent !important;
+}
+
+@media (max-width: 360px) {
+    .default_li {
+        max-width: 312px;
+    }
+
+    .wrapper__type {
+        max-width: 98px;
+        align-items: center;
+    }
+
+    .wrapper__type :global .ant-btn {
+        padding: 0;
+    }
+
+    .training__date {
+        display: flex;
+        align-items: center;
+        max-width: 134px;
+    }
+
+    .date_training {
+        max-width: 178px;
+    }
+
+    .date_training :global .ant-btn {
+        padding: 0;
+    }
+
+    .type_training__badge {
+        justify-content: flex-start;
+        max-width: 116px;
+    }
+}

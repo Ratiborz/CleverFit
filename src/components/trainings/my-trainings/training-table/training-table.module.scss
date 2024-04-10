@@ -43,49 +43,6 @@
     padding: 0;
 }
 
-.default_li {
-    display: flex;
-    justify-content: space-between;
-    max-width: 555px;
-    margin-bottom: 5px;
-}
-
-.default_li:last-of-type {
-    margin-bottom: 0;
-}
-
-.type_training__badge {
-    display: flex;
-    justify-content: space-between;
-    max-width: 259px;
-    width: 100%;
-}
-
-.wrapper__type {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    border-bottom: 1px solid #f0f0f0;
-}
-
-.date_training {
-    display: flex;
-    justify-content: space-between;
-    max-width: 284px;
-    width: 100%;
-}
-
-.training__date {
-    width: 100%;
-    max-width: 240px;
-    border-bottom: 1px solid #f0f0f0;
-}
-
-.badge {
-    margin-right: 8px;
-    border-bottom: 1px solid #f0f0f0;
-}
-
 .new_training__btn {
     max-width: 182px;
     width: 100%;
@@ -94,4 +51,41 @@
     color: #fff;
     margin-top: 40px;
     margin-bottom: 32px;
+}
+
+@media (max-width: 360px) {
+    .header__table {
+        max-width: 312px;
+    }
+
+    .header__title {
+        max-width: 116px;
+        padding: 3px 3px;
+        font-size: 12px;
+        text-align: center;
+    }
+
+    .select {
+        max-width: 188px;
+        font-size: 12px;
+    }
+
+    .select :global .ant-select-selector {
+        padding: 0 8px !important;
+        height: 24px !important;
+    }
+
+    .select :global .ant-select-selection-placeholder {
+        display: flex;
+        align-items: center;
+    }
+
+    .select :global .ant-select-selection-item {
+        display: flex;
+        align-items: center;
+    }
+
+    .new_training__btn {
+        max-width: none;
+    }
 }

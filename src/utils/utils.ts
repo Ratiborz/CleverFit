@@ -35,3 +35,17 @@ export const getNumberFromPeriod = (period: string) => {
 
     return null;
 };
+
+export const getConvertStringFromNumb = (number: number) => {
+    if (number === 1) {
+        return 'Через 1 день';
+    }
+    if (number <= 6) {
+        return `Через ${number} ${number < 5 ? 'дня' : 'дней'}`;
+    }
+    if (number === 7) {
+        return '1 раз в неделю';
+    }
+
+    return '';
+};

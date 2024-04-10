@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { DownOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
-import { getCurrentColor } from '@components/choose-color-badge/choose-color-badge';
+import { PlusOutlined } from '@ant-design/icons';
 import { defaultItemPerPage, sortByValues } from '@constants/constants';
-import { editFlowTrainingSelector, trainingsDataSelector } from '@constants/selectors';
+import { trainingsDataSelector } from '@constants/selectors';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { actions } from '@redux/reducers/training.slice';
 import { mirrorDate } from '@utils/utils';
-import { Badge, Button, Pagination, Select } from 'antd';
+import { Button, Pagination, Select } from 'antd';
 import moment from 'moment';
+
+import { TrainingListLi } from './training-list-li/training-list-li';
 
 import styles from './training-table.module.scss';
 
@@ -19,8 +20,10 @@ export const TrainingTable = ({ setOpen }: Props) => {
     const dispatch = useAppDispatch();
     const [currentPage, setCurrentPage] = useState(1);
     const trainingData = useAppSelector(trainingsDataSelector);
+    const [infoCard, setInfoCard] = useState({ date: '', name: '' });
+    const [sort, setSort] = useState('');
 
-    const handleEditTraining = (name: string, date: string) => {
+    const handleEditTraining = (name: string, date: string, infoCard?: string) => {
         dispatch(actions.setEditFlowTraining(true));
         const currentDateSelect = mirrorDate(date.slice(0, 10));
 
@@ -32,58 +35,40 @@ export const TrainingTable = ({ setOpen }: Props) => {
 
         const idTraining = exercisesData[0]?._id;
 
-        const updatedExercisesData = exercisesData.map((training, index) => ({
-            name: training.name,
-            exercisesName: training.exercises[index].name,
-            replays: training.exercises[index].replays || 1,
-            weight: training.exercises[index].weight || 0,
-            count: training.exercises[index].approaches || 1,
+        const updatedExercisesData = exercisesData[0].exercises.map((training) => ({
+            name: exercisesData[0].name,
+            exercisesName: training.name,
+            replays: training.replays || 1,
+            weight: training.weight || 0,
+            count: training.approaches || 1,
             date: moment(date).format('DD.MM.YYYY'),
             id: idTraining,
-            period: training.parameters?.period,
+            period: exercisesData[0].parameters?.period,
         }));
 
+        console.log(date);
         dispatch(actions.setDataForInputs(updatedExercisesData));
-        console.log(updatedExercisesData);
-        console.log(name, mirrorDate(date.slice(0, 10)));
-        setOpen(true);
+
+        if (infoCard) {
+            setInfoCard({ date, name });
+        } else {
+            setOpen(true);
+        }
     };
 
-    const getDataForCurrentPage = () => {
-        const startIndex = (currentPage - 1) * defaultItemPerPage;
-        const endIndex = startIndex + defaultItemPerPage;
-        const currentTrainingData = trainingData.slice(startIndex, endIndex);
-
-        return currentTrainingData.map((training) => (
-            <li className={styles.default_li} key={training._id}>
-                <div className={styles.type_training__badge}>
-                    <Badge color={getCurrentColor(training.name)} className={styles.badge} />
-                    <div className={styles.wrapper__type}>
-                        <p>{training.name}</p>
-                        <DownOutlined />
-                    </div>
-                </div>
-                <div className={styles.date_training}>
-                    <span className={styles.training__date}>
-                        {mirrorDate(training.date.slice(0, 10))}
-                    </span>
-                    <EditOutlined
-                        style={{ fontSize: 30, color: '#2F54EB' }}
-                        onClick={() => handleEditTraining(training.name, training.date)}
-                    />
-                </div>
-            </li>
-        ));
+    const sortingTraining = (e: string) => {
+        setSort(e);
     };
 
     return (
         <React.Fragment>
-            <div className={styles.header__table}>
+            <div className={styles.header__table} data-test-id='my-trainings-table'>
                 <p className={styles.header__title}>Тип тренировки</p>
                 <Select
                     placeholder='Сортировка по периоду'
                     bordered={false}
                     className={styles.select}
+                    onChange={(e) => sortingTraining(e)}
                     options={sortByValues.map((name) => ({
                         value: name,
                         label: name,
@@ -91,7 +76,16 @@ export const TrainingTable = ({ setOpen }: Props) => {
                 />
             </div>
             <div className={styles.container__body_table}>
-                <ul className={styles.training__list_ul}>{getDataForCurrentPage()}</ul>
+                <ul className={styles.training__list_ul}>
+                    <TrainingListLi
+                        currentPage={currentPage}
+                        infoCard={infoCard}
+                        handleEditTraining={handleEditTraining}
+                        setOpen={setOpen}
+                        setInfoCard={setInfoCard}
+                        sort={sort}
+                    />
+                </ul>
             </div>
             {trainingData.length >= 10 && (
                 <Pagination
@@ -102,6 +96,7 @@ export const TrainingTable = ({ setOpen }: Props) => {
                 />
             )}
             <Button
+                data-test-id='create-new-training-button'
                 icon={<PlusOutlined />}
                 className={styles.new_training__btn}
                 onClick={() => setOpen(true)}

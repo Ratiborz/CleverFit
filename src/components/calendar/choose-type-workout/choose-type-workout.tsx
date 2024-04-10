@@ -15,6 +15,7 @@ import {
     useEditTrainingMutation,
 } from '@redux/api-rtk/calendar-requests';
 import { actions } from '@redux/reducers/calendar.slice';
+import { actions as actionsCommon } from '@redux/reducers/common-modal.slice';
 import { Button, Divider, Image, Select, Spin } from 'antd';
 import classNames from 'classnames';
 import type { Moment } from 'moment';
@@ -65,7 +66,7 @@ export const ChooseTypeWorkout = ({
                 });
         }
         if (isError || editIsError) {
-            dispatch(actions.setModalError(true));
+            dispatch(actionsCommon.setModalError(true));
         }
     }, [isSuccess, isError, editIsSuccess, editIsError, swapModal, dispatch]);
 

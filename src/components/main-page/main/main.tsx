@@ -85,6 +85,7 @@ export const Main = () => {
                         <p className={styles.card_training__p}>Расписать тренировки</p>
                         <Divider style={{ margin: 0 }} />
                         <Button
+                            data-test-id='menu-button-training'
                             className={styles.card_training__btn}
                             type='link'
                             icon={<HeartFilled />}

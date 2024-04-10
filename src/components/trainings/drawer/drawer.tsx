@@ -1,9 +1,9 @@
 import React from 'react';
 import { CloseOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
-import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { editFlowTrainingSelector } from '@constants/selectors';
-import { Button, Drawer } from 'antd';
+import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { actions } from '@redux/reducers/training.slice';
+import { Button, Drawer } from 'antd';
 
 import { DrawerFormTraining } from './drawer-form-training/drawer-form-training';
 
@@ -20,15 +20,14 @@ export const DrawerTraining = ({ setOpen, open, setShowSuccessAlert }: Props) =>
     const editFlow = useAppSelector(editFlowTrainingSelector);
 
     const handleDrawerClose = () => {
-        setOpen(false);
-        dispatch(actions.setDataTraining([]));
+        // dispatch(actions.setDataForInputs([]));
         dispatch(actions.setEditFlowTraining(false));
+        setOpen(false);
     };
 
     return (
         <Drawer
             data-test-id='modal-drawer-right'
-            width={408}
             className={styles.drawer}
             title={
                 editFlow ? (
@@ -39,7 +38,7 @@ export const DrawerTraining = ({ setOpen, open, setShowSuccessAlert }: Props) =>
                 ) : (
                     <React.Fragment>
                         <PlusOutlined style={{ marginRight: '8px' }} />
-                        <span>Новая тренировка</span>
+                        <span>Добавление упражнений</span>
                     </React.Fragment>
                 )
             }
@@ -56,7 +55,7 @@ export const DrawerTraining = ({ setOpen, open, setShowSuccessAlert }: Props) =>
             <div className={styles.wrapper__position_btn}>
                 <Button
                     type='text'
-                    onClick={() => setOpen(false)}
+                    onClick={() => handleDrawerClose()}
                     className={styles.close__icon}
                     data-test-id='modal-drawer-right-button-close'
                 >

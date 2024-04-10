@@ -14,6 +14,7 @@ export const ContainerTrainings = () => {
             <Tabs
                 defaultActiveKey='1'
                 onChange={onChange}
+                onTabScroll={(e) => console.log(e)}
                 className={styles.tabs}
                 items={[
                     {

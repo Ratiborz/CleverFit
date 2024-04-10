@@ -5,6 +5,11 @@ div.drawer {
             margin: 0;
         }
 
+        .ant-drawer-content-wrapper {
+            max-width: 408px;
+            width: 100% !important;
+        }
+
         .ant-drawer-header {
             background: #fff;
             border-bottom: none;
@@ -46,4 +51,30 @@ div.drawer {
 .close__icon {
     top: 23px;
     right: 32px;
+}
+
+@media (max-width: 360px) {
+    div.drawer {
+        margin-top: 85px;
+        :global {
+            .ant-drawer-content,
+            .ant-drawer-content-wrapper {
+                border-top-right-radius: 24px;
+                border-top-left-radius: 24px;
+                max-width: 360px;
+            }
+
+            .ant-drawer-header {
+                padding: 24px 16px 0;
+            }
+
+            .ant-drawer-body {
+                padding: 16px 16px;
+            }
+        }
+    }
+
+    .close__icon {
+        right: 22px;
+    }
 }

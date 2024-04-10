@@ -21,7 +21,10 @@ export const TrainingPage = () => {
 
     useEffect(() => {
         if (isSuccess) dispatch(actionsTraining.setCatalogTariffNames(data));
-        if (repeatRequest) refetch();
+        if (repeatRequest) {
+            refetch();
+            dispatch(actionsTraining.setRepeatRequest(false));
+        }
         if (isError) dispatch(actions.setErrorWithOpen(isError));
     }, [dispatch, isError, repeatRequest, refetch, data, isSuccess]);
 
