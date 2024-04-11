@@ -761,7 +761,7 @@ describe('Sprint 6', () => {
             generalBlockCreatingTrainings();
             cy.get(`[data-test-id=${DATA_TEST_ID.modalDrawerRightButtonClose}]`).click();
             cy.get(`[data-test-id=${DATA_TEST_ID.myTrainingsTable}]`).within(() => {
-                cy.contains('Периодичность').click();
+                cy.contains('Периодичность').click({ force: true });
                 cy.contains('1 раз в неделю').should('not.exist');
                 cy.contains('Периодичность').click();
                 cy.contains('1 раз в неделю').should('not.exist');

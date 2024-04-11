@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
-import { defaultItemPerPage, sortByValues } from '@constants/constants';
 import { trainingsDataSelector } from '@constants/selectors';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { actions } from '@redux/reducers/training.slice';
 import { mirrorDate } from '@utils/utils';
-import { Button, Pagination, Select } from 'antd';
+import { Button } from 'antd';
 import moment from 'moment';
 
 import { TrainingListLi } from './training-list-li/training-list-li';
@@ -18,19 +17,18 @@ type Props = {
 
 export const TrainingTable = ({ setOpen }: Props) => {
     const dispatch = useAppDispatch();
-    const [currentPage, setCurrentPage] = useState(1);
     const trainingData = useAppSelector(trainingsDataSelector);
     const [infoCard, setInfoCard] = useState({ date: '', name: '' });
-    const [sort, setSort] = useState('');
 
     const handleEditTraining = (name: string, date: string, infoCard?: string) => {
         dispatch(actions.setEditFlowTraining(true));
-        const currentDateSelect = mirrorDate(date.slice(0, 10));
+        const currentDateSelect = new Date(date.slice(0, 10));
+        const formattedDate = currentDateSelect.toISOString().split('T')[0];
 
         const exercisesData = trainingData.filter(
             (training) =>
                 training?.name === name &&
-                mirrorDate(training.date.slice(0, 10)) === currentDateSelect,
+                mirrorDate(training.date.slice(0, 10)) === mirrorDate(formattedDate),
         );
 
         const idTraining = exercisesData[0]?._id;
@@ -46,7 +44,6 @@ export const TrainingTable = ({ setOpen }: Props) => {
             period: exercisesData[0].parameters?.period,
         }));
 
-        console.log(date);
         dispatch(actions.setDataForInputs(updatedExercisesData));
 
         if (infoCard) {
@@ -56,45 +53,16 @@ export const TrainingTable = ({ setOpen }: Props) => {
         }
     };
 
-    const sortingTraining = (e: string) => {
-        setSort(e);
-    };
-
     return (
         <React.Fragment>
-            <div className={styles.header__table} data-test-id='my-trainings-table'>
-                <p className={styles.header__title}>Тип тренировки</p>
-                <Select
-                    placeholder='Сортировка по периоду'
-                    bordered={false}
-                    className={styles.select}
-                    onChange={(e) => sortingTraining(e)}
-                    options={sortByValues.map((name) => ({
-                        value: name,
-                        label: name,
-                    }))}
+            <div className={styles.header__table}>
+                <TrainingListLi
+                    infoCard={infoCard}
+                    handleEditTraining={handleEditTraining}
+                    setOpen={setOpen}
+                    setInfoCard={setInfoCard}
                 />
             </div>
-            <div className={styles.container__body_table}>
-                <ul className={styles.training__list_ul}>
-                    <TrainingListLi
-                        currentPage={currentPage}
-                        infoCard={infoCard}
-                        handleEditTraining={handleEditTraining}
-                        setOpen={setOpen}
-                        setInfoCard={setInfoCard}
-                        sort={sort}
-                    />
-                </ul>
-            </div>
-            {trainingData.length >= 10 && (
-                <Pagination
-                    size='small'
-                    total={trainingData.length}
-                    defaultPageSize={defaultItemPerPage}
-                    onChange={(page) => setCurrentPage(page)}
-                />
-            )}
             <Button
                 data-test-id='create-new-training-button'
                 icon={<PlusOutlined />}

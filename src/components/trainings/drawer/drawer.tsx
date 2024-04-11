@@ -20,7 +20,7 @@ export const DrawerTraining = ({ setOpen, open, setShowSuccessAlert }: Props) =>
     const editFlow = useAppSelector(editFlowTrainingSelector);
 
     const handleDrawerClose = () => {
-        // dispatch(actions.setDataForInputs([]));
+        dispatch(actions.setDataForInputs([]));
         dispatch(actions.setEditFlowTraining(false));
         setOpen(false);
     };
@@ -50,11 +50,16 @@ export const DrawerTraining = ({ setOpen, open, setShowSuccessAlert }: Props) =>
             maskClosable={false}
             mask={false}
         >
-            <DrawerFormTraining setOpen={setOpen} setShowSuccessAlert={setShowSuccessAlert} />
+            <DrawerFormTraining
+                setOpen={setOpen}
+                setShowSuccessAlert={setShowSuccessAlert}
+                handleDrawerClose={handleDrawerClose}
+            />
 
             <div className={styles.wrapper__position_btn}>
                 <Button
                     type='text'
+                    htmlType='submit'
                     onClick={() => handleDrawerClose()}
                     className={styles.close__icon}
                     data-test-id='modal-drawer-right-button-close'

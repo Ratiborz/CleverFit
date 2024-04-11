@@ -3,11 +3,11 @@ import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import useWindowResize from '@hooks/use-window-resize';
 import { actions } from '@redux/reducers/training.slice';
 import { Button, Divider } from 'antd';
+import classNames from 'classnames';
 
 import { ArrowBack } from '../../../../assets/arrow-back/arrow-back';
 
 import styles from './info-card.module.scss';
-import classNames from 'classnames';
 
 type Props = {
     setOpen: (arg: boolean) => void;

@@ -1,8 +1,8 @@
 .header__table {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    max-width: 511px;
+    // display: flex;
+    // align-items: center;
+    // justify-content: space-between;
+    // max-width: 511px;
     margin-top: 24px;
 }
 
@@ -13,35 +13,35 @@
     background: #f0f0f0;
 }
 
-.select {
-    max-width: 240px;
-    width: 100%;
-    border: none;
-    background: #f0f0f0;
-}
+// .select {
+//     max-width: 240px;
+//     width: 100%;
+//     border: none;
+//     background: #f0f0f0;
+// }
 
-.select :global .ant-select-selector {
-    background-color: #f0f0f0 !important;
-    height: auto !important;
-    padding: 3px 11px !important;
-}
+// .select :global .ant-select-selector {
+//     background-color: #f0f0f0 !important;
+//     height: auto !important;
+//     padding: 3px 11px !important;
+// }
 
-.select :global .ant-select-arrow {
-    color: black;
-}
+// .select :global .ant-select-arrow {
+//     color: black;
+// }
 
-.select :global .ant-select-selection-placeholder {
-    color: black;
-}
+// .select :global .ant-select-selection-placeholder {
+//     color: black;
+// }
 
 .container__body_table {
     margin-top: 24px;
 }
 
-.training__list_ul {
-    list-style: none;
-    padding: 0;
-}
+// .training__list_ul {
+//     list-style: none;
+//     padding: 0;
+// }
 
 .new_training__btn {
     max-width: 182px;

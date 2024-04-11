@@ -1,26 +1,28 @@
-.default_li {
-    display: flex;
-    justify-content: space-between;
-    max-width: 555px;
-    margin-bottom: 5px;
-}
+// .default_li {
+//     display: flex;
+//     justify-content: space-between;
+//     max-width: 555px;
+//     margin-bottom: 5px;
+// }
 
-.default_li:last-of-type {
-    margin-bottom: 0;
-}
+// .default_li:last-of-type {
+//     margin-bottom: 0;
+// }
 
 .type_training__badge {
     display: flex;
     justify-content: space-between;
     max-width: 259px;
     width: 100%;
+    align-items: center;
 }
 
 .wrapper__type {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    border-bottom: 1px solid #f0f0f0;
+    align-items: center;
+    // border-bottom: 1px solid #f0f0f0;
     position: relative;
 }
 
@@ -34,18 +36,40 @@
 .training__date {
     width: 100%;
     max-width: 240px;
-    border-bottom: 1px solid #f0f0f0;
+    // border-bottom: 1px solid #f0f0f0;
 }
 
 .badge {
     margin-right: 12px;
-    border-bottom: 1px solid #f0f0f0;
+    // border-bottom: 1px solid #f0f0f0;
 }
 
 .btn__edit_training,
 .dropDown_btn {
     border: none;
     background: transparent !important;
+}
+
+.table :global {
+    max-width: 555px;
+
+    .ant-table-thead tr > .ant-table-cell {
+        padding: 7px 8px;
+        border-bottom: none;
+    }
+
+    .ant-table-thead tr > .ant-table-cell:last-of-type {
+        display: none;
+    }
+
+    .ant-table-tbody tr > .ant-table-cell:last-of-type {
+        border-bottom: none;
+    }
+
+    .ant-table-tbody tr > .ant-table-cell {
+        padding: 16px 0 0 0;
+        background: none;
+    }
 }
 
 @media (max-width: 360px) {

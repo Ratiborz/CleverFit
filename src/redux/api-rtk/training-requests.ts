@@ -18,7 +18,7 @@ export const trainingApi = api.injectEndpoints({
                 body: training,
                 method: 'POST',
             }),
-            invalidatesTags: ['Training'],
+            invalidatesTags: [{ type: 'Training', id: 'LIST' }],
         }),
         editTrainingDrawer: builder.mutation<Training, { id: string; training: Training }>({
             query: ({ training, id }) => ({
@@ -26,7 +26,7 @@ export const trainingApi = api.injectEndpoints({
                 body: training,
                 method: 'PUT',
             }),
-            invalidatesTags: ['Training'],
+            invalidatesTags: [{ type: 'Training', id: 'LIST' }],
         }),
     }),
 });
@@ -36,4 +36,5 @@ export const {
     useGetCatalogTariffListTrainingQuery,
     useSaveTrainingMutation,
     useEditTrainingDrawerMutation,
+    useGetAllTrainingsQuery,
 } = trainingApi;

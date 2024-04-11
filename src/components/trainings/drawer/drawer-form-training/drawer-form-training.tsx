@@ -43,9 +43,11 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
     const [typeTraining, setTypeTraining] = useState('');
     const [datePick, setDatePick] = useState<string | undefined>();
     const [trainingName, setTrainingName] = useState('');
-    const [saveTraining, { isSuccess, isError }] = useSaveTrainingMutation();
+    const [saveTraining, { isSuccess, isError, error, data }] = useSaveTrainingMutation();
     const [editTrainingDrawer, { isSuccess: successEdit, isError: errorEdit }] =
         useEditTrainingDrawerMutation();
+
+    // console.log(error, data, trainingData);
 
     const dataForInputs = useAppSelector(dataForInputsSelector);
 
@@ -59,7 +61,6 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
         if (isSuccess || successEdit) {
             setShowSuccessAlert(true);
             setOpen(false);
-            // dispatch(actionsTraining.setDataForInputs([]));
         }
     }, [dispatch, setOpen, setShowSuccessAlert, isError, errorEdit, successEdit, isSuccess]);
 
@@ -72,8 +73,6 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
     useEffect(() => {
         if (dataForInputs.length > 0) {
             const periodBoolean = typeof dataForInputs[0].period === 'number';
-
-            console.log(periodBoolean);
 
             setTypeTraining(dataForInputs[0].name);
             setDatePick(dataForInputs[0].date);
@@ -91,7 +90,9 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
     const dateCellRender = (value: Moment) => {
         const date = value.format('YYYY-MM-DD');
         const day = value.format('DD');
-        const dataTraining = trainingData.map((training) => training.date.slice(0, 10));
+        const dataTraining = trainingData.map((training) =>
+            typeof training.date === 'string' ? training.date.slice(0, 10) : training.date,
+        );
 
         const isTrainingDay = dataTraining.includes(date);
 
@@ -112,9 +113,11 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
             name: values.name_training,
             date: values.date.toISOString(),
             isImplementation: isDateBeforeOrEqualToday,
-            parameters: {
-                period: values.period ? (getNumberFromPeriod(values.period) as number) : 0,
-            },
+            ...(values.period && {
+                parameters: {
+                    period: getNumberFromPeriod(values.period) as number,
+                },
+            }),
             exercises: values.inputsBlock.map((input) => ({
                 name: input.exercise,
                 replays: input.replays,
@@ -130,6 +133,9 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
         if (editFlow) {
             editTrainingDrawer({ id: dataForInputs[0].id, training });
         } else {
+            // const updatedTrainingData = [...trainingData, training];
+
+            // dispatch(actionsTraining.setDataTraining(updatedTrainingData));
             saveTraining(training);
         }
     };
@@ -140,9 +146,9 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
                   key: training.name,
                   nameTraining: training.name,
                   exercise: training.exercisesName,
-                  replays: training.replays,
-                  weight: training.weight,
-                  count: training.count,
+                  replays: training.replays || 0,
+                  weight: training.weight || 1,
+                  count: training.count || 0,
                   id: training.id,
                   period: training.period && getConvertStringFromNumb(training.period),
                   date: training.date,
@@ -175,6 +181,7 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
                 <Form.Item name='name_training' initialValue={initialFormValues[0].nameTraining}>
                     <Select
                         placeholder='Выбор типа тренировки'
+                        data-test-id='modal-create-exercise-select'
                         className={styles.select}
                         onChange={(e) => setTypeTraining(e)}
                         options={trainingNames.map(({ name }) => ({
