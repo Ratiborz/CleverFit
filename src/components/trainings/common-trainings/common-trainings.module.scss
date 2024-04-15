@@ -1,0 +1,51 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #fafafa;
+    margin-bottom: 24px;
+    padding-top: 32px;
+    border-radius: 2px;
+    margin-top: 36px;
+}
+
+.container__title {
+    color: #061178;
+    text-align: center;
+    max-width: 1088px;
+    margin-bottom: 32px;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 130%;
+}
+
+.container__descrip {
+    color: #8c8c8c;
+    max-width: 1000px;
+    text-align: center;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 130%;
+}
+
+.wrapper__btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    width: 100%;
+    max-width: 690px;
+}
+
+.wrapper__btn :global .ant-btn {
+    padding: 0;
+    height: auto;
+}
+
+.btn__choose_friend {
+    color: black;
+}
+
+.no_partners__descrip {
+    color: #8c8c8c;
+}

@@ -51,19 +51,17 @@ export const Drawerz = ({ showDrawer, setOpen, dateMoment, selectedTraining }: P
             width={isMobile ? 360 : 408}
             className={classNames(styles.drawer, isMobile && styles.drawer_mobile)}
             title={
-                <div>
-                    {editFlow ? (
-                        <React.Fragment>
-                            <EditOutlined style={{ marginRight: '8px' }} />
-                            <span>Редактирование</span>
-                        </React.Fragment>
-                    ) : (
-                        <React.Fragment>
-                            <PlusOutlined style={{ marginRight: '8px' }} />
-                            <span>Добавление упражнений</span>
-                        </React.Fragment>
-                    )}
-                </div>
+                editFlow ? (
+                    <React.Fragment>
+                        <EditOutlined style={{ marginRight: '8px' }} />
+                        <span>Редактирование</span>
+                    </React.Fragment>
+                ) : (
+                    <React.Fragment>
+                        <PlusOutlined style={{ marginRight: '8px' }} />
+                        <span>Добавление упражнений</span>
+                    </React.Fragment>
+                )
             }
             closeIcon={false}
             placement='right'

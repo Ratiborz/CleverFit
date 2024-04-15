@@ -1,0 +1,9 @@
+.select {
+    width: 100%;
+    margin-bottom: 24px;
+}
+
+.select :global .ant-select-selection-placeholder {
+    display: flex;
+    align-items: center;
+}

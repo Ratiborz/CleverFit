@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { CalendarTwoTone, PlusOutlined } from '@ant-design/icons';
+import { CalendarTwoTone, MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { periodValue } from '@constants/constants';
 import {
+    commonTrainingFlowSelector,
     dataForInputsSelector,
     editFlowTrainingSelector,
     trainingsDataSelector,
-    trainingTariffNamesSelector,
 } from '@constants/selectors';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import {
@@ -26,6 +26,7 @@ import { FinishValues } from '../../../../types/trainings-types';
 import styles from './drawer-form-training.module.scss';
 
 import 'moment/locale/ru';
+import { FormNameTraining } from './form-name-training/form-name-training';
 
 type Props = {
     setOpen: (arg: boolean) => void;
@@ -36,18 +37,53 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
     const dispatch = useAppDispatch();
     const [form] = Form.useForm();
     const [saveActive, setSaveActive] = useState(false);
-    const trainingNames = useAppSelector(trainingTariffNamesSelector);
     const editFlow = useAppSelector(editFlowTrainingSelector);
     const [period, setPeriod] = useState(false);
     const trainingData = useAppSelector(trainingsDataSelector);
     const [typeTraining, setTypeTraining] = useState('');
     const [datePick, setDatePick] = useState<string | undefined>();
     const [trainingName, setTrainingName] = useState('');
-    const [saveTraining, { isSuccess, isError, error, data }] = useSaveTrainingMutation();
+    const [saveTraining, { isSuccess, isError, error }] = useSaveTrainingMutation();
     const [editTrainingDrawer, { isSuccess: successEdit, isError: errorEdit }] =
         useEditTrainingDrawerMutation();
+    const commonTrainingFlow = useAppSelector(commonTrainingFlowSelector);
 
-    // console.log(error, data, trainingData);
+    const [itemsToRemove, setItemsToRemove] = useState<{ [key: number]: boolean }>({});
+    const [buttonDelete, setButtonDelete] = useState(false);
+
+    const deleteExercise = (remove: (index: number | number[]) => void) => {
+        const checkboxKeys = Object.keys(itemsToRemove).map((key) => Number(key));
+        const checkboxTrueList = checkboxKeys.filter((key) => itemsToRemove[key] === true);
+
+        setItemsToRemove((prev) => {
+            const newItems = { ...prev };
+
+            checkboxTrueList.forEach((key) => {
+                delete newItems[key];
+            });
+
+            return newItems;
+        });
+        remove(checkboxTrueList);
+        setItemsToRemove([]);
+    };
+
+    const setDeleteExercises = (e: CheckboxChangeEvent, index: number) => {
+        const { checked } = e.target;
+
+        setItemsToRemove((prev) => ({
+            ...prev,
+            [index]: checked,
+        }));
+    };
+
+    useEffect(() => {
+        const hasCheckedItem = !Object.values(itemsToRemove).some((el) => el === true);
+
+        setButtonDelete(hasCheckedItem);
+    }, [itemsToRemove]);
+
+    console.log(error);
 
     const dataForInputs = useAppSelector(dataForInputsSelector);
 
@@ -133,9 +169,6 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
         if (editFlow) {
             editTrainingDrawer({ id: dataForInputs[0].id, training });
         } else {
-            // const updatedTrainingData = [...trainingData, training];
-
-            // dispatch(actionsTraining.setDataTraining(updatedTrainingData));
             saveTraining(training);
         }
     };
@@ -178,18 +211,12 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
             }}
         >
             <div>
-                <Form.Item name='name_training' initialValue={initialFormValues[0].nameTraining}>
-                    <Select
-                        placeholder='Выбор типа тренировки'
-                        data-test-id='modal-create-exercise-select'
-                        className={styles.select}
-                        onChange={(e) => setTypeTraining(e)}
-                        options={trainingNames.map(({ name }) => ({
-                            value: name,
-                            label: name,
-                        }))}
+                {!commonTrainingFlow && (
+                    <FormNameTraining
+                        nameTraining={initialFormValues[0].nameTraining}
+                        setTypeTraining={setTypeTraining}
                     />
-                </Form.Item>
+                )}
                 <div className={styles.container__date}>
                     <div className={styles.wrapper__date_picker}>
                         <Form.Item name='date'>
@@ -232,7 +259,7 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
                     )}
                 </div>
                 <Form.List name='inputsBlock'>
-                    {(fields, { add }) => (
+                    {(fields, { add, remove }) => (
                         <React.Fragment>
                             {fields.map(({ name }) => (
                                 <div key={name} className={styles.container}>
@@ -243,6 +270,18 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
                                             autoFocus={true}
                                             className={styles.exercises}
                                             onChange={(e) => setTrainingName(e.target.value)}
+                                            addonAfter={
+                                                commonTrainingFlow ? (
+                                                    <Checkbox
+                                                        data-test-id={`modal-drawer-right-checkbox-exercise${name}`}
+                                                        checked={itemsToRemove[name]}
+                                                        name='checkbox'
+                                                        onChange={(e) =>
+                                                            setDeleteExercises(e, name)
+                                                        }
+                                                    />
+                                                ) : null
+                                            }
                                         />
                                     </Form.Item>
                                     <div className={styles.descrip__text}>
@@ -295,8 +334,23 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
                                     onClick={() => add()}
                                 >
                                     <PlusOutlined style={{ marginRight: '8px' }} />
-                                    Добавить ещё упражнение
+                                    {commonTrainingFlow
+                                        ? 'Добавить ещё'
+                                        : 'Добавить ещё упражнение'}
                                 </Button>
+                                {commonTrainingFlow && (
+                                    <Button
+                                        type='link'
+                                        className={styles.delete_btn}
+                                        disabled={buttonDelete}
+                                        onClick={() => deleteExercise(remove)}
+                                    >
+                                        <MinusOutlined
+                                            style={{ marginRight: '8px', marginTop: '2px' }}
+                                        />
+                                        Удалить
+                                    </Button>
+                                )}
                             </div>
                         </React.Fragment>
                     )}
@@ -306,7 +360,7 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
             <div className={styles.wrapper__submit_btn}>
                 <Divider className={styles.divider__submit} />
                 <Button className={styles.btn__pay} disabled={!saveActive} htmlType='submit'>
-                    Сохранить
+                    {commonTrainingFlow ? 'Отправить приглашение' : 'Сохранить'}
                 </Button>
             </div>
         </Form>

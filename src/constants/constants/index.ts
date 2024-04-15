@@ -9,4 +9,5 @@ export {
     periodValue,
     sortByValues,
     defaultItemPerPage,
+    itemsPerPage,
 } from './constants';

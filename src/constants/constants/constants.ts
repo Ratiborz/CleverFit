@@ -8,6 +8,8 @@ export const backgroundImage = '/Main_page_light.png';
 
 export const defaultItemPerPage = 10;
 
+export const itemsPerPage = 12;
+
 export const positionImage = {
     backgroundImage: `url(${backgroundImage})`,
     backgroundSize: 'cover',

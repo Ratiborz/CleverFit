@@ -25,3 +25,13 @@ export type DataForInputs = {
     date: string;
     period?: number;
 };
+
+export type TrainingDataPals = {
+    id: string;
+    name: string;
+    trainingType: string;
+    imageSrc: string;
+    avgWeightInWeek: number;
+    status: null;
+    inviteId: null;
+};

@@ -1,0 +1,78 @@
+.container__page_header__search {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 734px;
+    margin-top: 24px;
+}
+
+.container__page_header__search :global .ant-page-header {
+    padding: 0;
+}
+
+.search {
+    max-width: 484px;
+}
+
+.container__users_card {
+    margin-top: 24px;
+    margin-bottom: 16px;
+    display: grid;
+    grid-template-columns: repeat(4, 234px);
+    grid-template-rows: repeat(3, 194px);
+    row-gap: 16px;
+    column-gap: 16px;
+}
+
+.wrapper__card {
+    background: #f0f5ff;
+    max-width: 234px;
+    padding: 16px 16px 36px 16px;
+}
+
+.avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+}
+
+.avatar_name {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.avatar_name :global .ant-image {
+    margin-right: 8px;
+}
+
+.type_training,
+.average_load {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.average_load {
+    margin-bottom: 20px;
+}
+
+.type_training__p,
+.average_load__p {
+    font-size: 13px;
+    color: #8c8c8c;
+}
+
+.training,
+.weight {
+    color: #2f54eb;
+}
+
+.create_training__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 28px;
+    background-color: #2f54eb;
+    color: #fff;
+}

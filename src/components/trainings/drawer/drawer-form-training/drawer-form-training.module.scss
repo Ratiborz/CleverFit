@@ -77,16 +77,6 @@
     height: 40px;
 }
 
-.select {
-    width: 100%;
-    margin-bottom: 24px;
-}
-
-.select :global .ant-select-selection-placeholder {
-    display: flex;
-    align-items: center;
-}
-
 .container__date {
     display: flex;
     flex-direction: column;
@@ -144,4 +134,12 @@
     background-color: #2f54eb;
     color: #fff;
     margin-top: 40px;
+}
+
+.delete_btn {
+    display: flex;
+    align-items: center;
+    padding: 7px 12px;
+    width: 100%;
+    color: #262626;
 }

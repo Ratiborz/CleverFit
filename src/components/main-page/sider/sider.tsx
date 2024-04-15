@@ -54,7 +54,6 @@ export const Aside: React.FC = () => {
         useLazyGetAllTrainingsQuery();
 
     useEffect(() => {
-        console.log(isSuccess, data);
         if (isSuccess) {
             dispatch(actionsTraining.setDataTraining(data));
             history.push(Paths.TRAINING);

@@ -44,4 +44,7 @@ export {
     trainingTariffNamesSelector,
     dataForInputsSelector,
     editFlowTrainingSelector,
+    randomStateSelector,
+    trainingDataPalsSelector,
+    commonTrainingFlowSelector,
 } from './training';

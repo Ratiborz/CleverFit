@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { Training } from '../../types/calendar-types';
-import { DataForInputs } from '../../types/trainings-types';
+import { DataForInputs, TrainingDataPals } from '../../types/trainings-types';
 
 interface ITraining {
     repeatRequest: boolean;
@@ -9,6 +9,9 @@ interface ITraining {
     catalogTariffNames: [];
     dataForInputs: DataForInputs[];
     editFlow: boolean;
+    randomChoiceState: boolean;
+    dataTrainingPals: TrainingDataPals[];
+    commonTrainingState: boolean;
 }
 
 const initialState: ITraining = {
@@ -17,6 +20,9 @@ const initialState: ITraining = {
     catalogTariffNames: [],
     dataForInputs: [],
     editFlow: false,
+    randomChoiceState: false,
+    dataTrainingPals: [],
+    commonTrainingState: false,
 };
 
 export const trainingSlice = createSlice({
@@ -38,6 +44,15 @@ export const trainingSlice = createSlice({
         },
         setEditFlowTraining: (state, { payload }) => {
             state.editFlow = payload;
+        },
+        setRandomChoiceState: (state, { payload }) => {
+            state.randomChoiceState = payload;
+        },
+        setDataTrainingPals: (state, { payload }) => {
+            state.dataTrainingPals = payload;
+        },
+        setCommonTrainingState: (state, { payload }) => {
+            state.commonTrainingState = payload;
         },
     },
 });

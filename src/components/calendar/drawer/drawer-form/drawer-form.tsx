@@ -78,7 +78,7 @@ export const DrawerForm = ({ setOpen, dateMoment }: Props) => {
         setButtonDelete(hasCheckedItem);
     }, [itemsToRemove]);
 
-    function onFinish(values: FormFieldsType) {
+    const onFinish = (values: FormFieldsType) => {
         const exercisesData = values.inputsBlock
             .filter((exercise) => exercise.exercise && exercise.exercise !== '')
             .map((exercise) => ({
@@ -95,7 +95,7 @@ export const DrawerForm = ({ setOpen, dateMoment }: Props) => {
         }
 
         setOpen(false);
-    }
+    };
 
     return (
         <Form

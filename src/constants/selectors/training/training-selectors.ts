@@ -5,3 +5,6 @@ export const trainingsDataSelector = (state: RootState) => state.training.traini
 export const trainingTariffNamesSelector = (state: RootState) => state.training.catalogTariffNames;
 export const dataForInputsSelector = (state: RootState) => state.training.dataForInputs;
 export const editFlowTrainingSelector = (state: RootState) => state.training.editFlow;
+export const randomStateSelector = (state: RootState) => state.training.randomChoiceState;
+export const trainingDataPalsSelector = (state: RootState) => state.training.dataTrainingPals;
+export const commonTrainingFlowSelector = (state: RootState) => state.training.commonTrainingState;
