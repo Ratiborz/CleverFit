@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import Loader from '@components/loader/loader';
+import { requestTrainingListSelector } from '@constants/selectors';
+import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import {
     useGetTrainingPalsQuery,
     useLazyGetUsersJointListQuery,
 } from '@redux/api-rtk/training-requests';
-import { Button, Divider } from 'antd';
-import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { actions as actionsCommon } from '@redux/reducers/common-modal.slice';
-import { requestTrainingListSelector } from '@constants/selectors';
 import { actions } from '@redux/reducers/training.slice';
+import { Button, Divider } from 'antd';
 
 import styles from './common-trainings.module.scss';
 

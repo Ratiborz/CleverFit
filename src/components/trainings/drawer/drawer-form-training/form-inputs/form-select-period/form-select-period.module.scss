@@ -1,0 +1,16 @@
+.select__period {
+    max-width: 156px;
+    height: 28px;
+    margin-top: 8px;
+}
+
+.select__period :global .ant-select-selector {
+    display: flex;
+    align-items: center;
+    height: 28px !important;
+}
+
+.select__period :global .ant-select-selection-placeholder {
+    display: flex;
+    align-items: center;
+}

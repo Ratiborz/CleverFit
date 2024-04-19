@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { PageHeader, Input, Image, Button, Pagination } from 'antd';
+import { DrawerTraining } from '@components/trainings/drawer/drawer';
+import { itemsPerPage } from '@constants/constants';
 import { trainingDataPalsSelector } from '@constants/selectors';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { actions } from '@redux/reducers/training.slice';
-import { DrawerTraining } from '@components/trainings/drawer/drawer';
-import { itemsPerPage } from '@constants/constants';
+import { Button, Image, Input, PageHeader, Pagination } from 'antd';
 
 import styles from './random-choice.module.scss';
 
@@ -16,7 +16,7 @@ export const RandomChoice = () => {
     const trainingDataPals = useAppSelector(trainingDataPalsSelector);
     const [currentPageNumber, setCurrentPageNumber] = useState(1);
 
-    const createTraining = () => {
+    const createTraining = (name: string, trainingType: string, imgSrc: string) => {
         setOpen(true);
         dispatch(actions.setCommonTrainingState(true));
     };
@@ -32,6 +32,7 @@ export const RandomChoice = () => {
     const startIndex = (currentPageNumber - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const currentTrainingData = trainingDataPals.slice(startIndex, endIndex);
+
     console.log(currentTrainingData);
 
     return (
@@ -82,7 +83,13 @@ export const RandomChoice = () => {
 
                         <Button
                             className={styles.create_training__btn}
-                            onClick={() => createTraining()}
+                            onClick={() =>
+                                createTraining(
+                                    training.name,
+                                    training.trainingType,
+                                    training.imageSrc,
+                                )
+                            }
                         >
                             Создать тренировку
                         </Button>

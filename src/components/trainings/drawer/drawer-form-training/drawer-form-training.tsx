@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { CalendarTwoTone, MinusOutlined, PlusOutlined } from '@ant-design/icons';
-import { periodValue } from '@constants/constants';
+import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import {
     commonTrainingFlowSelector,
     dataForInputsSelector,
     editFlowTrainingSelector,
-    trainingsDataSelector,
 } from '@constants/selectors';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import {
@@ -15,18 +13,19 @@ import {
 import { actions } from '@redux/reducers/common-modal.slice';
 import { actions as actionsTraining } from '@redux/reducers/training.slice';
 import { getConvertStringFromNumb, getNumberFromPeriod } from '@utils/utils';
-import { Button, Checkbox, DatePicker, Divider, Form, Input, InputNumber, Select } from 'antd';
-import locale from 'antd/es/date-picker/locale/ru_RU';
-import { CheckboxChangeEvent } from 'antd/lib/checkbox';
-import type { Moment } from 'moment';
+import { Button, Divider, Form, InputNumber } from 'antd';
 import moment from 'moment';
 
 import { FinishValues } from '../../../../types/trainings-types';
+import 'moment/locale/ru';
+import { FromExerciseName } from './form-inputs/form-exercise-name/from-exercise-name';
+
+import { CheckboxPeriod } from './form-inputs/form-checkbox-period/form-checkbox-period';
+import { DatePickerTraining } from './form-inputs/form-date-picker/form-date-picker';
+import { FormNameTraining } from './form-inputs/form-name-training/form-name-training';
+import { SelectPeriod } from './form-inputs/form-select-period/form-select-period';
 
 import styles from './drawer-form-training.module.scss';
-
-import 'moment/locale/ru';
-import { FormNameTraining } from './form-name-training/form-name-training';
 
 type Props = {
     setOpen: (arg: boolean) => void;
@@ -39,7 +38,6 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
     const [saveActive, setSaveActive] = useState(false);
     const editFlow = useAppSelector(editFlowTrainingSelector);
     const [period, setPeriod] = useState(false);
-    const trainingData = useAppSelector(trainingsDataSelector);
     const [typeTraining, setTypeTraining] = useState('');
     const [datePick, setDatePick] = useState<string | undefined>();
     const [trainingName, setTrainingName] = useState('');
@@ -47,7 +45,6 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
     const [editTrainingDrawer, { isSuccess: successEdit, isError: errorEdit }] =
         useEditTrainingDrawerMutation();
     const commonTrainingFlow = useAppSelector(commonTrainingFlowSelector);
-
     const [itemsToRemove, setItemsToRemove] = useState<{ [key: number]: boolean }>({});
     const [buttonDelete, setButtonDelete] = useState(false);
 
@@ -66,15 +63,6 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
         });
         remove(checkboxTrueList);
         setItemsToRemove([]);
-    };
-
-    const setDeleteExercises = (e: CheckboxChangeEvent, index: number) => {
-        const { checked } = e.target;
-
-        setItemsToRemove((prev) => ({
-            ...prev,
-            [index]: checked,
-        }));
     };
 
     useEffect(() => {
@@ -116,26 +104,6 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
             setPeriod(periodBoolean);
         }
     }, [setSaveActive, dataForInputs]);
-
-    const setPeriodCheckbox = (e: CheckboxChangeEvent) => {
-        const { checked } = e.target;
-
-        setPeriod(checked);
-    };
-
-    const dateCellRender = (value: Moment) => {
-        const date = value.format('YYYY-MM-DD');
-        const day = value.format('DD');
-        const dataTraining = trainingData.map((training) =>
-            typeof training.date === 'string' ? training.date.slice(0, 10) : training.date,
-        );
-
-        const isTrainingDay = dataTraining.includes(date);
-
-        return <div className={isTrainingDay ? styles.today__training : ''}>{day}</div>;
-    };
-
-    const disabledPastDate = (value: Moment) => value.isSameOrBefore(moment(), 'day');
 
     const onFinish = (values: FinishValues) => {
         const today = moment().format('DD.MM.YYYY');
@@ -219,71 +187,23 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
                 )}
                 <div className={styles.container__date}>
                     <div className={styles.wrapper__date_picker}>
-                        <Form.Item name='date'>
-                            <DatePicker
-                                data-test-id='modal-drawer-right-date-picker'
-                                className={styles.date_picker}
-                                dateRender={dateCellRender}
-                                disabledDate={(e) => disabledPastDate(e)}
-                                onChange={(e) => setDatePick(e?.format('DD.MM.YYYY'))}
-                                locale={locale}
-                                format='DD.MM.YYYY'
-                                suffixIcon={
-                                    <CalendarTwoTone twoToneColor={['#00000040', '#00000040']} />
-                                }
-                                placeholder='Выбрать дату'
-                            />
-                        </Form.Item>
-                        <div>
-                            <Checkbox
-                                data-test-id='modal-drawer-right-checkbox-period'
-                                className={styles.checkbox__period}
-                                onChange={(e) => setPeriodCheckbox(e)}
-                                checked={period}
-                            />
-                            С периодичностью
-                        </div>
+                        <DatePickerTraining setDatePick={setDatePick} />
+                        <CheckboxPeriod period={period} setPeriod={setPeriod} />
                     </div>
-                    {period && (
-                        <Form.Item name='period' initialValue={initialFormValues[0].period}>
-                            <Select
-                                data-test-id='modal-drawer-right-select-period'
-                                placeholder='Периодичность'
-                                className={styles.select__period}
-                                options={periodValue.map((name) => ({
-                                    value: name,
-                                    label: name,
-                                }))}
-                            />
-                        </Form.Item>
-                    )}
+                    {period && <SelectPeriod InPeriod={initialFormValues[0].period} />}
                 </div>
                 <Form.List name='inputsBlock'>
                     {(fields, { add, remove }) => (
                         <React.Fragment>
                             {fields.map(({ name }) => (
                                 <div key={name} className={styles.container}>
-                                    <Form.Item name={[name, 'exercise']}>
-                                        <Input
-                                            data-test-id={`modal-drawer-right-input-exercise${name}`}
-                                            placeholder='Упражнение'
-                                            autoFocus={true}
-                                            className={styles.exercises}
-                                            onChange={(e) => setTrainingName(e.target.value)}
-                                            addonAfter={
-                                                commonTrainingFlow ? (
-                                                    <Checkbox
-                                                        data-test-id={`modal-drawer-right-checkbox-exercise${name}`}
-                                                        checked={itemsToRemove[name]}
-                                                        name='checkbox'
-                                                        onChange={(e) =>
-                                                            setDeleteExercises(e, name)
-                                                        }
-                                                    />
-                                                ) : null
-                                            }
-                                        />
-                                    </Form.Item>
+                                    <FromExerciseName
+                                        name={name}
+                                        itemsToRemove={itemsToRemove}
+                                        setItemsToRemove={setItemsToRemove}
+                                        setTrainingName={setTrainingName}
+                                    />
+
                                     <div className={styles.descrip__text}>
                                         <div className={styles.repeat}>Подходы</div>
                                         <div className={styles.weight}>Вес, кг</div>
