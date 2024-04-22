@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Loader from '@components/loader/loader';
-import { requestTrainingListSelector } from '@constants/selectors';
+import { requestTrainingListSelector, trainingsDataSelector } from '@constants/selectors';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import {
     useGetTrainingPalsQuery,
@@ -8,6 +8,7 @@ import {
 } from '@redux/api-rtk/training-requests';
 import { actions as actionsCommon } from '@redux/reducers/common-modal.slice';
 import { actions } from '@redux/reducers/training.slice';
+import { getPopularTypeTraining } from '@utils/get-popular-training';
 import { Button, Divider } from 'antd';
 
 import styles from './common-trainings.module.scss';
@@ -16,23 +17,32 @@ export const CommonTrainings = () => {
     const dispatch = useAppDispatch();
     const { data: dataPals } = useGetTrainingPalsQuery();
     const repeatRequest = useAppSelector(requestTrainingListSelector);
+    const trainingData = useAppSelector(trainingsDataSelector);
+    const [idTypeTraining, setIdTypeTraining] = useState();
     const [getUsersJointList, { data, isLoading, isSuccess, isError }] =
         useLazyGetUsersJointListQuery();
+
+    const chooseByMyTraining = () => {
+        const favouriteTypeTraining = getPopularTypeTraining(trainingData);
+        setIdTypeTraining(favouriteTypeTraining?.id);
+        console.log(favouriteTypeTraining);
+        getUsersJointList({ trainingType: favouriteTypeTraining?.type });
+    };
 
     useEffect(() => {
         if (isSuccess) {
             dispatch(actions.setRandomChoiceState(true));
-            dispatch(actions.setDataTrainingPals(data));
+            dispatch(actions.setDataTrainingPals({ data, idTypeTraining }));
         }
         if (repeatRequest) {
-            getUsersJointList();
+            getUsersJointList({});
             dispatch(actions.setRepeatRequest(false));
         }
         if (isError) dispatch(actionsCommon.setErrorWithOpen(true));
-    }, [dispatch, getUsersJointList, repeatRequest, isSuccess, isError, data]);
+    }, [dispatch, getUsersJointList, repeatRequest, isSuccess, isError, data, idTypeTraining]);
 
     const randomUser = () => {
-        getUsersJointList();
+        getUsersJointList({});
     };
 
     return (
@@ -52,7 +62,11 @@ export const CommonTrainings = () => {
                     <Button className={styles.btn__random} type='link' onClick={() => randomUser()}>
                         Случайный выбор
                     </Button>
-                    <Button className={styles.btn__choose_friend} type='link'>
+                    <Button
+                        className={styles.btn__choose_friend}
+                        type='link'
+                        onClick={() => chooseByMyTraining()}
+                    >
                         Выбор друга по моим видам тренировок
                     </Button>
                 </div>

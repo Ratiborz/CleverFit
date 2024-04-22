@@ -8,3 +8,4 @@ export const editFlowTrainingSelector = (state: RootState) => state.training.edi
 export const randomStateSelector = (state: RootState) => state.training.randomChoiceState;
 export const trainingDataPalsSelector = (state: RootState) => state.training.dataTrainingPals;
 export const commonTrainingFlowSelector = (state: RootState) => state.training.commonTrainingState;
+export const userDataForDrawerSelector = (state: RootState) => state.training.userDataForDrawer;

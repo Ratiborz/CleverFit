@@ -109,3 +109,33 @@
     width: 100%;
     color: #262626;
 }
+
+.user_info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 32px;
+}
+
+.user__image_name {
+    display: flex;
+    align-items: flex-start;
+}
+
+.user__image_name :global .ant-image {
+    margin-right: 8px;
+}
+
+.avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+}
+
+.user__type_name_training {
+    display: flex;
+    align-items: end;
+}
+
+.type_training {
+    color: #8c8c8c;
+}

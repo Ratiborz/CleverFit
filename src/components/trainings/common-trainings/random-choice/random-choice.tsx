@@ -5,6 +5,7 @@ import { trainingDataPalsSelector } from '@constants/selectors';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { actions } from '@redux/reducers/training.slice';
 import { Button, Image, Input, PageHeader, Pagination } from 'antd';
+import { CreateCommonTraining } from '../../../../types/trainings-types';
 
 import styles from './random-choice.module.scss';
 
@@ -16,9 +17,10 @@ export const RandomChoice = () => {
     const trainingDataPals = useAppSelector(trainingDataPalsSelector);
     const [currentPageNumber, setCurrentPageNumber] = useState(1);
 
-    const createTraining = (name: string, trainingType: string, imgSrc: string) => {
+    const createTraining = ({ name, trainingType, imgSrc, id }: CreateCommonTraining) => {
         setOpen(true);
         dispatch(actions.setCommonTrainingState(true));
+        dispatch(actions.setUserDataForDrawer({ name, trainingType, imgSrc, id }));
     };
 
     const onSearch = (value: string) => console.log(value);
@@ -31,7 +33,7 @@ export const RandomChoice = () => {
 
     const startIndex = (currentPageNumber - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    const currentTrainingData = trainingDataPals.slice(startIndex, endIndex);
+    const currentTrainingData = trainingDataPals.data.slice(startIndex, endIndex);
 
     console.log(currentTrainingData);
 
@@ -84,11 +86,12 @@ export const RandomChoice = () => {
                         <Button
                             className={styles.create_training__btn}
                             onClick={() =>
-                                createTraining(
-                                    training.name,
-                                    training.trainingType,
-                                    training.imageSrc,
-                                )
+                                createTraining({
+                                    name: training.name,
+                                    trainingType: training.trainingType,
+                                    imgSrc: training.imageSrc,
+                                    id: training.id,
+                                })
                             }
                         >
                             Создать тренировку
@@ -99,7 +102,7 @@ export const RandomChoice = () => {
             <Pagination
                 defaultCurrent={currentPageNumber}
                 pageSize={currentTrainingData.length}
-                total={trainingDataPals.length}
+                total={trainingDataPals.data.length}
                 hideOnSinglePage={true}
                 showSizeChanger={false}
                 size='small'

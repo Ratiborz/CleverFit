@@ -30,6 +30,7 @@ export {
     randomStateSelector,
     trainingDataPalsSelector,
     commonTrainingFlowSelector,
+    userDataForDrawerSelector,
 } from './selectors';
 
 export {

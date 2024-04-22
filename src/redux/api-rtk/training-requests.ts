@@ -1,3 +1,8 @@
+import {
+    CatalogTrainingPalsResponse,
+    JointTrainingParticipantsQuery,
+} from '../../types/trainings-types';
+
 import { CreateTraining, Training } from '../../types/calendar-types';
 import { GetFeedbacksResponse } from '../../types/value-request';
 
@@ -31,8 +36,26 @@ export const trainingApi = api.injectEndpoints({
         getTrainingPals: builder.query<void, void>({
             query: () => 'catalogs/training-pals',
         }),
-        getUsersJointList: builder.query<void, void>({
-            query: () => 'catalogs/user-joint-training-list',
+        getUsersJointList: builder.query<
+            CatalogTrainingPalsResponse[],
+            JointTrainingParticipantsQuery
+        >({
+            query: ({ trainingType, status }) => {
+                const queryParams: Record<string, string | undefined> = {};
+
+                if (trainingType) {
+                    queryParams.trainingType = trainingType;
+                }
+                if (status !== null) {
+                    queryParams.status = status;
+                }
+
+                return {
+                    url: 'catalogs/user-joint-training-list',
+                    method: 'GET',
+                    params: queryParams,
+                };
+            },
         }),
     }),
 });

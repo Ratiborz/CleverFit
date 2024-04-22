@@ -7,4 +7,5 @@ export {
     randomStateSelector,
     trainingDataPalsSelector,
     commonTrainingFlowSelector,
+    userDataForDrawerSelector,
 } from './training-selectors';

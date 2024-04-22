@@ -1,7 +1,7 @@
-import { Checkbox, Form, Input } from 'antd';
 import { commonTrainingFlowSelector } from '@constants/selectors';
-import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { Checkbox, Form, Input } from 'antd';
+import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 
 import styles from './from-exercise-name.module.scss';
 

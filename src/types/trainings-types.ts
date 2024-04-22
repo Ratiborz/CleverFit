@@ -1,5 +1,7 @@
 import type { Moment } from 'moment';
 
+export type Nullebel<T> = T | null;
+
 export type InputsData = {
     exercise: string;
     replays: number;
@@ -34,4 +36,33 @@ export type TrainingDataPals = {
     avgWeightInWeek: number;
     status: null;
     inviteId: null;
+};
+
+export type UserDataForDrawer = {
+    name: string;
+    trainingType: string;
+    imgSrc: string;
+    id?: string;
+};
+
+export type CatalogTrainingPalsResponse = {
+    id: string;
+    name: string;
+    trainingType: string;
+    imageSrc: string;
+    avgWeightInWeek: number;
+    status: Nullebel<string>;
+    inviteId: Nullebel<string>;
+};
+
+export type JointTrainingParticipantsQuery = {
+    trainingType?: string;
+    status?: Nullebel<string>;
+};
+
+export type CreateCommonTraining = {
+    name: string;
+    trainingType: string;
+    imgSrc: string;
+    id: string;
 };

@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
+import { getCurrentColor } from '@components/choose-color-badge/choose-color-badge';
 import {
     commonTrainingFlowSelector,
     dataForInputsSelector,
     editFlowTrainingSelector,
+    userDataForDrawerSelector,
 } from '@constants/selectors';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { useCreateInviteMutation } from '@redux/api-rtk/invite-requests';
 import {
     useEditTrainingDrawerMutation,
     useSaveTrainingMutation,
@@ -13,19 +16,20 @@ import {
 import { actions } from '@redux/reducers/common-modal.slice';
 import { actions as actionsTraining } from '@redux/reducers/training.slice';
 import { getConvertStringFromNumb, getNumberFromPeriod } from '@utils/utils';
-import { Button, Divider, Form, InputNumber } from 'antd';
+import { Badge, Button, Divider, Form, Image, InputNumber } from 'antd';
 import moment from 'moment';
 
 import { FinishValues } from '../../../../types/trainings-types';
-import 'moment/locale/ru';
-import { FromExerciseName } from './form-inputs/form-exercise-name/from-exercise-name';
 
 import { CheckboxPeriod } from './form-inputs/form-checkbox-period/form-checkbox-period';
 import { DatePickerTraining } from './form-inputs/form-date-picker/form-date-picker';
+import { FromExerciseName } from './form-inputs/form-exercise-name/from-exercise-name';
 import { FormNameTraining } from './form-inputs/form-name-training/form-name-training';
 import { SelectPeriod } from './form-inputs/form-select-period/form-select-period';
 
 import styles from './drawer-form-training.module.scss';
+
+import 'moment/locale/ru';
 
 type Props = {
     setOpen: (arg: boolean) => void;
@@ -47,6 +51,8 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
     const commonTrainingFlow = useAppSelector(commonTrainingFlowSelector);
     const [itemsToRemove, setItemsToRemove] = useState<{ [key: number]: boolean }>({});
     const [buttonDelete, setButtonDelete] = useState(false);
+    const userDataForDrawer = useAppSelector(userDataForDrawerSelector);
+    const [createInvite] = useCreateInviteMutation();
 
     const deleteExercise = (remove: (index: number | number[]) => void) => {
         const checkboxKeys = Object.keys(itemsToRemove).map((key) => Number(key));
@@ -89,10 +95,14 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
     }, [dispatch, setOpen, setShowSuccessAlert, isError, errorEdit, successEdit, isSuccess]);
 
     useEffect(() => {
-        const isDataComplete = !!typeTraining && !!datePick && !!trainingName;
+        let isDataComplete = !!typeTraining && !!datePick && !!trainingName;
+
+        if (commonTrainingFlow) {
+            isDataComplete = !!datePick && !!trainingName;
+        }
 
         setSaveActive(isDataComplete);
-    }, [typeTraining, datePick, trainingName]);
+    }, [typeTraining, datePick, trainingName, commonTrainingFlow]);
 
     useEffect(() => {
         if (dataForInputs.length > 0) {
@@ -136,6 +146,8 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
 
         if (editFlow) {
             editTrainingDrawer({ id: dataForInputs[0].id, training });
+        } else if (commonTrainingFlow) {
+            createInvite({ to: userDataForDrawer?.id, trainingId: 0 });
         } else {
             saveTraining(training);
         }
@@ -184,6 +196,41 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
                         nameTraining={initialFormValues[0].nameTraining}
                         setTypeTraining={setTypeTraining}
                     />
+                )}
+                {commonTrainingFlow && (
+                    <div className={styles.user_info}>
+                        <div className={styles.user__image_name}>
+                            <Image
+                                src={
+                                    userDataForDrawer?.imgSrc
+                                        ? userDataForDrawer.imgSrc
+                                        : '/Avatar-mock.svg'
+                                }
+                                alt='avatar'
+                                preview={false}
+                                className={styles.avatar}
+                            />
+                            <p>
+                                {userDataForDrawer?.name && userDataForDrawer?.name.split(' ')[0]}{' '}
+                                <br />
+                                {userDataForDrawer?.name &&
+                                    userDataForDrawer?.name.split(' ').slice(1).join(' ')}
+                            </p>
+                        </div>
+                        <div className={styles.user__type_name_training}>
+                            <Badge
+                                color={getCurrentColor(
+                                    userDataForDrawer?.trainingType
+                                        ? userDataForDrawer?.trainingType
+                                        : '',
+                                )}
+                                style={{ marginRight: '8px' }}
+                            />
+                            <span className={styles.type_training}>
+                                {userDataForDrawer?.trainingType}
+                            </span>
+                        </div>
+                    </div>
                 )}
                 <div className={styles.container__date}>
                     <div className={styles.wrapper__date_picker}>
