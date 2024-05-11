@@ -1,4 +1,7 @@
+import { TrainingInviteStatus } from '@constants/constants';
 import type { Moment } from 'moment';
+
+import { Training } from './calendar-types';
 
 export type Nullebel<T> = T | null;
 
@@ -42,6 +45,7 @@ export type UserDataForDrawer = {
     name: string;
     trainingType: string;
     imgSrc: string;
+    trainingId: string;
     id?: string;
 };
 
@@ -65,4 +69,46 @@ export type CreateCommonTraining = {
     trainingType: string;
     imgSrc: string;
     id: string;
+};
+
+export type TcreateInvite = {
+    to: string;
+    trainingId: string;
+};
+
+type InviteFrom = {
+    _id: string;
+    lastName: Nullebel<string>;
+    imageSrc: Nullebel<string>;
+    firstName?: string;
+};
+
+export type InviteResponse = {
+    _id: string;
+    from: InviteFrom;
+    training: Training;
+    status: string;
+    createdAt: string;
+};
+
+export type TrainingInviteResponse = InviteResponse & {
+    to: InviteFrom;
+};
+
+export type InviteIdData = {
+    inviteId: Nullebel<string>;
+};
+
+export type ErrorTypeResponse = {
+    status: number;
+    data: {
+        statusCode: number;
+        error: string;
+        message: string;
+    };
+};
+
+export type InviteStatusData = {
+    id: string;
+    status: typeof TrainingInviteStatus.ACCEPTED | typeof TrainingInviteStatus.REJECTED;
 };

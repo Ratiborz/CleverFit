@@ -1,4 +1,5 @@
-import { randomStateSelector } from '@constants/selectors';
+import React from 'react';
+import { inviteListSelector, randomStateSelector } from '@constants/selectors';
 import { useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { Tabs } from 'antd';
 
@@ -10,6 +11,7 @@ import styles from './container-trainings.module.scss';
 
 export const ContainerTrainings = () => {
     const randomState = useAppSelector(randomStateSelector);
+    const inviteList = useAppSelector(inviteListSelector);
 
     return (
         <div className={styles.container}>
@@ -23,7 +25,12 @@ export const ContainerTrainings = () => {
                         children: <MyTrainings />,
                     },
                     {
-                        label: 'Совместные тренировки',
+                        label: (
+                            <React.Fragment>
+                                Совместные тренировки{' '}
+                                <span className={styles.inviteCount}>{inviteList.length}</span>
+                            </React.Fragment>
+                        ),
                         key: '2',
                         children: randomState ? <RandomChoice /> : <CommonTrainings />,
                     },

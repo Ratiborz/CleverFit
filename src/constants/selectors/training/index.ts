@@ -8,4 +8,6 @@ export {
     trainingDataPalsSelector,
     commonTrainingFlowSelector,
     userDataForDrawerSelector,
+    inviteListSelector,
+    usersTrainingPalsSelector,
 } from './training-selectors';

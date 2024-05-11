@@ -22,7 +22,7 @@ import styles from './training-list.module.scss';
 type Props = {
     isRightPosition: boolean;
     date: string;
-    trainingNames: Array<{ name: string; isImplementation: boolean | undefined }>;
+    trainingNames: Array<{ name: string; isImplementation: boolean | undefined; id: string }>;
     swapModal: () => void;
     handleClose: () => void;
     dateMoment: Moment;
@@ -148,9 +148,9 @@ export const TrainingList = ({
                 ) : (
                     <div className={styles.container_trainings}>
                         <ul className={styles.list_trainings}>
-                            {trainingNames?.map(({ name, isImplementation }, key) => (
+                            {trainingNames?.map(({ name, isImplementation, id }, key) => (
                                 <li
-                                    key={name}
+                                    key={id}
                                     className={classNames(
                                         styles.trainings_li,
 

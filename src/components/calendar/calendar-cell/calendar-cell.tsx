@@ -38,6 +38,7 @@ export const CalendarCell = ({
     const trainingNames = filteredTrainings.map((training) => ({
         name: training.name,
         isImplementation: training.isImplementation,
+        id: training._id,
     }));
 
     return (
@@ -52,10 +53,10 @@ export const CalendarCell = ({
                         padding: 0,
                     }}
                 >
-                    {trainingNames.map(({ name, isImplementation }) => (
+                    {trainingNames.map(({ name, isImplementation, id }) => (
                         <li
                             style={{ fontSize: '12px' }}
-                            key={name}
+                            key={id}
                             className={isImplementation ? styles.past__color : styles.default_li}
                         >
                             <Badge color={getCurrentColor(name)} style={{ marginRight: '8px' }} />

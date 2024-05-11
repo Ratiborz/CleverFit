@@ -1,4 +1,6 @@
 export function currentTime(time: string) {
+    if (!time) return null;
+
     const fullDate = time;
     const [year, month, day] = fullDate.split('T')[0].split('-');
 

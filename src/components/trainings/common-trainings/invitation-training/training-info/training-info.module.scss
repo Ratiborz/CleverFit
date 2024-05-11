@@ -1,0 +1,75 @@
+.card {
+    max-width: 312px;
+    width: 100%;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+    background: #fff;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    position: absolute;
+    top: 0;
+}
+
+.btn_close {
+    border: none;
+}
+
+.badge__block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.period__time {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.period {
+    display: flex;
+    justify-content: flex-start;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.time {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.divider {
+    margin-top: 12px;
+    margin-bottom: 17px;
+}
+
+.training__details {
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.list_trainings {
+    list-style: none;
+    padding-left: 0;
+}
+
+.exercise_name {
+    color: #8c8c8c;
+}
+
+.exercise_info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1px;
+}
+
+.exercise_info:last-of-type {
+    margin-bottom: 0;
+}
+
+.count {
+    color: #2f54eb;
+}

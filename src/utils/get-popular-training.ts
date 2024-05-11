@@ -10,20 +10,23 @@ enum Trainings {
 
 export const getPopularTypeTraining = (
     trainingData: Training[],
-): { type: string; id: string } | undefined => {
-    const result: Record<string, { totalValue: number; name: string }> = {};
+): { type: string; id: string; data: Training } | undefined => {
+    const result: Record<string, { totalValue: number; name: string; data: Training }> = {};
 
     if (trainingData.length === 0) return undefined;
 
-    trainingData.forEach(({ _id, name, exercises }) => {
-        if (exercises && exercises.length > 0) {
-            const totalValue = exercises.reduce((acc, exercise) => {
+    trainingData.forEach(({ _id, name, ...training }) => {
+        if (training.exercises && training.exercises.length > 0) {
+            const totalValue = training.exercises.reduce((acc, exercise) => {
                 const { replays, weight, approaches } = exercise;
+
                 return acc + replays * weight * approaches;
             }, 0);
 
-            result[_id] = { totalValue, name };
-            result[name] = { totalValue, name };
+            const data = training;
+
+            result[_id] = { totalValue, name, data };
+            result[name] = { totalValue, name, data };
         }
     });
 
@@ -34,5 +37,6 @@ export const getPopularTypeTraining = (
     return {
         type: Trainings[result[popularTrainingId].name as keyof typeof Trainings],
         id: popularTrainingId,
+        data: result[popularTrainingId].data,
     };
 };

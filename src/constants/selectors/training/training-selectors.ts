@@ -9,3 +9,5 @@ export const randomStateSelector = (state: RootState) => state.training.randomCh
 export const trainingDataPalsSelector = (state: RootState) => state.training.dataTrainingPals;
 export const commonTrainingFlowSelector = (state: RootState) => state.training.commonTrainingState;
 export const userDataForDrawerSelector = (state: RootState) => state.training.userDataForDrawer;
+export const inviteListSelector = (state: RootState) => state.training.inviteList;
+export const usersTrainingPalsSelector = (state: RootState) => state.training.usersTrainingPals;

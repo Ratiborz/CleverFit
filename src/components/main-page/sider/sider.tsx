@@ -11,7 +11,8 @@ import {
 import Loader from '@components/loader/loader';
 import { BadRequstModalError } from '@components/result/common-modal-result/bad-request-modal/bad-request-modal';
 import { Paths } from '@constants/paths';
-import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
+import { inviteListSelector } from '@constants/selectors';
+import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { useLazyGetAllTrainingsQuery } from '@redux/api-rtk/training-requests';
 import { history } from '@redux/configure-store';
 import { actions as actionsCalendar } from '@redux/reducers/calendar.slice';
@@ -52,6 +53,7 @@ export const Aside: React.FC = () => {
     const [selectedTab, setSelectedTab] = useState('');
     const [getAllTrainings, { isSuccess, isError, data, isLoading }] =
         useLazyGetAllTrainingsQuery();
+    const inviteList = useAppSelector(inviteListSelector);
 
     useEffect(() => {
         if (isSuccess) {
@@ -97,7 +99,19 @@ export const Aside: React.FC = () => {
 
     const items: MenuItem[] = [
         getItem('Календарь', '1', mobileWidth ? '' : <CalendarTwoTone twoToneColor='#10239E' />),
-        getItem('Тренировки', '2', mobileWidth ? '' : <HeartFilled style={{ color: '#10239E' }} />),
+        getItem(
+            <React.Fragment>
+                Тренировки{' '}
+                <span
+                    className={styles.inviteCount}
+                    data-test-id='notification-about-joint-training'
+                >
+                    {inviteList.length}
+                </span>
+            </React.Fragment>,
+            '2',
+            mobileWidth ? '' : <HeartFilled style={{ color: '#10239E' }} />,
+        ),
         getItem(
             'Достижения',
             '3',

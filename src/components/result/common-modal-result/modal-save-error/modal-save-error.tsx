@@ -20,6 +20,7 @@ export const ModalSaveError = ({ handleClose }: Props) => {
     const closeModals = () => {
         dispatch(actions.setModalError(false));
         if (location.pathname === '/calendar' && handleClose) handleClose();
+        if (location.pathname === '/training' && handleClose) handleClose();
     };
 
     return (

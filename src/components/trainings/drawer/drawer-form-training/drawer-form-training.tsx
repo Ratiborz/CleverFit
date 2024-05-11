@@ -45,14 +45,30 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
     const [typeTraining, setTypeTraining] = useState('');
     const [datePick, setDatePick] = useState<string | undefined>();
     const [trainingName, setTrainingName] = useState('');
-    const [saveTraining, { isSuccess, isError, error }] = useSaveTrainingMutation();
+    const [saveTraining, { data, isSuccess, isError }] = useSaveTrainingMutation();
     const [editTrainingDrawer, { isSuccess: successEdit, isError: errorEdit }] =
         useEditTrainingDrawerMutation();
     const commonTrainingFlow = useAppSelector(commonTrainingFlowSelector);
     const [itemsToRemove, setItemsToRemove] = useState<{ [key: number]: boolean }>({});
     const [buttonDelete, setButtonDelete] = useState(false);
     const userDataForDrawer = useAppSelector(userDataForDrawerSelector);
-    const [createInvite] = useCreateInviteMutation();
+    const [createInvite, { isSuccess: successInvite, isError: errorInvite }] =
+        useCreateInviteMutation();
+    const [isInviteSent, setIsInviteSent] = useState(true);
+    const dataForInputs = useAppSelector(dataForInputsSelector);
+
+    useEffect(() => {
+        if (successInvite) {
+            setIsInviteSent(false);
+            dispatch(actionsTraining.setUserDataForDrawer({}));
+            dispatch(actionsTraining.setDataForInputs({}));
+            setOpen(false);
+        }
+        if (errorInvite) {
+            setOpen(false);
+            dispatch(actions.setModalError(true));
+        }
+    }, [successInvite, errorInvite, setOpen, dispatch]);
 
     const deleteExercise = (remove: (index: number | number[]) => void) => {
         const checkboxKeys = Object.keys(itemsToRemove).map((key) => Number(key));
@@ -77,28 +93,53 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
         setButtonDelete(hasCheckedItem);
     }, [itemsToRemove]);
 
-    console.log(error);
-
-    const dataForInputs = useAppSelector(dataForInputsSelector);
-
     useEffect(() => {
         if (isError || errorEdit) {
             setOpen(false);
             dispatch(actions.setModalError(true));
             dispatch(actionsTraining.setDataForInputs([]));
+            dispatch(actionsTraining.setUserDataForDrawer([]));
             dispatch(actionsTraining.setEditFlowTraining(false));
         }
+    }, [isError, errorEdit, dispatch, setOpen]);
+
+    useEffect(() => {
         if (isSuccess || successEdit) {
-            setShowSuccessAlert(true);
+            if (commonTrainingFlow) {
+                const newUserDataForDrawer = {
+                    ...userDataForDrawer,
+                    trainingId: data?._id || '',
+                };
+
+                if (isInviteSent && newUserDataForDrawer.id) {
+                    createInvite({
+                        to: newUserDataForDrawer.id,
+                        trainingId: newUserDataForDrawer.trainingId,
+                    });
+                }
+                dispatch(actionsTraining.setUserDataForDrawer(newUserDataForDrawer));
+            }
+
+            if (!commonTrainingFlow) setShowSuccessAlert(true);
             setOpen(false);
         }
-    }, [dispatch, setOpen, setShowSuccessAlert, isError, errorEdit, successEdit, isSuccess]);
+    }, [
+        dispatch,
+        setOpen,
+        setShowSuccessAlert,
+        createInvite,
+        successEdit,
+        isSuccess,
+        commonTrainingFlow,
+        data,
+        isInviteSent,
+    ]);
 
     useEffect(() => {
         let isDataComplete = !!typeTraining && !!datePick && !!trainingName;
 
         if (commonTrainingFlow) {
-            isDataComplete = !!datePick && !!trainingName;
+            isDataComplete = true;
         }
 
         setSaveActive(isDataComplete);
@@ -123,8 +164,14 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
             'day',
         );
 
+        let trainingName = values.name_training;
+
+        if (commonTrainingFlow && userDataForDrawer) {
+            trainingName = userDataForDrawer.trainingType;
+        }
+
         const training = {
-            name: values.name_training,
+            name: trainingName,
             date: values.date.toISOString(),
             isImplementation: isDateBeforeOrEqualToday,
             ...(values.period && {
@@ -147,7 +194,14 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
         if (editFlow) {
             editTrainingDrawer({ id: dataForInputs[0].id, training });
         } else if (commonTrainingFlow) {
-            createInvite({ to: userDataForDrawer?.id, trainingId: 0 });
+            if (!userDataForDrawer?.trainingId) saveTraining(training);
+
+            if (userDataForDrawer && userDataForDrawer.id) {
+                createInvite({
+                    to: userDataForDrawer.id,
+                    trainingId: userDataForDrawer.trainingId,
+                });
+            }
         } else {
             saveTraining(training);
         }

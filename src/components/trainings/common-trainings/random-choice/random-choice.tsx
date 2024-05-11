@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
+import { CheckCircleFilled, ExclamationCircleOutlined } from '@ant-design/icons';
 import { DrawerTraining } from '@components/trainings/drawer/drawer';
 import { itemsPerPage } from '@constants/constants';
 import { trainingDataPalsSelector } from '@constants/selectors';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { actions } from '@redux/reducers/training.slice';
+import { sortedUsers } from '@utils/sorted-users';
 import { Button, Image, Input, PageHeader, Pagination } from 'antd';
+import classNames from 'classnames';
+import moment from 'moment';
+
 import { CreateCommonTraining } from '../../../../types/trainings-types';
 
 import styles from './random-choice.module.scss';
@@ -16,14 +21,61 @@ export const RandomChoice = () => {
     const [open, setOpen] = useState(false);
     const trainingDataPals = useAppSelector(trainingDataPalsSelector);
     const [currentPageNumber, setCurrentPageNumber] = useState(1);
+    const [searchValue, setSearchValue] = useState('');
 
     const createTraining = ({ name, trainingType, imgSrc, id }: CreateCommonTraining) => {
         setOpen(true);
+        const trainingId = trainingDataPals.idTypeTraining;
+        const dataForInputsCommon = trainingDataPals.dataInputs?.exercises.map((exercise) => ({
+            name: exercise.name,
+            exercisesName: exercise.name,
+            replays: exercise.replays,
+            weight: exercise.weight,
+            count: exercise.approaches,
+            id: exercise.id,
+            date: moment(trainingDataPals?.dataInputs?.date).format('DD.MM.YYYY'),
+            period: trainingDataPals?.dataInputs?.parameters?.period,
+        }));
+
+        if (trainingId) {
+            dispatch(actions.setDataForInputs(dataForInputsCommon));
+        }
+        console.log(dataForInputsCommon);
+
         dispatch(actions.setCommonTrainingState(true));
-        dispatch(actions.setUserDataForDrawer({ name, trainingType, imgSrc, id }));
+        dispatch(actions.setUserDataForDrawer({ name, trainingType, imgSrc, id, trainingId }));
     };
 
-    const onSearch = (value: string) => console.log(value);
+    const onSearch = (value: string) => setSearchValue(value);
+
+    const filteredTrainingList = searchValue
+        ? sortedUsers(
+              trainingDataPals.data.filter((el) =>
+                  el.name.toLowerCase().includes(searchValue.toLowerCase()),
+              ),
+          )
+        : sortedUsers(trainingDataPals.data);
+
+    const highlight = useCallback(
+        (text: string, id: string) => {
+            if (!searchValue) return text;
+
+            const regex = new RegExp(searchValue, 'gi');
+            const parts = text.split(regex);
+
+            return (
+                <React.Fragment>
+                    {parts.map((part, i) => (
+                        <React.Fragment key={`${id + i}`}>
+                            {i > 0 && <span style={{ color: 'red' }}>{searchValue}</span>}
+                            {part}
+                        </React.Fragment>
+                    ))}
+                </React.Fragment>
+            );
+        },
+        [searchValue],
+    );
 
     const onBack = () => dispatch(actions.setRandomChoiceState(false));
 
@@ -31,11 +83,17 @@ export const RandomChoice = () => {
         setCurrentPageNumber(pageNumber);
     };
 
+    const currentStatus = (status: string | null) => {
+        if (status === 'pending') return true;
+        if (status === 'accepted') return false;
+        if (status === 'rejected') return true;
+
+        return undefined;
+    };
+
     const startIndex = (currentPageNumber - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    const currentTrainingData = trainingDataPals.data.slice(startIndex, endIndex);
-
-    console.log(currentTrainingData);
+    const currentTrainingData = filteredTrainingList.slice(startIndex, endIndex);
 
     return (
         <React.Fragment>
@@ -53,7 +111,13 @@ export const RandomChoice = () => {
 
             <div className={styles.container__users_card}>
                 {currentTrainingData?.map((training) => (
-                    <div className={styles.wrapper__card} key={training.id}>
+                    <div
+                        className={classNames(
+                            styles.wrapper__card,
+                            training.status === 'rejected' && styles.color__rejected,
+                        )}
+                        key={training.id}
+                    >
                         <div className={styles.avatar_name}>
                             <Image
                                 src={training.imageSrc ? training.imageSrc : '/Avatar-mock.svg'}
@@ -61,7 +125,7 @@ export const RandomChoice = () => {
                                 preview={false}
                                 className={styles.avatar}
                             />
-                            <p>{training.name}</p>
+                            <p>{highlight(training.name, training.id)}</p>
                         </div>
 
                         <div className={styles.type_training}>
@@ -85,6 +149,7 @@ export const RandomChoice = () => {
 
                         <Button
                             className={styles.create_training__btn}
+                            disabled={currentStatus(training.status)}
                             onClick={() =>
                                 createTraining({
                                     name: training.name,
@@ -94,8 +159,25 @@ export const RandomChoice = () => {
                                 })
                             }
                         >
-                            Создать тренировку
+                            {training.status === 'accepted'
+                                ? 'Отменить тренировку'
+                                : 'Создать тренировку'}
                         </Button>
+                        {training.status === 'pending' && (
+                            <p className={styles.waiting_confirn}>ожидает подтверждения</p>
+                        )}
+                        {training.status === 'accepted' && (
+                            <p className={styles.waiting_confirn}>
+                                тренировка одобрена
+                                <CheckCircleFilled style={{ marginLeft: 8, color: '#52C41A' }} />
+                            </p>
+                        )}
+                        {training.status === 'rejected' && (
+                            <p className={styles.waiting_confirn}>
+                                тренировка отклонена
+                                <ExclamationCircleOutlined style={{ marginLeft: 8 }} />
+                            </p>
+                        )}
                     </div>
                 ))}
             </div>

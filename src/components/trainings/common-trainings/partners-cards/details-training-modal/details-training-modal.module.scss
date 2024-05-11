@@ -1,0 +1,60 @@
+@import '/src/variables.scss';
+
+.modal :global .ant-modal-body {
+    display: flex;
+    align-items: center;
+    padding: 40px 32px;
+}
+
+.avatar_name {
+    display: flex;
+    margin-bottom: 24px;
+    width: 100%;
+}
+
+.training_direction__container,
+.avatar_name__container {
+    width: 100%;
+}
+
+.avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.type_training__p,
+.average_load__p {
+    color: #8c8c8c;
+}
+
+.training,
+.weight {
+    color: #2f54eb;
+    font-size: 15px;
+    margin-right: 20px;
+}
+
+.type_training {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.average_load {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 26px;
+}
+
+.btn__reject {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 209px;
+    width: 100%;
+    height: 40px;
+    font-size: 14px;
+}

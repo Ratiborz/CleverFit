@@ -1,7 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { Training } from '../../types/calendar-types';
-import { DataForInputs, TrainingDataPals, UserDataForDrawer } from '../../types/trainings-types';
+import {     CatalogTrainingPalsResponse,
+DataForInputs,     InviteResponse,
+TrainingDataPals ,
+    UserDataForDrawer,
+} from '../../types/trainings-types';
+
 
 interface ITraining {
     repeatRequest: boolean;
@@ -13,9 +18,12 @@ interface ITraining {
     dataTrainingPals: {
         data: TrainingDataPals[];
         idTypeTraining: string;
+        dataInputs?: Training;
     };
     commonTrainingState: boolean;
     userDataForDrawer?: UserDataForDrawer;
+    inviteList: InviteResponse[];
+    usersTrainingPals: CatalogTrainingPalsResponse[];
 }
 
 const initialState: ITraining = {
@@ -30,6 +38,8 @@ const initialState: ITraining = {
         idTypeTraining: '',
     },
     commonTrainingState: false,
+    inviteList: [],
+    usersTrainingPals: [],
 };
 
 export const trainingSlice = createSlice({
@@ -39,8 +49,8 @@ export const trainingSlice = createSlice({
         setRepeatRequest: (state, { payload }) => {
             state.repeatRequest = payload;
         },
-        setDataTraining: (state, { payload }) => {
-            state.trainingData = payload;
+        setDataTraining: (state, action) => {
+            state.trainingData = action.payload;
             console.log(state.trainingData);
         },
         setCatalogTariffNames: (state, { payload }) => {
@@ -64,9 +74,34 @@ export const trainingSlice = createSlice({
         },
         setUserDataForDrawer: (state, { payload }) => {
             state.userDataForDrawer = payload;
-            console.log(state.userDataForDrawer);
+        },
+        setCatalogUserJointTrainingStatus: (state, { payload }) => {
+            const { id, status } = payload;
+
+            state.dataTrainingPals.data = state.dataTrainingPals.data.map((training) =>
+                training.id === id ? { ...training, status } : training,
+            );
+        },
+        setInviteList: (state, { payload }) => {
+            state.inviteList = payload;
+            console.log(state.inviteList);
+        },
+        deleteInvite: (state, { payload }) => {
+            state.inviteList = state.inviteList.filter((invite) => invite._id !== payload);
+        },
+        setUsersTrainingPals: (state, { payload }) => {
+            state.usersTrainingPals = payload;
+
+            console.log(state.usersTrainingPals);
         },
     },
 });
 
 export const { actions, reducer } = trainingSlice;
+
+export const {
+    setCatalogUserJointTrainingStatus,
+    setInviteList,
+    deleteInvite,
+    setUsersTrainingPals,
+} = actions;

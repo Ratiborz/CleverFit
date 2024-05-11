@@ -39,7 +39,7 @@ export const TrainingTable = ({ setOpen }: Props) => {
             replays: training.replays || 1,
             weight: training.weight || 0,
             count: training.approaches || 1,
-            date: moment(date).format('DD.MM.YYYY'),
+            date: moment(exercisesData[0].date).format('DD.MM.YYYY'),
             id: idTraining,
             period: exercisesData[0].parameters?.period,
         }));

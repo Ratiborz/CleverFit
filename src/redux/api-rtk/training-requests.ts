@@ -1,9 +1,10 @@
+import { setUsersTrainingPals } from '@redux/reducers/training.slice';
+
+import { CreateTraining, Training } from '../../types/calendar-types';
 import {
     CatalogTrainingPalsResponse,
     JointTrainingParticipantsQuery,
 } from '../../types/trainings-types';
-
-import { CreateTraining, Training } from '../../types/calendar-types';
 import { GetFeedbacksResponse } from '../../types/value-request';
 
 import { api } from './api';
@@ -33,8 +34,19 @@ export const trainingApi = api.injectEndpoints({
             }),
             invalidatesTags: ['Training'],
         }),
-        getTrainingPals: builder.query<void, void>({
+        getTrainingPals: builder.query<CatalogTrainingPalsResponse[], void>({
             query: () => 'catalogs/training-pals',
+
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+
+                    dispatch(setUsersTrainingPals(data));
+                } catch (error) {
+                    console.log(error);
+                }
+            },
+            providesTags: ['Invite'],
         }),
         getUsersJointList: builder.query<
             CatalogTrainingPalsResponse[],
@@ -67,4 +79,5 @@ export const {
     useEditTrainingDrawerMutation,
     useGetTrainingPalsQuery,
     useLazyGetUsersJointListQuery,
+    useLazyGetTrainingPalsQuery,
 } = trainingApi;
