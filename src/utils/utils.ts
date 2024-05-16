@@ -1,8 +1,22 @@
 export function currentTime(time: string) {
     if (!time) return null;
 
-    const fullDate = time;
-    const [year, month, day] = fullDate.split('T')[0].split('-');
+    const date = new Date(time);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+
+    return `${day}.${month}.${year}`;
+}
+
+export function addDaysToDate(dateStr: string, days: number): string {
+    const date = new Date(dateStr);
+
+    date.setDate(date.getDate() + days + 1);
+
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
 
     return `${day}.${month}.${year}`;
 }

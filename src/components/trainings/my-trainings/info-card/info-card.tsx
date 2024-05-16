@@ -45,15 +45,15 @@ export const InfoCard = ({ setOpen, color, setInfoCard }: Props) => {
                     >
                         <ArrowBack />
                     </Button>
-                    {dataForInputs[0].name && dataForInputs[0].name}
+                    {dataForInputs[0]?.name && dataForInputs[0]?.name}
                 </div>
                 <Divider className={styles.divider_top} style={{ borderColor: `${color}` }} />
             </div>
 
             <div className={styles.container__exercises}>
-                {dataForInputs.map((item) => (
-                    <div key={item.exercisesName} className={styles.exercise}>
-                        <p>{item.exercisesName}</p>
+                {dataForInputs?.map((item) => (
+                    <div key={item?.exercisesName} className={styles.exercise}>
+                        <p>{item?.exercisesName}</p>
                     </div>
                 ))}
             </div>

@@ -105,7 +105,7 @@ export const CommonTrainings = () => {
                             type='link'
                             onClick={() => chooseByMyTraining()}
                         >
-                            Выбор друга по моим видам тренировок
+                            Выбор друга по моим тренировкам
                         </Button>
                     </div>
                 </div>

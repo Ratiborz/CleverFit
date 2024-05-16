@@ -27,6 +27,8 @@ export const InvitationTraining = ({ setListPartners }: Props) => {
     const [responseToInvite] = useResponseToInviteMutation();
     const [getTrainingPals] = useLazyGetTrainingPalsQuery();
 
+    const lastElement = inviteList.length - 1;
+
     const watchInfo = () => {
         setOpenCard(true);
     };
@@ -49,8 +51,8 @@ export const InvitationTraining = ({ setListPartners }: Props) => {
                 <div className={styles.profile__block}>
                     <Image
                         src={
-                            inviteList[0]?.from?.imageSrc
-                                ? inviteList[0]?.from?.imageSrc
+                            inviteList[lastElement]?.from?.imageSrc
+                                ? inviteList[lastElement]?.from?.imageSrc
                                 : '/Avatar-mock.svg'
                         }
                         alt='avatar'
@@ -58,12 +60,14 @@ export const InvitationTraining = ({ setListPartners }: Props) => {
                         preview={false}
                     />
                     <p className={styles.invite__name}>
-                        {inviteList[0]?.from?.firstName ?? 'Пользователь'}
+                        {inviteList[lastElement]?.from?.firstName ?? 'Пользователь'}
                     </p>
+                    <p>{inviteList[lastElement]?.from?.lastName ?? ''}</p>
                 </div>
                 <div className={styles.message_block}>
                     <div className={styles.invite__date}>
-                        {currentTime(inviteList[0]?.createdAt)}
+                        {inviteList[lastElement]?.createdAt &&
+                            currentTime(inviteList[lastElement]?.createdAt)}
                     </div>
                     <h2 className={styles.invite__message}>
                         Привет, я ищу партнёра для совместных [силовых тренировок]. Ты хочешь
@@ -78,20 +82,23 @@ export const InvitationTraining = ({ setListPartners }: Props) => {
                             Посмотреть детали тренировки
                         </Button>
                         {openCard && (
-                            <TrainingInfo inviteList={inviteList[0]} setOpenCard={setOpenCard} />
+                            <TrainingInfo
+                                inviteList={inviteList[lastElement]}
+                                setOpenCard={setOpenCard}
+                            />
                         )}
                     </div>
                 </div>
                 <div className={styles.btn__block}>
                     <Button
                         className={styles.invite__btn__accepted}
-                        onClick={() => trainTogether(inviteList[0]?._id)}
+                        onClick={() => trainTogether(inviteList[lastElement]?._id)}
                     >
                         Тренироваться вместе
                     </Button>
                     <Button
                         className={styles.invite__btn__rejected}
-                        onClick={() => rejectedRequest(inviteList[0]?._id)}
+                        onClick={() => rejectedRequest(inviteList[lastElement]?._id)}
                     >
                         Отклонить запрос
                     </Button>

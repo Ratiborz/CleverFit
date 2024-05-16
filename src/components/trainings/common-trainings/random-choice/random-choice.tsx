@@ -37,9 +37,9 @@ export const RandomChoice = () => {
             period: trainingDataPals?.dataInputs?.parameters?.period,
         }));
 
-        if (trainingId) {
-            dispatch(actions.setDataForInputs(dataForInputsCommon));
-        }
+        // if (trainingId) {
+        //     dispatch(actions.setDataForInputs(dataForInputsCommon));
+        // }
         console.log(dataForInputsCommon);
 
         dispatch(actions.setCommonTrainingState(true));
@@ -110,12 +110,13 @@ export const RandomChoice = () => {
             </div>
 
             <div className={styles.container__users_card}>
-                {currentTrainingData?.map((training) => (
+                {currentTrainingData?.map((training, index) => (
                     <div
                         className={classNames(
                             styles.wrapper__card,
                             training.status === 'rejected' && styles.color__rejected,
                         )}
+                        data-test-id={`joint-training-cards${index}`}
                         key={training.id}
                     >
                         <div className={styles.avatar_name}>

@@ -139,22 +139,22 @@ export const DrawerFormTraining = ({ setOpen, setShowSuccessAlert }: Props) => {
         let isDataComplete = !!typeTraining && !!datePick && !!trainingName;
 
         if (commonTrainingFlow) {
-            isDataComplete = true;
+            isDataComplete = !!trainingName && !!datePick;
         }
 
         setSaveActive(isDataComplete);
     }, [typeTraining, datePick, trainingName, commonTrainingFlow]);
 
-    useEffect(() => {
-        if (dataForInputs.length > 0) {
-            const periodBoolean = typeof dataForInputs[0].period === 'number';
+    // useEffect(() => {
+    //     if (dataForInputs.length > 0) {
+    //         const periodBoolean = typeof dataForInputs[0].period === 'number';
 
-            setTypeTraining(dataForInputs[0].name);
-            setDatePick(dataForInputs[0].date);
-            setTrainingName(dataForInputs[0].exercisesName);
-            setPeriod(periodBoolean);
-        }
-    }, [setSaveActive, dataForInputs]);
+    //         setTypeTraining(dataForInputs[0].name);
+    //         setDatePick(dataForInputs[0].date);
+    //         setTrainingName(dataForInputs[0].exercisesName);
+    //         setPeriod(periodBoolean);
+    //     }
+    // }, [setSaveActive, dataForInputs]);
 
     const onFinish = (values: FinishValues) => {
         const today = moment().format('DD.MM.YYYY');

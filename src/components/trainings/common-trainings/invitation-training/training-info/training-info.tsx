@@ -1,7 +1,7 @@
 import { CloseOutlined } from '@ant-design/icons';
 import { getCurrentColor } from '@components/choose-color-badge/choose-color-badge';
-import { currentTime, getConvertStringFromNumb } from '@utils/utils';
-import { Badge, Button, Card, Divider } from 'antd';
+import { addDaysToDate, currentTime, getConvertStringFromNumb } from '@utils/utils';
+import { Badge, Button, Divider } from 'antd';
 
 import { InviteResponse } from '../../../../../types/trainings-types';
 
@@ -18,7 +18,7 @@ export const TrainingInfo = ({ inviteList, setOpenCard }: Props) => {
     };
 
     return (
-        <div className={styles.card}>
+        <div className={styles.card} data-test-id='joint-training-review-card'>
             <div className={styles.badge__block}>
                 <div>
                     <Badge
@@ -41,14 +41,23 @@ export const TrainingInfo = ({ inviteList, setOpenCard }: Props) => {
                             ? getConvertStringFromNumb(inviteList.training.parameters?.period)
                             : null}
                     </span>
-                    <span className={styles.time}>{currentTime(inviteList.createdAt)}</span>
+                    <span className={styles.time}>
+                        {inviteList.training.parameters?.period &&
+                            addDaysToDate(
+                                inviteList.createdAt,
+                                inviteList.training.parameters?.period,
+                            )}
+                    </span>
                 </div>
                 <ul className={styles.list_trainings}>
                     {inviteList.training.exercises.map((exercise) => (
                         <li key={exercise._id} className={styles.exercise_info}>
                             <p className={styles.exercise_name}>{exercise.name}</p>
-                            <span className={styles.count}>{`
-														${exercise.approaches} x (${`${exercise.weight}кг` ?? exercise.replays})`}</span>
+                            <span className={styles.count}>
+                                {`${exercise.approaches} x (${
+                                    `${exercise.weight}кг` ?? exercise.replays
+                                })`}
+                            </span>
                         </li>
                     ))}
                 </ul>

@@ -75,16 +75,6 @@ export const inviteApi = api.injectEndpoints({
                 url: `invite/${inviteId}`,
                 method: 'DELETE',
             }),
-            async onQueryStarted(inviteId, { dispatch, queryFulfilled }) {
-                try {
-                    await queryFulfilled;
-
-                    dispatch(deleteInvite(inviteId));
-                } catch (error) {
-                    console.log(error);
-                }
-            },
-            invalidatesTags: ['Invite'],
         }),
     }),
 });

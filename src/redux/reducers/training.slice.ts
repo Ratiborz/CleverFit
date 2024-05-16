@@ -1,12 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { Training } from '../../types/calendar-types';
-import {     CatalogTrainingPalsResponse,
-DataForInputs,     InviteResponse,
-TrainingDataPals ,
+import {
+    CatalogTrainingPalsResponse,
+    DataForInputs,
+    InviteResponse,
+    TrainingDataPals,
     UserDataForDrawer,
 } from '../../types/trainings-types';
-
 
 interface ITraining {
     repeatRequest: boolean;
@@ -67,7 +68,6 @@ export const trainingSlice = createSlice({
         },
         setDataTrainingPals: (state, { payload }) => {
             state.dataTrainingPals = payload;
-            console.log(state.dataTrainingPals);
         },
         setCommonTrainingState: (state, { payload }) => {
             state.commonTrainingState = payload;
@@ -84,15 +84,17 @@ export const trainingSlice = createSlice({
         },
         setInviteList: (state, { payload }) => {
             state.inviteList = payload;
-            console.log(state.inviteList);
         },
         deleteInvite: (state, { payload }) => {
             state.inviteList = state.inviteList.filter((invite) => invite._id !== payload);
         },
         setUsersTrainingPals: (state, { payload }) => {
             state.usersTrainingPals = payload;
-
-            console.log(state.usersTrainingPals);
+        },
+        deleteUsersTrainingPals: (state, { payload }) => {
+            state.usersTrainingPals = state.usersTrainingPals.filter(
+                (invite) => invite.inviteId !== payload,
+            );
         },
     },
 });
@@ -104,4 +106,5 @@ export const {
     setInviteList,
     deleteInvite,
     setUsersTrainingPals,
+    deleteUsersTrainingPals,
 } = actions;

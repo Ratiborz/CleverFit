@@ -78,8 +78,8 @@ export type TcreateInvite = {
 
 type InviteFrom = {
     _id: string;
-    lastName: Nullebel<string>;
-    imageSrc: Nullebel<string>;
+    lastName: string;
+    imageSrc: string;
     firstName?: string;
 };
 

@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 import { CheckCircleFilled, CloseOutlined } from '@ant-design/icons';
 import { maskStyle } from '@constants/constants';
-import { Button, Image, Modal } from 'antd';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
-import { actions } from '@redux/reducers/common-modal.slice';
 import { useDeleteInviteMutation } from '@redux/api-rtk/invite-requests';
+import { actions } from '@redux/reducers/common-modal.slice';
+import { actions as actionsTraining } from '@redux/reducers/training.slice';
+import { Button, Image, Modal } from 'antd';
+
 import { CatalogTrainingPalsResponse } from '../../../../../types/trainings-types';
 
 import styles from './details-training-modal.module.scss';
@@ -35,6 +37,7 @@ export const DetailsTrainingModal = ({
 
     const cancelInvite = () => {
         deleteInvite({ inviteId: userData.inviteId });
+        dispatch(actionsTraining.deleteUsersTrainingPals(userData.inviteId));
         setOpenModal(false);
         setListPartners(false);
     };

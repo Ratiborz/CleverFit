@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { usersTrainingPalsSelector } from '@constants/selectors';
 import { useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { Image } from 'antd';
+
 import { DetailsTrainingModal } from './details-training-modal/details-training-modal';
 
 import styles from './partners-cards.module.scss';
@@ -31,9 +32,10 @@ export const PartnersCards = ({ setListPartners }: Props) => {
                 />
             )}
             <div className={styles.wrapper__partners_cards}>
-                {usersTrainingPals.map((user) => (
+                {usersTrainingPals.map((user, index) => (
                     <div
                         key={user.id}
+                        data-test-id={`joint-training-cards${index}`}
                         className={styles.card}
                         onClick={() => detailsTrainingUser(user)}
                     >
